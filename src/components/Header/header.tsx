@@ -31,6 +31,7 @@ export function Header() {
             h='64px'
             padding={{ '3xl': '16px 56px 16px 8px', base: '8px 20px' }}
             data-test-id='header'
+            zIndex={3}
         >
             <Grid
                 templateColumns={{ base: 'repeat(4, 1fr)', ms: 'repeat(12, 1fr)' }}

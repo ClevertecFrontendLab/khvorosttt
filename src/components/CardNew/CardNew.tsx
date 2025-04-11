@@ -1,4 +1,4 @@
-import { Box, Card, CardBody, Flex, Heading, Image, Stack, Text } from '@chakra-ui/react';
+import { Box, Card, CardBody, Flex, Heading, Hide, Image, Stack, Text } from '@chakra-ui/react';
 
 import { markerFood, markFood } from '~/data/consts';
 
@@ -20,40 +20,57 @@ export type CardNewType = {
 
 export function CardNew({ data }: CardNewType) {
     return (
-        <Card maxW='sm' borderRadius='8px' padding={0} overflow='hidden' fontFamily='text'>
+        <Card
+            maxW='sm'
+            borderRadius='8px'
+            padding={0}
+            overflow='hidden'
+            fontFamily='text'
+            h='100%'
+            maxH={{ base: '220px', md: 'none' }}
+        >
             <CardBody w='100%' padding={0}>
                 <Image src={data.src} alt={data.title} w='100%' />
-                <Box
-                    display='flex'
-                    flexDirection='column'
-                    h='184px'
+                <Stack
+                    maxH='184px'
                     gap='15px'
-                    padding='16px 24px 20px 24px'
+                    padding={{ base: '8px 8px 4px 8px', lg: '16px 24px 20px 24px' }}
+                    justifyContent='space-between'
                 >
-                    <Stack mt='6' spacing='3' h='100px' m={0}>
-                        <Heading size='md' isTruncated>
+                    <Stack mt='6' spacing='3' maxH='100px' m={0}>
+                        <Heading
+                            size='md'
+                            isTruncated
+                            fontSize={{ base: '16px', lg: '18px' }}
+                            whiteSpace={{ base: 'wrap', lg: 'nowrap' }}
+                            noOfLines={2}
+                        >
                             {data.title}
                         </Heading>
-                        <Text isTruncated noOfLines={3} whiteSpace='wrap'>
-                            {data.description}
-                        </Text>
+                        <Hide below='lg'>
+                            <Text isTruncated noOfLines={3} whiteSpace='wrap'>
+                                {data.description}
+                            </Text>
+                        </Hide>
                     </Stack>
                     <Flex justifyContent='space-between' w='100%'>
-                        <Box
-                            display='flex'
-                            padding='2px 8px'
-                            bg='#d7ff94'
-                            alignItems='center'
-                            justifyContent='space-between'
-                            borderRadius='4px'
-                            gap='5px'
-                        >
-                            <Image src={markFood(data.marker)} w='16px' h='16px' />
-                            <Text fontSize='14px' fontWeight={400}>
-                                {markerFood[data.marker]}
-                            </Text>
-                        </Box>
-                        <Box>
+                        <Hide below='xl'>
+                            <Box
+                                display='flex'
+                                padding='2px 8px'
+                                bg='#d7ff94'
+                                alignItems='center'
+                                justifyContent='space-between'
+                                borderRadius='4px'
+                                gap='5px'
+                            >
+                                <Image src={markFood(data.marker)} w='16px' h='16px' />
+                                <Text fontSize='14px' fontWeight={400}>
+                                    {markerFood[data.marker]}
+                                </Text>
+                            </Box>
+                        </Hide>
+                        <Box display='flex' gap='5px'>
                             {data.bookmark ? (
                                 <Box display='flex' alignItems='center' gap='5px'>
                                     <BookmarkIcon />
@@ -61,17 +78,18 @@ export function CardNew({ data }: CardNewType) {
                                         {data.bookmark}
                                     </Text>
                                 </Box>
-                            ) : (
+                            ) : null}
+                            {data.like ? (
                                 <Box display='flex' alignItems='center' gap='5px'>
                                     <LikeSmileIcon />
                                     <Text color='#2db100' fontWeight={600}>
                                         {data.like}
                                     </Text>
                                 </Box>
-                            )}
+                            ) : null}
                         </Box>
                     </Flex>
-                </Box>
+                </Stack>
             </CardBody>
         </Card>
     );

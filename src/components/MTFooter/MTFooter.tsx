@@ -15,6 +15,7 @@ export function Footer() {
             h='84px'
             position='fixed'
             bottom={0}
+            zIndex={3}
         >
             <Grid templateColumns='repeat(4, 1fr)' p='10px 0px'>
                 <GridItem>
