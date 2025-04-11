@@ -28,7 +28,8 @@ export function Header() {
             bg='headerBg'
             position='fixed'
             width='100%'
-            padding={{ '3xl': '16px 56px 16px 8px', md: '8px 20px' }}
+            h='64px'
+            padding={{ '3xl': '16px 56px 16px 8px', base: '8px 20px' }}
             data-test-id='header'
         >
             <Grid
