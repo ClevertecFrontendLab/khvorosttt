@@ -1,6 +1,7 @@
 import './App.css';
 
 import { Show } from '@chakra-ui/react';
+import { Outlet } from 'react-router';
 
 import { Header } from '~/components/Header/header';
 import { Footer } from '~/components/MTFooter/MTFooter';
@@ -13,6 +14,7 @@ function App() {
         <>
             <div>
                 <Header />
+                <Outlet />
                 <Show below='lg'>
                     <Footer />
                 </Show>

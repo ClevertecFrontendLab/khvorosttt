@@ -7,7 +7,15 @@ import { NoteIcon } from '../Icons/Note';
 
 export function Footer() {
     return (
-        <Box bg='#ffffd3' width='100%' h='84px' position='fixed' bottom={0}>
+        <Box
+            as='footer'
+            data-test-id='footer'
+            bg='#ffffd3'
+            width='100%'
+            h='84px'
+            position='fixed'
+            bottom={0}
+        >
             <Grid templateColumns='repeat(4, 1fr)' p='10px 0px'>
                 <GridItem>
                     <Box display='flex' flexDirection='column' alignItems='center' gap='8px'>
