@@ -1,18 +1,21 @@
 import './App.css';
 
-//import { useState } from 'react';
-//import reactLogo from '~/assets/react.svg';
+import { Show } from '@chakra-ui/react';
+
 import { Header } from '~/components/Header/header';
+import { Footer } from '~/components/MTFooter/MTFooter';
 import { useGetPostsQuery } from '~/query/services/posts.ts';
 
 function App() {
-    //const [count, setCount] = useState(0);
     const { data: _data, isLoading: _isLoading } = useGetPostsQuery();
 
     return (
         <>
             <div>
                 <Header />
+                <Show below='lg'>
+                    <Footer />
+                </Show>
             </div>
         </>
     );
