@@ -1,9 +1,9 @@
-import food2 from '../assets/images/icons8-frying-pan-96 1.png';
-import international from '../assets/images/icons8-international-food-96 1.png';
-import salat from '../assets/images/icons8-баклажан-96 1.png';
-import food1 from '../assets/images/icons8-кастрюля-96 2.png';
-import veg from '../assets/images/icons8-лавровый-лист-96 1.png';
-import desert from '../assets/images/icons8-хлеб-и-скалка-96 1.png';
+import salat from '../assets/images/baklagan.png';
+import desert from '../assets/images/bread.png';
+import food2 from '../assets/images/fryingPan.png';
+import international from '../assets/images/internationalFood.png';
+import veg from '../assets/images/list.png';
+import food1 from '../assets/images/pot.png';
 
 export const markerFood: string[] = [
     'Первые блюда',
