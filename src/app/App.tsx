@@ -1,10 +1,12 @@
 import './App.css';
 
-import { Show } from '@chakra-ui/react';
+import { Grid, GridItem, Hide, Show } from '@chakra-ui/react';
 import { Outlet } from 'react-router';
 
 import { Header } from '~/components/Header/header';
 import { Footer } from '~/components/MTFooter/MTFooter';
+import { Navbar } from '~/components/Navbar/Navbar';
+import { NotificationAside } from '~/components/NotificationAside/NotificationAside';
 import { useGetPostsQuery } from '~/query/services/posts.ts';
 
 function App() {
@@ -14,7 +16,27 @@ function App() {
         <>
             <div>
                 <Header />
-                <Outlet />
+                <Grid
+                    templateColumns={{
+                        base: 'repeat(4, 1fr)',
+                        lg: 'repeat(12, 1fr)',
+                        xl: 'repeat(17, 1fr)',
+                    }}
+                    h='100vh'
+                    gap='24px'
+                >
+                    <Hide below='xl'>
+                        <GridItem colSpan={3}>
+                            <Navbar />
+                        </GridItem>
+                    </Hide>
+                    <GridItem colSpan={12} overflowY='auto'>
+                        <Outlet />
+                    </GridItem>
+                    <Hide below='xl'>
+                        <NotificationAside />
+                    </Hide>
+                </Grid>
                 <Show below='lg'>
                     <Footer />
                 </Show>

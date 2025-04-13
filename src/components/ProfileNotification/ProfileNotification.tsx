@@ -12,7 +12,7 @@ export type notificationInfo = {
 
 export function ProfileNotification(props: notificationInfo) {
     return (
-        <Flex p='0px 16px'>
+        <Flex p='0px 16px' flexDirection={{ xl: 'column', base: 'row' }} alignItems='center'>
             <Box display='flex' gap='8px' p='0px 8px' alignItems='center'>
                 <BookmarkIcon />
                 <Text color='#2db100' fontWeight='600'>

@@ -23,7 +23,7 @@ export function ShortCardFood(data: CardNewInfo) {
                 <Text fontSize='14px' isTruncated noOfLines={3} whiteSpace='wrap'>
                     {data.description}
                 </Text>
-                <Flex justifyContent='space-between' w='100%'>
+                <Flex justifyContent='space-between' w='100%' mt='auto'>
                     <Box
                         display='flex'
                         padding='2px 4px'

@@ -19,15 +19,7 @@ export type CardNewType = {
 
 export function CardNew({ data }: CardNewType) {
     return (
-        <Card
-            maxW='sm'
-            borderRadius='8px'
-            padding={0}
-            overflow='hidden'
-            fontFamily='text'
-            h='100%'
-            maxH={{ base: '220px', md: 'none' }}
-        >
+        <Card maxW='sm' borderRadius='8px' padding={0} overflow='hidden' fontFamily='text' h='100%'>
             <CardBody w='100%' padding={0}>
                 <Image src={data.src} alt={data.title} w='100%' />
                 <Stack

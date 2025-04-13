@@ -1,11 +1,15 @@
 import salat from '../assets/images/baklagan.png';
 import desert from '../assets/images/bread.png';
 import childTasty from '../assets/images/childTasty.png';
+import drinks from '../assets/images/drinks.png';
 import food2 from '../assets/images/fryingPan.png';
 import gril from '../assets/images/gril.png';
+import healthy from '../assets/images/healthy.png';
+import sous from '../assets/images/healthy.png';
 import international from '../assets/images/internationalFood.png';
 import veg from '../assets/images/list.png';
 import food1 from '../assets/images/pot.png';
+import zakusk from '../assets/images/zakusk.png';
 
 export const markerFood: string[] = [
     'Первые блюда',
@@ -16,6 +20,10 @@ export const markerFood: string[] = [
     'Национальные',
     'Детские блюда',
     'Блюда на гриле',
+    'Закуски',
+    'Лечебное питание',
+    'Соусы',
+    'Напитки',
 ];
 
 export function markFood(marker: number) {
@@ -36,5 +44,13 @@ export function markFood(marker: number) {
             return childTasty;
         case 7:
             return gril;
+        case 8:
+            return zakusk;
+        case 9:
+            return healthy;
+        case 10:
+            return sous;
+        case 11:
+            return drinks;
     }
 }

@@ -19,6 +19,7 @@ export function ShortCardTitle(data: CardNewInfo) {
                         borderColor=' #2db100'
                         fontStyle='text'
                         variant='outline'
+                        minW={{ base: '70px', lg: '85px' }}
                     >
                         Готовить
                     </Button>
