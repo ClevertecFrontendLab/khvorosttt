@@ -2,8 +2,7 @@ import { Box, Card, CardBody, Flex, Heading, Hide, Image, Stack, Text } from '@c
 
 import { markerFood, markFood } from '~/data/consts';
 
-import { BookmarkIcon } from '../Icons/Bookmark';
-import { LikeSmileIcon } from '../Icons/LikeSmile';
+import { Interactions } from '../Interactions/Interactions';
 
 export type CardNewInfo = {
     title: string;
@@ -70,24 +69,7 @@ export function CardNew({ data }: CardNewType) {
                                 </Text>
                             </Box>
                         </Hide>
-                        <Box display='flex' gap='5px'>
-                            {data.bookmark ? (
-                                <Box display='flex' alignItems='center' gap='5px'>
-                                    <BookmarkIcon />
-                                    <Text color='#2db100' fontWeight={600}>
-                                        {data.bookmark}
-                                    </Text>
-                                </Box>
-                            ) : null}
-                            {data.like ? (
-                                <Box display='flex' alignItems='center' gap='5px'>
-                                    <LikeSmileIcon />
-                                    <Text color='#2db100' fontWeight={600}>
-                                        {data.like}
-                                    </Text>
-                                </Box>
-                            ) : null}
-                        </Box>
+                        <Interactions {...data} />
                     </Flex>
                 </Stack>
             </CardBody>

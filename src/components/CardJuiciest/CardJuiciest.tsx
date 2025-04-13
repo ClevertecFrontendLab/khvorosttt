@@ -16,7 +16,7 @@ import { markerFood, markFood } from '~/data/consts';
 
 import { CardNewType } from '../CardNew/CardNew';
 import { BookmarkIcon } from '../Icons/Bookmark';
-import { LikeSmileIcon } from '../Icons/LikeSmile';
+import { Interactions } from '../Interactions/Interactions';
 
 export function CardJuiciest({ data }: CardNewType) {
     return (
@@ -60,24 +60,7 @@ export function CardJuiciest({ data }: CardNewType) {
                             {markerFood[data.marker]}
                         </Text>
                     </Box>
-                    <Box display='flex' gap='5px'>
-                        {data.bookmark ? (
-                            <Box display='flex' alignItems='center' gap='5px'>
-                                <BookmarkIcon />
-                                <Text color='#2db100' fontWeight={600}>
-                                    {data.bookmark}
-                                </Text>
-                            </Box>
-                        ) : null}
-                        {data.like ? (
-                            <Box display='flex' alignItems='center' gap='5px'>
-                                <LikeSmileIcon />
-                                <Text color='#2db100' fontWeight={600}>
-                                    {data.like}
-                                </Text>
-                            </Box>
-                        ) : null}
-                    </Box>
+                    <Interactions {...data} />
                 </Flex>
                 <CardBody padding={0} mt='20px' w='100%'>
                     <Heading

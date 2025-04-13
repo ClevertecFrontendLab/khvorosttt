@@ -3,8 +3,7 @@ import { Box, Card, CardBody, CardHeader, Flex, Heading, Image, Text } from '@ch
 import { markerFood, markFood } from '~/data/consts';
 
 import { CardNewInfo } from '../CardNew/CardNew';
-import { BookmarkIcon } from '../Icons/Bookmark';
-import { LikeSmileIcon } from '../Icons/LikeSmile';
+import { Interactions } from '../Interactions/Interactions';
 
 export function ShortCardFood(data: CardNewInfo) {
     return (
@@ -39,24 +38,7 @@ export function ShortCardFood(data: CardNewInfo) {
                             {markerFood[data.marker]}
                         </Text>
                     </Box>
-                    <Box display='flex' gap='5px'>
-                        {data.bookmark ? (
-                            <Box display='flex' alignItems='center' gap='5px'>
-                                <BookmarkIcon />
-                                <Text color='#2db100' fontSize='12px' fontWeight={600}>
-                                    {data.bookmark}
-                                </Text>
-                            </Box>
-                        ) : null}
-                        {data.like ? (
-                            <Box display='flex' alignItems='center' gap='5px'>
-                                <LikeSmileIcon />
-                                <Text color='#2db100' fontSize='12px' fontWeight={600}>
-                                    {data.like}
-                                </Text>
-                            </Box>
-                        ) : null}
-                    </Box>
+                    <Interactions {...data} />
                 </Flex>
             </CardBody>
         </Card>
