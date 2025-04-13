@@ -13,7 +13,7 @@ export type AuthorType = {
 
 export function PostCard({ data }: AuthorType) {
     return (
-        <Card maxW='sm' overflow='hidden'>
+        <Card overflow='hidden'>
             <CardHeader padding='16px 16px 8px 16px' w='100%'>
                 <HStack w='100%'>
                     <Avatar name={data.name} src={data.src} />

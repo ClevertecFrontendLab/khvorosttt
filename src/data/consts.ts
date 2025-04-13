@@ -1,6 +1,8 @@
 import salat from '../assets/images/baklagan.png';
 import desert from '../assets/images/bread.png';
+import childTasty from '../assets/images/childTasty.png';
 import food2 from '../assets/images/fryingPan.png';
+import gril from '../assets/images/gril.png';
 import international from '../assets/images/internationalFood.png';
 import veg from '../assets/images/list.png';
 import food1 from '../assets/images/pot.png';
@@ -12,6 +14,8 @@ export const markerFood: string[] = [
     'Салаты',
     'Вторые блюда',
     'Национальные',
+    'Детские блюда',
+    'Блюда на гриле',
 ];
 
 export function markFood(marker: number) {
@@ -28,5 +32,9 @@ export function markFood(marker: number) {
             return food2;
         case 5:
             return international;
+        case 6:
+            return childTasty;
+        case 7:
+            return gril;
     }
 }
