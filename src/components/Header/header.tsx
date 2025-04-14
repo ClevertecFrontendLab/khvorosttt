@@ -1,20 +1,10 @@
 //import React from "react";
 import { HamburgerIcon } from '@chakra-ui/icons';
-import {
-    Avatar,
-    Box,
-    Flex,
-    Grid,
-    GridItem,
-    Hide,
-    IconButton,
-    Link,
-    Show,
-    Text,
-} from '@chakra-ui/react';
+import { Avatar, Box, Flex, Grid, GridItem, Hide, IconButton, Show, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 
 import avatar from '../../assets/images/kat_konst.jpg';
+import { BreadCrumb } from '../BreadCrumb/BreadCrumb';
 import { NameIcon } from '../Icons/Name.tsx';
 import { PotIcon } from '../Icons/Pot.tsx';
 import { ProfileNotification } from '../ProfileNotification/ProfileNotification';
@@ -48,11 +38,7 @@ export function Header() {
                 </GridItem>
                 <GridItem colSpan={{ base: 0, ms: 8, xl: 6 }}>
                     <Hide below='lg'>
-                        <Flex alignItems='center' h='100%'>
-                            <Link fontFamily='text' href='#'>
-                                Главная
-                            </Link>
-                        </Flex>
+                        <BreadCrumb />
                     </Hide>
                 </GridItem>
                 <Hide below='xl'>
