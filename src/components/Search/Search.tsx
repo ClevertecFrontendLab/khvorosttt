@@ -30,7 +30,11 @@ export function Search(data: SearchProps) {
             <Text as='h2' fontWeight={700} fontSize={{ base: '24px', lg: '48px' }}>
                 {data.name}
             </Text>
-            {data.description! ? <Text>{data.description}</Text> : null}
+            {data.description! ? (
+                <Text maxW='696px' align='center'>
+                    {data.description}
+                </Text>
+            ) : null}
             <Flex gap='15px'>
                 <IconButton icon={<SearchIcon2 />} aria-label='search' />
                 <InputGroup w={{ ms: '458px', base: '284px' }}>
