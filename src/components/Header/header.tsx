@@ -15,7 +15,7 @@ export function Header() {
     const [email] = useState('@bake_and_pie');
     return (
         <Box as='header' sx={headerStyle} data-test-id='header' w='100%'>
-            <Flex align='center' justify='space-between'>
+            <Flex align='center' justify='space-between' pb={0} pt={0}>
                 <Flex align='center' gap={2} w='256px'>
                     <PotIcon w='33px' h='32px' />
                     <Hide below='ms'>
@@ -48,6 +48,10 @@ export function Header() {
                             icon={<HamburgerIcon />}
                             aria-label='Menu'
                             onClick={() => {}}
+                            _hover={{ bg: 'transparent', color: 'inherit' }}
+                            _active={{ bg: 'transparent', color: 'inherit' }}
+                            _focus={{ boxShadow: 'none' }}
+                            border='none'
                         />
                     </Flex>
                 </Show>
