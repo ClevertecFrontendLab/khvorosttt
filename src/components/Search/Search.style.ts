@@ -25,5 +25,7 @@ export const MenuButtonStyle: SystemStyleObject = {
 export const IconButtonStyle: SystemStyleObject = {
     bg: 'transparent',
     borderRadius: '6',
+    p: '0px 9px',
     border: '1px solid rgba(0, 0, 0, 0.48);',
+    w: { base: '32px', ms: '48px' },
 };

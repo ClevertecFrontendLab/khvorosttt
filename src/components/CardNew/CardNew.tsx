@@ -1,8 +1,16 @@
-import { Box, Card, CardBody, Flex, Heading, Hide, Image, Stack, Text } from '@chakra-ui/react';
+import { Box, Card, CardBody, Flex, Heading, Hide, Image, Text } from '@chakra-ui/react';
 
 import { markerFood, markFood } from '~/data/consts';
 
 import { Interactions } from '../Interactions/Interactions';
+import {
+    CardBodyStyle,
+    CardHeadStyle,
+    CardStyle,
+    CardTagMobileElementsStyle,
+    CardTagMobileStyle,
+    CardTagStyle,
+} from './CardNew.style';
 
 export type CardNewInfo = {
     title: string;
@@ -19,42 +27,36 @@ export type CardNewType = {
 
 export function CardNew({ data }: CardNewType) {
     return (
-        <Card maxW='sm' borderRadius='8px' padding={0} overflow='hidden' fontFamily='text' h='100%'>
-            <CardBody w='100%' padding={0}>
+        <Card
+            sx={CardStyle}
+            position='relative'
+            transition='all 0.2s ease'
+            _hover={{
+                boxShadow: 'lg',
+            }}
+        >
+            <Flex sx={CardTagMobileStyle}>
+                <Box sx={CardTagMobileElementsStyle}>
+                    <Image src={markFood(data.marker)} w='16px' h='16px' />
+                    <Text fontSize='14px' fontWeight={400}>
+                        {markerFood[data.marker]}
+                    </Text>
+                </Box>
+            </Flex>
+            <CardBody w='100%' padding={0} display='flex' flexDirection='column'>
                 <Image src={data.src} alt={data.title} w='100%' />
-                <Stack
-                    maxH='184px'
-                    gap='15px'
-                    padding={{ base: '8px 8px 4px 8px', lg: '16px 24px 20px 24px' }}
-                    justifyContent='space-between'
-                >
-                    <Stack mt='6' spacing='3' maxH='100px' m={0}>
-                        <Heading
-                            size='md'
-                            isTruncated
-                            fontSize={{ base: '16px', lg: '18px' }}
-                            whiteSpace={{ base: 'wrap', lg: 'nowrap' }}
-                            noOfLines={2}
-                        >
-                            {data.title}
-                        </Heading>
+                <Flex sx={CardBodyStyle} direction='column'>
+                    <Box mb='10px'>
+                        <Heading sx={CardHeadStyle}>{data.title}</Heading>
                         <Hide below='lg'>
-                            <Text isTruncated noOfLines={3} whiteSpace='wrap'>
+                            <Text noOfLines={3} mt='4px' fontSize='14px'>
                                 {data.description}
                             </Text>
                         </Hide>
-                    </Stack>
-                    <Flex justifyContent='space-between' w='100%'>
-                        <Hide below='xl'>
-                            <Box
-                                display='flex'
-                                padding='2px 8px'
-                                bg='#d7ff94'
-                                alignItems='center'
-                                justifyContent='space-between'
-                                borderRadius='4px'
-                                gap='5px'
-                            >
+                    </Box>
+                    <Flex justifyContent='space-between' mt='auto'>
+                        <Hide below='2xl'>
+                            <Box sx={CardTagStyle}>
                                 <Image src={markFood(data.marker)} w='16px' h='16px' />
                                 <Text fontSize='14px' fontWeight={400}>
                                     {markerFood[data.marker]}
@@ -63,7 +65,7 @@ export function CardNew({ data }: CardNewType) {
                         </Hide>
                         <Interactions {...data} />
                     </Flex>
-                </Stack>
+                </Flex>
             </CardBody>
         </Card>
     );

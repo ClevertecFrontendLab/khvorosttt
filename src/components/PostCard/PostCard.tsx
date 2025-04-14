@@ -18,10 +18,24 @@ export function PostCard({ data }: AuthorType) {
                 <HStack w='100%'>
                     <Avatar name={data.name} src={data.src} />
                     <Stack gap='2px' w='100%' overflow='hidden'>
-                        <Heading size='sm' overflow='hidden' isTruncated>
+                        <Heading
+                            size='sm'
+                            overflow='hidden'
+                            fontWeight={500}
+                            fontSize={{ base: '16', lg: '18px' }}
+                            fontStyle='text'
+                            isTruncated
+                        >
                             {data.name}
                         </Heading>
-                        <Text>{data.email}</Text>
+                        <Text
+                            color='rgba(0, 0, 0, 0.64)'
+                            fontWeight={400}
+                            fontSize={{ base: '12px', lg: '14px' }}
+                            fontStyle='text'
+                        >
+                            {data.email}
+                        </Text>
                     </Stack>
                 </HStack>
             </CardHeader>

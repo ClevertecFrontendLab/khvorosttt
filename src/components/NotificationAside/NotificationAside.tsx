@@ -2,29 +2,17 @@ import { EditIcon } from '@chakra-ui/icons';
 import { Flex, GridItem, Text } from '@chakra-ui/react';
 
 import { ProfileNotification } from '../ProfileNotification/ProfileNotification';
+import { NoteElementStyle, NoteStyle, NotificationAsideStyle } from './NotificationAside.style';
 
 export function NotificationAside() {
     return (
-        <GridItem colSpan={2} p='90px 0px' as='aside' h='100%' alignItems='center'>
+        <GridItem colSpan={2} as='aside' sx={NotificationAsideStyle}>
             <ProfileNotification bookmarks={0} people={0} like={0} />
-            <Flex
-                flexDirection='column'
-                mt='auto'
-                h='100%'
-                alignItems='center'
-                justifyContent='flex-end'
-            >
-                <Flex
-                    bg='#000'
-                    borderRadius={50}
-                    w='48px'
-                    h='48px'
-                    p='0px 12px'
-                    alignItems='center'
-                >
+            <Flex sx={NoteElementStyle}>
+                <Flex sx={NoteStyle}>
                     <EditIcon color='white' boxSize={6} />
                 </Flex>
-                <Text color='rgba(0, 0, 0, 0.64)' fontSize='12px'>
+                <Text color='rgba(0, 0, 0, 0.64)' fontSize='12px' fontWeight={400}>
                     Записать рецепт
                 </Text>
             </Flex>

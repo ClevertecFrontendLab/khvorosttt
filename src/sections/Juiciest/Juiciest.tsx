@@ -13,7 +13,11 @@ export function Juiciest({ data }: JuiciestProps) {
     return (
         <Flex flexDirection='column' gap='16px'>
             <Flex justifyContent='space-between' alignItems='center'>
-                <Text as='h3' fontWeight={500} fontSize='48px'>
+                <Text
+                    as='h3'
+                    fontWeight={500}
+                    fontSize={{ '3xl': '48px', '2xl': '36px', base: '24px' }}
+                >
                     Самое сочное
                 </Text>
                 <Hide below='lg'>

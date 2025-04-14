@@ -43,13 +43,9 @@ export function Search(data: SearchProps) {
                     </Text>
                 ) : null}
             </VStack>
-            <VStack gap='16px'>
+            <VStack gap='16px' maxW={{ base: '328px', md: 'none' }}>
                 <Flex gap='15px'>
-                    <IconButton
-                        icon={<SearchIcon2 />}
-                        aria-label='search'
-                        sx={{ IconButtonStyle }}
-                    />
+                    <IconButton icon={<SearchIcon2 />} aria-label='search' sx={IconButtonStyle} />
                     <InputGroup w={{ ms: '458px', base: '284px' }}>
                         <InputRightElement pointerEvents='none'>
                             <SearchIcon color='black' />

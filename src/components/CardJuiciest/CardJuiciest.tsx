@@ -27,6 +27,10 @@ export function CardJuiciest({ data }: CardNewType) {
             maxH='244px'
             w='100%'
             position='relative'
+            transition='all 0.2s ease'
+            _hover={{
+                boxShadow: 'lg',
+            }}
         >
             <Image
                 objectFit='cover'
@@ -49,26 +53,35 @@ export function CardJuiciest({ data }: CardNewType) {
                     <Box
                         display='flex'
                         padding='2px 8px'
-                        bg='#d7ff94'
+                        bg=' #ffffd3'
                         alignItems='center'
                         justifyContent='space-between'
                         borderRadius='4px'
                         gap='5px'
                     >
                         <Image src={markFood(data.marker)} w='16px' h='16px' />
-                        <Text fontSize='14px' fontWeight={400}>
+                        <Text fontSize='14px' fontWeight={400} fontStyle='text'>
                             {markerFood[data.marker]}
                         </Text>
                     </Box>
                     <Interactions {...data} />
                 </Flex>
-                <CardBody padding={0} mt='20px' w='100%'>
+                <CardBody
+                    padding={0}
+                    mt='25px'
+                    w='100%'
+                    gap='10px'
+                    display='flex'
+                    flexDirection='column'
+                >
                     <Heading
                         size='md'
                         isTruncated
-                        fontSize={{ base: '16px', lg: '18px' }}
+                        fontSize={{ base: '16px', '2xl': '20px' }}
+                        fontWeight={500}
                         whiteSpace={{ base: 'wrap', lg: 'nowrap' }}
                         noOfLines={2}
+                        fontFamily='text'
                     >
                         {data.title}
                     </Heading>
@@ -84,15 +97,17 @@ export function CardJuiciest({ data }: CardNewType) {
                         bg='transparent'
                         color='black'
                         border='1px solid rgba(0, 0, 0, 0.48)'
-                        p='0px 12px'
+                        p='0px 6px'
                         gap='5px'
+                        w={{ base: '24px', md: 'auto' }}
+                        h={{ base: '24px', md: '32px' }}
                     >
                         <BookmarkIcon />
                         <Hide below='lg'>
                             <Text>Сохранить</Text>
                         </Hide>
                     </Button>
-                    <Button bg='black' color='white' p='0px 12px'>
+                    <Button bg='black' color='white' p='0px 8px' h={{ base: '24px', md: '32px' }}>
                         <Text>Готовить</Text>
                     </Button>
                 </CardFooter>

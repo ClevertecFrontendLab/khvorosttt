@@ -10,7 +10,7 @@ export function Interactions(data: CardNewInfo) {
             {data.bookmark ? (
                 <Box display='flex' alignItems='center' gap='5px'>
                     <BookmarkIcon />
-                    <Text color='#2db100' fontWeight={600}>
+                    <Text color='#2db100' fontWeight={600} fontSize='12px'>
                         {data.bookmark}
                     </Text>
                 </Box>
@@ -18,7 +18,7 @@ export function Interactions(data: CardNewInfo) {
             {data.like ? (
                 <Box display='flex' alignItems='center' gap='5px'>
                     <LikeSmileIcon />
-                    <Text color='#2db100' fontWeight={600}>
+                    <Text color='#2db100' fontWeight={600} fontSize='12px'>
                         {data.like}
                     </Text>
                 </Box>
