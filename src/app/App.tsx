@@ -14,7 +14,7 @@ function App() {
 
     return (
         <>
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                 <Header />
                 <Grid
                     templateColumns={{
@@ -22,15 +22,18 @@ function App() {
                         lg: 'repeat(12, 1fr)',
                         xl: 'repeat(17, 1fr)',
                     }}
-                    h='100vh'
                     gap='24px'
+                    style={{
+                        flex: 1,
+                        overflowY: 'auto',
+                    }}
                 >
                     <Hide below='xl'>
                         <GridItem colSpan={3}>
                             <Navbar />
                         </GridItem>
                     </Hide>
-                    <GridItem colSpan={12} overflowY='auto'>
+                    <GridItem colSpan={12} style={{ overflowY: 'auto', height: '100%' }}>
                         <Outlet />
                     </GridItem>
                     <Hide below='xl'>

@@ -54,3 +54,32 @@ export function markFood(marker: number) {
             return drinks;
     }
 }
+
+export function categoryPath(marker: number) {
+    switch (marker) {
+        case 0:
+            return 'vegan-cuisine';
+        case 1:
+            return 'vegan-cuisine';
+        case 2:
+            return 'vegan-cuisine';
+        case 3:
+            return 'vegan-cuisine';
+        case 4:
+            return 'vegan-cuisine';
+        case 5:
+            return 'vegan-cuisine';
+        case 6:
+            return 'vegan-cuisine';
+        case 7:
+            return 'vegan-cuisine';
+        case 8:
+            return 'vegan-cuisine';
+        case 9:
+            return 'vegan-cuisine';
+        case 10:
+            return 'vegan-cuisine';
+        case 11:
+            return 'vegan-cuisine';
+    }
+}

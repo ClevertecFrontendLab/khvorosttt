@@ -2,6 +2,8 @@ import { createBrowserRouter } from 'react-router';
 
 import App from '~/app/App';
 import { Home } from '~/pages/Home/Home';
+import { JuiciestPage } from '~/pages/Juiciest/Juiciest';
+import { Vegan } from '~/pages/Vegan/Vegan';
 
 const router = createBrowserRouter([
     {
@@ -14,11 +16,11 @@ const router = createBrowserRouter([
             },
             {
                 path: 'vegan-cuisine',
-                element: <></>,
+                element: <Vegan />,
             },
             {
-                path: 'juiciest',
-                element: <></>,
+                path: 'juiciest-link',
+                element: <JuiciestPage />,
             },
         ],
     },
