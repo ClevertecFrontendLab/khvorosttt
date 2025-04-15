@@ -5,32 +5,30 @@ import { Link } from 'react-router';
 import { CardJuiciest } from '~/components/CardJuiciest/CardJuiciest';
 import { CardNewType } from '~/components/CardNew/CardNew';
 
+import { JuiciestButtonStyle, JuiciestSectionHeadingStyle } from './Juiciest.style';
+
 interface JuiciestProps {
+    title: string | null;
     data: CardNewType[];
 }
 
-export function Juiciest({ data }: JuiciestProps) {
+export function Juiciest({ title, data }: JuiciestProps) {
     return (
         <Flex flexDirection='column' gap='16px'>
             <Flex justifyContent='space-between' alignItems='center'>
-                <Text
-                    as='h3'
-                    fontWeight={500}
-                    fontSize={{ '3xl': '48px', '2xl': '36px', base: '24px' }}
-                >
-                    Самое сочное
-                </Text>
+                {title! ? (
+                    <Text as='h3' sx={JuiciestSectionHeadingStyle}>
+                        {title}
+                    </Text>
+                ) : null}
+
                 <Hide below='lg'>
                     <Button
                         data-test-id='juiciest-link'
                         rightIcon={<ArrowForwardIcon />}
-                        bg='#b1ff2e'
-                        variant='solid'
-                        p='0px 16px'
-                        fontSize='16px'
-                        fontWeight={600}
                         as={Link}
                         to='/juiciest-link'
+                        sx={JuiciestButtonStyle}
                     >
                         Вся подборка
                     </Button>
@@ -51,14 +49,10 @@ export function Juiciest({ data }: JuiciestProps) {
                 data-test-id='juiciest-link-mobile'
                 display={{ base: 'flex', lg: 'none' }}
                 rightIcon={<ArrowForwardIcon />}
-                bg='#b1ff2e'
-                variant='solid'
-                p='0px 16px'
-                fontSize='16px'
-                fontWeight={600}
                 alignSelf='center'
                 as={Link}
                 to='/juiciest-link'
+                sx={JuiciestButtonStyle}
             >
                 Вся подборка
             </Button>
