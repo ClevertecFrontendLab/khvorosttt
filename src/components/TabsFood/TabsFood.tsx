@@ -1,21 +1,29 @@
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 
 import { markerFood } from '~/data/consts';
 import juiciest from '~/data/juiciest.json';
-import { Juiciest } from '~/sections/Juiciest/Juiciest';
+
+import { FoodDisplay } from '../FoodDisplay/FoodDisplay';
+import {
+    TabFoodIndicatorStyle,
+    TabFoodListItemStyle,
+    TabFoodListStyle,
+    TabFoodStyle,
+} from './TabFood.style';
 
 export function TabsFood() {
     return (
-        <Tabs>
-            <TabList>
+        <Tabs sx={TabFoodStyle} w='100%'>
+            <TabList sx={TabFoodListStyle}>
                 {markerFood.map((name) => (
-                    <Tab>{name}</Tab>
+                    <Tab sx={TabFoodListItemStyle}>{name}</Tab>
                 ))}
+                <TabIndicator sx={TabFoodIndicatorStyle} />
             </TabList>
             <TabPanels>
                 {markerFood.map((_) => (
-                    <TabPanel>
-                        <Juiciest data={juiciest} />
+                    <TabPanel p={0}>
+                        <FoodDisplay data={juiciest} />
                     </TabPanel>
                 ))}
             </TabPanels>
