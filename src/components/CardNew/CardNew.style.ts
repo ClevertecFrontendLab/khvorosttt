@@ -20,7 +20,7 @@ export const CardHeadStyle: SystemStyleObject = {
     fontSize: { base: '16px', lg: '18px', '2xl': '20px' },
     noOfLines: 2,
     fontWeight: 500,
-    fontStyle: 'text',
+    fontFamily: 'text',
 };
 
 export const CardTagStyle: SystemStyleObject = {

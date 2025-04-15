@@ -63,7 +63,7 @@ export function Search(data: SearchProps) {
                 </Flex>
                 <Hide below='lg'>
                     <Stack align='center' direction='row'>
-                        <Text fontWeight={500} fontSize='16px' fontStyle='text'>
+                        <Text fontWeight={500} fontSize='16px' fontFamily='text'>
                             Исключить мои аллергены
                         </Text>
                         <Switch size='sm' />

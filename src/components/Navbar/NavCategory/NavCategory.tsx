@@ -4,11 +4,12 @@ import {
     AccordionIcon,
     AccordionItem,
     AccordionPanel,
+    Box,
     Flex,
     Image,
     Text,
 } from '@chakra-ui/react';
-import { Link } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import { categoryPath, markerFood, markFood } from '~/data/consts';
 
@@ -18,12 +19,20 @@ export type navCategoryType = {
 };
 
 export function NavCategory(data: navCategoryType) {
+    const navigate = useNavigate();
     return (
         <Accordion allowMultiple>
-            <AccordionItem>
+            <AccordionItem
+                sx={{
+                    _expanded: {
+                        bg: '#c4ff61',
+                    },
+                }}
+            >
                 <AccordionButton
-                    as={Link}
-                    to={categoryPath(data.category)}
+                    _expanded={{ bg: '#c4ff61' }}
+                    borderRadius={0}
+                    onClick={() => navigate(`/${categoryPath(data.category)}`)}
                     data-test-id={data.category == 7 ? 'vegan-cuisine' : ''}
                 >
                     <Flex alignItems='center' gap='5px'>
@@ -34,9 +43,14 @@ export function NavCategory(data: navCategoryType) {
                     </Flex>
                     <AccordionIcon ml='auto' />
                 </AccordionButton>
-                <AccordionPanel pb={4}>
+                <AccordionPanel pb={4} pl={0}>
                     {data.subCategory.map((subCategory) => (
-                        <Text>{subCategory}</Text>
+                        <Flex padding='6px 8px 6px 52px' gap='10px'>
+                            <Box w='1px' h='24px' borderRight='1px solid #c4ff61' />
+                            <Text fontSize='16px' fontWeight={500} fontFamily='text'>
+                                {subCategory}
+                            </Text>
+                        </Flex>
                     ))}
                 </AccordionPanel>
             </AccordionItem>

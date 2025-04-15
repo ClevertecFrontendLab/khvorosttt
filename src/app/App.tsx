@@ -1,6 +1,6 @@
 import './App.css';
 
-import { Grid, GridItem, Hide, Show } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem, Hide, Show } from '@chakra-ui/react';
 import { Outlet } from 'react-router';
 
 import { Header } from '~/components/Header/header';
@@ -14,32 +14,33 @@ function App() {
 
     return (
         <>
-            <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <Header />
-                <Grid
-                    templateColumns={{
-                        base: 'repeat(4, 1fr)',
-                        lg: 'repeat(12, 1fr)',
-                        xl: 'repeat(17, 1fr)',
-                    }}
-                    gap='24px'
-                    style={{
-                        flex: 1,
-                        overflowY: 'auto',
-                    }}
-                >
+                <Flex w='100%' align='center' justify='space-between'>
                     <Hide below='xl'>
-                        <GridItem colSpan={3}>
-                            <Navbar />
+                        <Navbar />
+                    </Hide>
+                </Flex>
+                <Box p={{ base: '0px', xl: '0px 280px' }}>
+                    <Grid
+                        templateColumns={{
+                            base: 'repeat(4, 1fr)',
+                            lg: 'repeat(12, 1fr)',
+                        }}
+                        gap='24px'
+                        style={{
+                            flex: 1,
+                            overflowY: 'auto',
+                        }}
+                    >
+                        <GridItem colSpan={12} style={{ overflowY: 'auto', height: '100%' }}>
+                            <Outlet />
                         </GridItem>
-                    </Hide>
-                    <GridItem colSpan={12} style={{ overflowY: 'auto', height: '100%' }}>
-                        <Outlet />
-                    </GridItem>
-                    <Hide below='xl'>
-                        <NotificationAside />
-                    </Hide>
-                </Grid>
+                        <Hide below='xl'>
+                            <NotificationAside />
+                        </Hide>
+                    </Grid>
+                </Box>
                 <Show below='lg'>
                     <Footer />
                 </Show>

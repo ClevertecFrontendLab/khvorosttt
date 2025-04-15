@@ -12,14 +12,14 @@ export type CategoryInfoType = {
 
 export function CategoryInfo({ name, description, data }: CategoryInfoType) {
     return (
-        <Box display='flex' flexDirection='column' gap='24px'>
+        <Box display='flex' flexDirection='column' gap='24px' padding={{ base: '16px' }}>
             <Flex flexDirection={{ base: 'column', lg: 'row' }} alignItems='center' gap='10px'>
                 <Text
                     as='h3'
                     fontWeight={500}
                     fontSize={{ '3xl': '48px', '2xl': '36px', base: '24px' }}
                     mr='auto'
-                    fontStyle='text'
+                    fontFamily='text'
                 >
                     {name}
                 </Text>
@@ -29,7 +29,7 @@ export function CategoryInfo({ name, description, data }: CategoryInfoType) {
                     fontWeight={500}
                     color='rgba(0, 0, 0, 0.64)'
                     maxW={{ xl: '578px', '3xl': '668px' }}
-                    fontStyle='text'
+                    fontFamily='text'
                 >
                     {description}
                 </Text>

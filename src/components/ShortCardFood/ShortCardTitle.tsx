@@ -27,7 +27,7 @@ export function ShortCardTitle(data: CardNewInfo) {
                         ml='auto'
                         color=' #2db100'
                         borderColor=' #2db100'
-                        fontStyle='text'
+                        fontFamily='text'
                         variant='outline'
                         minW={{ base: '70px', lg: '85px' }}
                         h='32px'

@@ -16,7 +16,7 @@ export function Home() {
             <Flex flexDirection='column' gap='40px'>
                 <Search name='Приятного аппетита' description={null} />
                 <NewRecipes data={newData} />
-                <Juiciest data={juiciest} />
+                <Juiciest title='Самое сочное' data={juiciest} />
                 <CookingBlog data={authors} />
                 <CategoryInfo
                     name={shortInfo.name}

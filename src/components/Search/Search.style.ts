@@ -1,7 +1,7 @@
 import type { SystemStyleObject } from '@chakra-ui/styled-system';
 
 export const SearchHeaderStyle: SystemStyleObject = {
-    fontStyle: 'text',
+    fontFamily: 'text',
     fontWeight: 700,
     fontSize: { base: '24px', lg: '48px' },
 };
@@ -11,6 +11,7 @@ export const SearchDescriptionStyle: SystemStyleObject = {
     fontWeight: 500,
     fontSize: { base: '14px', lg: '16px' },
     color: 'rgba(0, 0, 0, 0.48)',
+    fontFamily: 'text',
 };
 
 export const MenuButtonStyle: SystemStyleObject = {
@@ -19,7 +20,7 @@ export const MenuButtonStyle: SystemStyleObject = {
     fontWeight: 400,
     fontSize: '16px',
     color: 'rgba(0, 0, 0, 0.64)',
-    fontStyle: 'text',
+    fontFamily: 'text',
 };
 
 export const IconButtonStyle: SystemStyleObject = {
