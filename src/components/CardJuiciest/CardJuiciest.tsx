@@ -12,7 +12,7 @@ import {
     Text,
 } from '@chakra-ui/react';
 
-import { markerFood, markFood } from '~/data/consts';
+import { markFood } from '~/data/consts';
 
 import { CardNewType } from '../CardNew/CardNew';
 import { BookmarkIcon } from '../Icons/Bookmark';
@@ -36,7 +36,7 @@ export function CardJuiciest({ data }: CardNewType) {
                     <Box sx={MarkerStyle}>
                         <Image src={markFood(data.marker)} w='16px' h='16px' />
                         <Text fontSize='14px' fontWeight={400} fontFamily='text'>
-                            {markerFood[data.marker]}
+                            {data.marker}
                         </Text>
                     </Box>
                     <Interactions {...data} />

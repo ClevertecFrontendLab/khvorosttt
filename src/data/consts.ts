@@ -26,60 +26,64 @@ export const markerFood: string[] = [
     'Напитки',
 ];
 
-export function markFood(marker: number) {
+export function markFood(marker: string) {
     switch (marker) {
-        case 0:
+        case 'Первые блюда':
             return food1;
-        case 1:
+        case 'Веганские блюда':
             return veg;
-        case 2:
+        case 'Десерты, выпечка':
             return desert;
-        case 3:
+        case 'Салаты':
             return salat;
-        case 4:
+        case 'Вторые блюда':
             return food2;
-        case 5:
+        case 'Национальные блюда':
             return international;
-        case 6:
+        case 'Детские блюда':
             return childTasty;
-        case 7:
+        case 'Блюда на гриле':
             return gril;
-        case 8:
+        case 'Закуски':
             return zakusk;
-        case 9:
+        case 'Лечебное питание':
             return healthy;
-        case 10:
+        case 'Соусы':
             return sous;
-        case 11:
+        case 'Домашние заготовки':
+            return sous;
+        case 'Напитки':
             return drinks;
     }
 }
 
-export function categoryPath(marker: number) {
+export function categoryPath(marker: string) {
     switch (marker) {
-        case 0:
+        case 'Первые блюда':
             return 'vegan-cuisine';
-        case 1:
+        case 'Веганские блюда':
             return 'vegan-cuisine';
-        case 2:
+        case 'Десерты, выпечка':
             return 'vegan-cuisine';
-        case 3:
+        case 'Салаты':
             return 'vegan-cuisine';
-        case 4:
+        case 'Вторые блюда':
             return 'vegan-cuisine';
-        case 5:
+        case 'Национальные блюда':
             return 'vegan-cuisine';
-        case 6:
+        case 'Детские блюда':
             return 'vegan-cuisine';
-        case 7:
+        case 'Блюда на гриле':
             return 'vegan-cuisine';
-        case 8:
+        case 'Закуски':
             return 'vegan-cuisine';
-        case 9:
+        case 'Лечебное питание':
             return 'vegan-cuisine';
-        case 10:
+        case 'Соусы':
             return 'vegan-cuisine';
-        case 11:
+        case 'Домашние заготовки':
+            return 'vegan-cuisine';
+        case 'Напитки':
             return 'vegan-cuisine';
     }
 }

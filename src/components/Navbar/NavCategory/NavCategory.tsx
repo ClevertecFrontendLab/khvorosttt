@@ -11,10 +11,10 @@ import {
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 
-import { categoryPath, markerFood, markFood } from '~/data/consts';
+import { categoryPath, markFood } from '~/data/consts';
 
 export type navCategoryType = {
-    category: number;
+    category: string;
     subCategory: string[];
 };
 
@@ -33,12 +33,12 @@ export function NavCategory(data: navCategoryType) {
                     _expanded={{ bg: '#c4ff61' }}
                     borderRadius={0}
                     onClick={() => navigate(`/${categoryPath(data.category)}`)}
-                    data-test-id={data.category == 7 ? 'vegan-cuisine' : ''}
+                    data-test-id={data.category == 'Веганские блюда' ? 'vegan-cuisine' : ''}
                 >
                     <Flex alignItems='center' gap='5px'>
                         <Image src={markFood(data.category)} w='16px' h='16px' />
                         <Text fontSize='14px' textAlign='left' fontWeight={400}>
-                            {markerFood[data.category]}
+                            {data.category}
                         </Text>
                     </Flex>
                     <AccordionIcon ml='auto' />

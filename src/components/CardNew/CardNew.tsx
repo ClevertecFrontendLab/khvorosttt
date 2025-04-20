@@ -1,6 +1,6 @@
 import { Box, Card, CardBody, Flex, Heading, Hide, Image, Text } from '@chakra-ui/react';
 
-import { markerFood, markFood } from '~/data/consts';
+import { markFood } from '~/data/consts';
 
 import { Interactions } from '../Interactions/Interactions';
 import {
@@ -16,7 +16,7 @@ export type CardNewInfo = {
     title: string;
     src: string;
     description: string;
-    marker: number;
+    marker: string;
     bookmark: number;
     like: number;
 };
@@ -39,7 +39,7 @@ export function CardNew({ data }: CardNewType) {
                 <Box sx={CardTagMobileElementsStyle}>
                     <Image src={markFood(data.marker)} w='16px' h='16px' />
                     <Text fontSize='14px' fontWeight={400}>
-                        {markerFood[data.marker]}
+                        {data.marker}
                     </Text>
                 </Box>
             </Flex>
@@ -59,7 +59,7 @@ export function CardNew({ data }: CardNewType) {
                             <Box sx={CardTagStyle}>
                                 <Image src={markFood(data.marker)} w='16px' h='16px' />
                                 <Text fontSize='14px' fontWeight={400}>
-                                    {markerFood[data.marker]}
+                                    {data.marker}
                                 </Text>
                             </Box>
                         </Hide>
