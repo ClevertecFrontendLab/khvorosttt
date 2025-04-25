@@ -1,38 +1,89 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import 'swiper/swiper-bundle.css';
 
-import { CardNew, CardNewType } from '~/components/CardNew/CardNew';
+import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
+import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
+import { Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import { CardNew } from '~/components/CardNew/CardNew';
+import { recipeI } from '~/data/interface/data';
+
+import {
+    newRecipeheaderStyle,
+    siderButtonNextStyle,
+    siderButtonPrevStyle,
+} from './newRecipe.style';
 
 interface NewRecipes {
-    data: CardNewType[];
+    data: recipeI[];
 }
 
 export function NewRecipes({ data }: NewRecipes) {
     return (
         <Flex flexDirection='column' gap='24px'>
-            <Text
-                as='h3'
-                fontWeight={500}
-                fontSize={{ '3xl': '48px', '2xl': '36px', base: '24px' }}
-            >
+            <Text as='h3' sx={newRecipeheaderStyle}>
                 Новые рецепты
             </Text>
-            <Box
-                display='flex'
-                gap='24px'
-                overflow='hidden'
-                w='100%'
-                justifyContent='space-between'
-                p='5px 0px'
-            >
-                {data.map((item, index) => (
-                    <Box
-                        key={index}
-                        flex='0 0 auto'
-                        w={{ base: '46%', ms: '30%', lg: '22%', xl: '30%', '3xl': '23%' }}
-                    >
-                        <CardNew data={item.data} />
-                    </Box>
-                ))}
+            <Box overflow='hidden' w='100%' p='10px 0px' m='10px' position='relative'>
+                <Swiper
+                    loop={true}
+                    modules={[Navigation]}
+                    navigation={{
+                        nextEl: '.next-slide-btn',
+                        prevEl: '.prev-slide-btn',
+                    }}
+                    data-test-id='carousel'
+                    breakpoints={{
+                        0: {
+                            slidesPerView: 2,
+                            spaceBetween: 12,
+                        },
+                        768: {
+                            slidesPerView: 4.4,
+                            spaceBetween: 12,
+                        },
+                        1232: {
+                            slidesPerView: 3.2,
+                            spaceBetween: 24,
+                        },
+                        1700: {
+                            slidesPerView: 4,
+                        },
+                    }}
+                >
+                    {data.map((recipe, index) => (
+                        <SwiperSlide
+                            key={index}
+                            style={{ height: 'auto' }}
+                            data-test-id={`carousel-card-${index}`}
+                        >
+                            <Box
+                                key={index}
+                                flex='0 0 auto'
+                                w='100%'
+                                height='100%'
+                                mr={{ base: '0px', xl: '12px' }}
+                            >
+                                <CardNew {...recipe} />
+                            </Box>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+
+                <IconButton
+                    data-test-id='carousel-back'
+                    className='prev-slide-btn'
+                    icon={<ArrowBackIcon color='white' />}
+                    aria-label='Предыдущий рецепт'
+                    sx={siderButtonPrevStyle}
+                />
+                <IconButton
+                    data-test-id='carousel-forward'
+                    className='next-slide-btn'
+                    icon={<ArrowForwardIcon color='white' />}
+                    aria-label='Следующий рецепт'
+                    sx={siderButtonNextStyle}
+                />
             </Box>
         </Flex>
     );
