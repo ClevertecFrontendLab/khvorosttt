@@ -11,79 +11,80 @@ import veg from '../assets/images/list.png';
 import food1 from '../assets/images/pot.png';
 import zakusk from '../assets/images/zakusk.png';
 
-export const markerFood: string[] = [
-    'Первые блюда',
-    'Веганские блюда',
-    'Десерты, выпечка',
-    'Салаты',
-    'Вторые блюда',
-    'Национальные',
-    'Детские блюда',
-    'Блюда на гриле',
-    'Закуски',
-    'Лечебное питание',
-    'Соусы',
-    'Напитки',
-];
+export const markerFood: Record<string, string> = {
+    vegan: 'Веганская кухня',
+    'second-dish': 'Вторые блюда',
+    'first-dish': 'Первые блюда',
+    desert: 'Десерты, выпечка',
+    salads: 'Салаты',
+    national: 'Национальные блюда',
+    children: 'Детские блюда',
+    grill: 'Блюда на гриле',
+    snacks: 'Закуски',
+    therapeutic: 'Лечебное питание',
+    sous: 'Соусы',
+    drinks: 'Напитки',
+    'home-food': 'Домашние заготовки',
+};
 
 export function markFood(marker: string) {
     switch (marker) {
-        case 'Первые блюда':
+        case 'first-dish':
             return food1;
-        case 'Веганские блюда':
+        case 'vegan':
             return veg;
-        case 'Десерты, выпечка':
+        case 'desert':
             return desert;
-        case 'Салаты':
+        case 'salads':
             return salat;
-        case 'Вторые блюда':
+        case 'second-dish':
             return food2;
-        case 'Национальные блюда':
+        case 'national':
             return international;
-        case 'Детские блюда':
+        case 'children':
             return childTasty;
-        case 'Блюда на гриле':
+        case 'grill':
             return gril;
-        case 'Закуски':
+        case 'snacks':
             return zakusk;
-        case 'Лечебное питание':
+        case 'therapeutic':
             return healthy;
-        case 'Соусы':
+        case 'sous':
             return sous;
-        case 'Домашние заготовки':
+        case 'home-food':
             return sous;
-        case 'Напитки':
+        case 'drinks':
             return drinks;
     }
 }
 
 export function categoryPath(marker: string) {
     switch (marker) {
-        case 'Первые блюда':
+        case 'first-dish':
             return 'vegan-cuisine';
-        case 'Веганские блюда':
+        case 'vegan':
             return 'vegan-cuisine';
-        case 'Десерты, выпечка':
+        case 'desert':
             return 'vegan-cuisine';
-        case 'Салаты':
+        case 'salads':
             return 'vegan-cuisine';
-        case 'Вторые блюда':
+        case 'second-dish':
             return 'vegan-cuisine';
-        case 'Национальные блюда':
+        case 'national':
             return 'vegan-cuisine';
-        case 'Детские блюда':
+        case 'children':
             return 'vegan-cuisine';
-        case 'Блюда на гриле':
+        case 'grill':
             return 'vegan-cuisine';
-        case 'Закуски':
+        case 'snacks':
             return 'vegan-cuisine';
-        case 'Лечебное питание':
+        case 'therapeutic':
             return 'vegan-cuisine';
-        case 'Соусы':
+        case 'sous':
             return 'vegan-cuisine';
-        case 'Домашние заготовки':
+        case 'home-food':
             return 'vegan-cuisine';
-        case 'Напитки':
+        case 'drinks':
             return 'vegan-cuisine';
     }
 }

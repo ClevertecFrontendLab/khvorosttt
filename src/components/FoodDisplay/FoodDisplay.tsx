@@ -1,20 +1,21 @@
 import { Button, Flex, Grid, GridItem } from '@chakra-ui/react';
 
+import { recipeI } from '~/data/interface/data';
+
 import { CardJuiciest } from '../CardJuiciest/CardJuiciest';
-import { CardNewType } from '../CardNew/CardNew';
 import { ButtonMoreStyle, FoodDisplayStyle } from './FoodDisplay.style';
 
 interface FoodDisplayProps {
-    data: CardNewType[];
+    data: recipeI[];
 }
 
 export function FoodDisplay({ data }: FoodDisplayProps) {
     return (
         <Flex flexDirection='column' gap='16px' padding={{ base: '16px', ms: '20px', xl: '24px' }}>
             <Grid sx={FoodDisplayStyle}>
-                {data.map((item, index) => (
+                {data.map((recipe, index) => (
                     <GridItem key={index} colSpan={{ base: 4, sm: 6, xl: 12, '3xl': 6 }}>
-                        <CardJuiciest data={item.data} />
+                        <CardJuiciest {...recipe} />
                     </GridItem>
                 ))}
             </Grid>

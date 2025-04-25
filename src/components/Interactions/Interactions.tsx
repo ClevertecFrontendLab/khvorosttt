@@ -1,25 +1,26 @@
 import { Box, Text } from '@chakra-ui/react';
 
-import { CardNewInfo } from '../CardNew/CardNew';
+import { recipeI } from '~/data/interface/data';
+
 import { BookmarkIcon } from '../Icons/Bookmark';
 import { LikeSmileIcon } from '../Icons/LikeSmile';
 
-export function Interactions(data: CardNewInfo) {
+export function Interactions({ bookmarks, likes }: recipeI) {
     return (
-        <Box display='flex' gap='5px'>
-            {data.bookmark ? (
+        <Box display='flex' gap='5px' alignItems='flex-end'>
+            {bookmarks ? (
                 <Box display='flex' alignItems='center' gap='5px'>
                     <BookmarkIcon />
                     <Text color='#2db100' fontWeight={600} fontSize='12px'>
-                        {data.bookmark}
+                        {bookmarks}
                     </Text>
                 </Box>
             ) : null}
-            {data.like ? (
+            {likes ? (
                 <Box display='flex' alignItems='center' gap='5px'>
                     <LikeSmileIcon />
                     <Text color='#2db100' fontWeight={600} fontSize='12px'>
-                        {data.like}
+                        {likes}
                     </Text>
                 </Box>
             ) : null}

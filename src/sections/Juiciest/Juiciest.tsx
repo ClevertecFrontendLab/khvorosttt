@@ -3,13 +3,13 @@ import { Button, Flex, Grid, GridItem, Hide, Text } from '@chakra-ui/react';
 import { Link } from 'react-router';
 
 import { CardJuiciest } from '~/components/CardJuiciest/CardJuiciest';
-import { CardNewType } from '~/components/CardNew/CardNew';
+import { recipeI } from '~/data/interface/data';
 
 import { JuiciestButtonStyle, JuiciestSectionHeadingStyle } from './Juiciest.style';
 
 interface JuiciestProps {
     title: string | null;
-    data: CardNewType[];
+    data: recipeI[];
 }
 
 export function Juiciest({ title, data }: JuiciestProps) {
@@ -39,9 +39,9 @@ export function Juiciest({ title, data }: JuiciestProps) {
                 w='100%'
                 gap='24px'
             >
-                {data.map((item, index) => (
+                {data.map((recipe, index) => (
                     <GridItem key={index} colSpan={{ base: 4, sm: 6, xl: 12, '3xl': 6 }}>
-                        <CardJuiciest data={item.data} />
+                        <CardJuiciest {...recipe} />
                     </GridItem>
                 ))}
             </Grid>

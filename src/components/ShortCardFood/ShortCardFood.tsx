@@ -1,11 +1,12 @@
-import { Box, Card, CardBody, CardHeader, Flex, Heading, Image, Text } from '@chakra-ui/react';
+import { Card, CardBody, CardHeader, Flex, Heading, Text } from '@chakra-ui/react';
 
-import { markerFood, markFood } from '~/data/consts';
+import { recipeI } from '~/data/interface/data';
 
-import { CardNewInfo } from '../CardNew/CardNew';
+import { MarkerStyle } from '../CardNew/CardNew.style';
+import { CategoryMarker } from '../CategoryMarker/CategoryMarker';
 import { Interactions } from '../Interactions/Interactions';
 
-export function ShortCardFood(data: CardNewInfo) {
+export function ShortCardFood(data: recipeI) {
     return (
         <Card
             overflow='hidden'
@@ -34,20 +35,9 @@ export function ShortCardFood(data: CardNewInfo) {
                     {data.description}
                 </Text>
                 <Flex justifyContent='space-between' w='100%' mt='auto'>
-                    <Box
-                        display='flex'
-                        padding='2px 4px'
-                        bg='#d7ff94'
-                        alignItems='center'
-                        justifyContent='space-between'
-                        borderRadius='4px'
-                        gap='5px'
-                    >
-                        <Image src={markFood(data.marker)} w='16px' h='16px' />
-                        <Text fontSize='14px' fontWeight={400}>
-                            {markerFood[data.marker]}
-                        </Text>
-                    </Box>
+                    <Flex flexDirection='column' gap='5px'>
+                        <CategoryMarker style={MarkerStyle} data={data} />
+                    </Flex>
                     <Interactions {...data} />
                 </Flex>
             </CardBody>

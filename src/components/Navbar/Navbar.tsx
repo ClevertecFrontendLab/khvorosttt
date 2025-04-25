@@ -10,8 +10,9 @@ export function Navbar() {
     return (
         <Flex as='nav' sx={NavbarStyle} data-test-id='nav'>
             <Accordion maxH={{ base: '416px', md: '644px' }} overflowY='auto'>
-                {menuCategory.map((categoryInfo) => (
+                {menuCategory.map((categoryInfo, index) => (
                     <NavCategory
+                        key={index}
                         category={categoryInfo.category}
                         subCategory={categoryInfo.subCategory}
                     />

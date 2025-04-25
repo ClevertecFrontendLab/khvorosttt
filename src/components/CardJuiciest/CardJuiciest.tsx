@@ -1,5 +1,4 @@
 import {
-    Box,
     Button,
     Card,
     CardBody,
@@ -12,9 +11,9 @@ import {
     Text,
 } from '@chakra-ui/react';
 
-import { markFood } from '~/data/consts';
+import { recipeI } from '~/data/interface/data';
 
-import { CardNewType } from '../CardNew/CardNew';
+import { CategoryMarker } from '../CategoryMarker/CategoryMarker';
 import { BookmarkIcon } from '../Icons/Bookmark';
 import { Interactions } from '../Interactions/Interactions';
 import {
@@ -27,18 +26,15 @@ import {
     SaveButtonStyle,
 } from './CardJuisiest.style';
 
-export function CardJuiciest({ data }: CardNewType) {
+export function CardJuiciest(data: recipeI) {
     return (
         <Card sx={CardStyle} direction={{ sm: 'row' }}>
-            <Image sx={CardImageStyle} src={data.src} alt={data.title} />
+            <Image sx={CardImageStyle} src={data.image} alt={data.title} />
             <Stack p={{ base: '8px 8px 4px 8px', lg: '20px 24px' }} w='100%' overflow='hidden'>
-                <Flex sx={MarkerInteractionsStyle}>
-                    <Box sx={MarkerStyle}>
-                        <Image src={markFood(data.marker)} w='16px' h='16px' />
-                        <Text fontSize='14px' fontWeight={400} fontFamily='text'>
-                            {data.marker}
-                        </Text>
-                    </Box>
+                <Flex sx={MarkerInteractionsStyle} alignItems='flex-start'>
+                    <Flex wrap='wrap' gap='3px' direction={{ base: 'column', xl: 'row' }}>
+                        <CategoryMarker style={MarkerStyle} data={data} />
+                    </Flex>
                     <Interactions {...data} />
                 </Flex>
                 <CardBody sx={CardBodyStyle}>

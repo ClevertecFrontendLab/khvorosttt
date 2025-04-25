@@ -1,13 +1,13 @@
 import { Box, Flex, Grid, GridItem, Text } from '@chakra-ui/react';
 
-import { CardNewType } from '~/components/CardNew/CardNew';
 import { ShortCardFood } from '~/components/ShortCardFood/ShortCardFood';
 import { ShortCardTitle } from '~/components/ShortCardFood/ShortCardTitle';
+import { recipeI } from '~/data/interface/data';
 
 export type CategoryInfoType = {
     name: string;
     description: string;
-    data: CardNewType[];
+    data: recipeI[];
 };
 
 export function CategoryInfo({ name, description, data }: CategoryInfoType) {
@@ -40,16 +40,16 @@ export function CategoryInfo({ name, description, data }: CategoryInfoType) {
                 gap='24px'
             >
                 <GridItem colSpan={{ base: 4, md: 4, '3xl': 3 }}>
-                    <ShortCardFood {...data[0].data} />
+                    <ShortCardFood {...data[0]} />
                 </GridItem>
                 <GridItem colSpan={{ base: 4, md: 4, '3xl': 3 }}>
-                    <ShortCardFood {...data[1].data} />
+                    <ShortCardFood {...data[1]} />
                 </GridItem>
                 <GridItem colSpan={{ base: 4, md: 4, '3xl': 6 }}>
                     <Flex flexDirection='column' gap='12px'>
-                        <ShortCardTitle {...data[2].data} />
-                        <ShortCardTitle {...data[3].data} />
-                        <ShortCardTitle {...data[4].data} />
+                        <ShortCardTitle {...data[2]} />
+                        <ShortCardTitle {...data[3]} />
+                        <ShortCardTitle {...data[4]} />
                     </Flex>
                 </GridItem>
             </Grid>

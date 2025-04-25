@@ -1,7 +1,8 @@
 import { Box, Card, CardBody, Flex, Heading, Hide, Image, Text } from '@chakra-ui/react';
 
-import { markFood } from '~/data/consts';
+import { recipeI } from '~/data/interface/data';
 
+import { CategoryMarker } from '../CategoryMarker/CategoryMarker';
 import { Interactions } from '../Interactions/Interactions';
 import {
     CardBodyStyle,
@@ -9,7 +10,7 @@ import {
     CardStyle,
     CardTagMobileElementsStyle,
     CardTagMobileStyle,
-    CardTagStyle,
+    MarkerStyle,
 } from './CardNew.style';
 
 export type CardNewInfo = {
@@ -25,7 +26,7 @@ export type CardNewType = {
     data: CardNewInfo;
 };
 
-export function CardNew({ data }: CardNewType) {
+export function CardNew(data: recipeI) {
     return (
         <Card
             sx={CardStyle}
@@ -37,14 +38,11 @@ export function CardNew({ data }: CardNewType) {
         >
             <Flex sx={CardTagMobileStyle}>
                 <Box sx={CardTagMobileElementsStyle}>
-                    <Image src={markFood(data.marker)} w='16px' h='16px' />
-                    <Text fontSize='14px' fontWeight={400}>
-                        {data.marker}
-                    </Text>
+                    <CategoryMarker style={MarkerStyle} data={data} />
                 </Box>
             </Flex>
             <CardBody w='100%' padding={0} display='flex' flexDirection='column'>
-                <Image src={data.src} alt={data.title} w='100%' />
+                <Image src={data.image} alt={data.title} w='100%' minH='158px' objectFit='cover' />
                 <Flex sx={CardBodyStyle} direction='column'>
                     <Box mb='10px'>
                         <Heading sx={CardHeadStyle}>{data.title}</Heading>
@@ -56,11 +54,8 @@ export function CardNew({ data }: CardNewType) {
                     </Box>
                     <Flex justifyContent='space-between' mt='auto'>
                         <Hide below='2xl'>
-                            <Box sx={CardTagStyle}>
-                                <Image src={markFood(data.marker)} w='16px' h='16px' />
-                                <Text fontSize='14px' fontWeight={400}>
-                                    {data.marker}
-                                </Text>
+                            <Box sx={CardTagMobileElementsStyle}>
+                                <CategoryMarker style={MarkerStyle} data={data} />
                             </Box>
                         </Hide>
                         <Interactions {...data} />

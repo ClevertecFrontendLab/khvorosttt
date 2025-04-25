@@ -1,10 +1,9 @@
 import { Box, Button, Card, CardHeader, Image, Text } from '@chakra-ui/react';
 
 import { markFood } from '~/data/consts';
+import { recipeI } from '~/data/interface/data';
 
-import { CardNewInfo } from '../CardNew/CardNew';
-
-export function ShortCardTitle(data: CardNewInfo) {
+export function ShortCardTitle(data: recipeI) {
     return (
         <Card
             transition='all 0.2s ease'
@@ -14,7 +13,7 @@ export function ShortCardTitle(data: CardNewInfo) {
         >
             <CardHeader p='16px 12px' w='100%' gap='10px'>
                 <Box display='flex' alignContent='center'>
-                    <Image src={markFood(data.marker)} w='24px' h='24px' />
+                    <Image src={markFood(data.category[0])} w='24px' h='24px' />
                     <Text
                         fontWeight={500}
                         fontSize={{ '3xl': '20px', '2xl': '18px', base: '16px' }}

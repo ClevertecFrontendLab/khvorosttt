@@ -49,9 +49,9 @@ function App() {
                     </Hide>
                 </Grid>
             </Box>
-            <Show below='lg'>
+            <Box display={{ base: 'block', lg: 'none' }}>
                 <Footer />
-            </Show>
+            </Box>
         </Box>
     );
 }

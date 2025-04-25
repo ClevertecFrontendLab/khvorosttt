@@ -2,7 +2,8 @@ import { Box, Flex } from '@chakra-ui/react';
 
 import { FoodDisplay } from '~/components/FoodDisplay/FoodDisplay';
 import { Search } from '~/components/Search/Search';
-import juiciest from '~/data/juiciest.json';
+import { compareLikes } from '~/data/comparators';
+import menuRecipes from '~/data/menuData.json';
 import shortInfo from '~/data/vegan.json';
 import { CategoryInfo } from '~/sections/CategoryInfoSection/CategoryInfo';
 
@@ -11,11 +12,11 @@ export function JuiciestPage() {
         <Box w='100%' p='90px 0px'>
             <Flex flexDirection='column' gap='40px'>
                 <Search name='Самое сочное' description={null} />
-                <FoodDisplay data={juiciest} />
+                <FoodDisplay data={menuRecipes.sort(compareLikes).slice(0, 10).reverse()} />
                 <CategoryInfo
                     name={shortInfo.name}
                     description={shortInfo.description}
-                    data={shortInfo.data}
+                    data={menuRecipes}
                 />
             </Flex>
         </Box>

@@ -4,6 +4,7 @@ export const CardStyle: SystemStyleObject = {
     overflow: 'hidden',
     variant: 'outline',
     maxH: '244px',
+    h: '100%',
     w: '100%',
     position: 'relative',
     transition: 'all 0.2s ease',
@@ -22,9 +23,9 @@ export const MarkerInteractionsStyle: SystemStyleObject = {
     justifyContent: { lg: 'space-between' },
     gap: { base: '30px' },
     w: '100%',
-    position: { base: 'absolute', lg: 'relative' },
-    top: { base: '8px', lg: 'initial' },
-    left: { base: '8px', lg: 'initial' },
+    position: { base: 'absolute', xl: 'relative' },
+    top: { base: '8px', xl: 'initial' },
+    left: { base: '8px', xl: 'initial' },
     paddingRight: '20px',
     zIndex: 1,
 };
@@ -37,6 +38,7 @@ export const MarkerStyle: SystemStyleObject = {
     justifyContent: 'space-between',
     borderRadius: '4px',
     gap: '5px',
+    maxW: { base: '150px', xl: 'initial' },
 };
 
 export const CardBodyStyle: SystemStyleObject = {

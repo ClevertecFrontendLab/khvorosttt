@@ -1,10 +1,10 @@
 [
     {
-        "category": "Салаты",
+        "category": "salads",
         "subCategory": ["Мясные салаты", "Рыбные салаты", "Овощные салаты", "Теплые салаты"]
     },
     {
-        "category": "Закуски",
+        "category": "snacks",
         "subCategory": [
             "Мясные закуски",
             "Рыбные закуски",
@@ -15,7 +15,7 @@
         ]
     },
     {
-        "category": "Первые блюда",
+        "category": "first-dish",
         "subCategory": [
             "Мясные супы",
             "Овощные супы",
@@ -25,7 +25,7 @@
         ]
     },
     {
-        "category": "Вторые блюда",
+        "category": "second-dish",
         "subCategory": [
             "Мясные",
             "Рыбные",
@@ -42,7 +42,7 @@
         ]
     },
     {
-        "category": "Десерты, выпечка",
+        "category": "desert",
         "subCategory": [
             "Блины и оладьи",
             "Пироги и пончики",
@@ -60,11 +60,11 @@
         ]
     },
     {
-        "category": "Блюда на гриле",
+        "category": "grill",
         "subCategory": ["Говядина", "Свинина", "Птица", "Рыба", "Грибы", "Овощи"]
     },
     {
-        "category": "Веганские блюда",
+        "category": "vegan",
         "subCategory": [
             "Закуски",
             "Первые блюда",
@@ -77,7 +77,7 @@
         ]
     },
     {
-        "category": "Детские блюда",
+        "category": "children",
         "subCategory": [
             "Первые блюда",
             "Вторые блюда",
@@ -90,7 +90,7 @@
         ]
     },
     {
-        "category": "Лечебное питание",
+        "category": "therapeutic",
         "subCategory": [
             "Детская диета",
             "Диета №1",
@@ -112,7 +112,7 @@
         ]
     },
     {
-        "category": "Национальные блюда",
+        "category": "national",
         "subCategory": [
             "Американская кухня",
             "Армянская кухня",
@@ -132,11 +132,11 @@
         ]
     },
     {
-        "category": "Соусы",
+        "category": "sous",
         "subCategory": ["Соусы мясные", "Соусы сырные", "Маринады"]
     },
     {
-        "category": "Домашние заготовки",
+        "category": "home-food",
         "subCategory": [
             "Мясные заготовки",
             "Рыбные заготовки",
@@ -149,7 +149,7 @@
         ]
     },
     {
-        "category": "Напитки",
+        "category": "drinks",
         "subCategory": [
             "Соки и фреши",
             "Смузи",
