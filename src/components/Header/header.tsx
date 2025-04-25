@@ -1,20 +1,26 @@
-//import React from "react";
 import { HamburgerIcon } from '@chakra-ui/icons';
-import { Avatar, Box, Flex, Hide, IconButton, Show, Text } from '@chakra-ui/react';
+import { Avatar, Box, CloseButton, Flex, Hide, IconButton, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 
 import avatar from '../../assets/images/kat_konst.jpg';
 import { BreadCrumb } from '../BreadCrumb/BreadCrumb';
+import { BurgerMenuProps } from '../BurgerMenu/BurgerMenu.tsx';
 import { NameIcon } from '../Icons/Name.tsx';
 import { PotIcon } from '../Icons/Pot.tsx';
 import { ProfileNotification } from '../ProfileNotification/ProfileNotification';
 import { avatarStyle, headerStyle } from './header.style.ts';
 
-export function Header() {
+export function Header(props: BurgerMenuProps) {
     const [name] = useState('Екатерина Константинопольская');
     const [email] = useState('@bake_and_pie');
     return (
-        <Box as='header' sx={headerStyle} data-test-id='header' w='100%'>
+        <Box
+            as='header'
+            sx={headerStyle}
+            data-test-id='header'
+            w='100%'
+            bg={{ base: props.isOpen ? 'white' : 'headerBg', xl: 'headerBg' }}
+        >
             <Flex align='center' justify='space-between' pb={0} pt={0}>
                 <Flex align='center' gap={2} w='256px'>
                     <PotIcon w='33px' h='32px' />
@@ -40,21 +46,20 @@ export function Header() {
                         </Box>
                     </Flex>
                 </Hide>
-                <Show below='xl'>
-                    <Flex align='center' gap={3}>
-                        <ProfileNotification bookmarks={0} people={0} like={0} />
-                        <IconButton
-                            bg='transparent'
-                            icon={<HamburgerIcon />}
-                            aria-label='Menu'
-                            onClick={() => {}}
-                            _hover={{ bg: 'transparent', color: 'inherit' }}
-                            _active={{ bg: 'transparent', color: 'inherit' }}
-                            _focus={{ boxShadow: 'none' }}
-                            border='none'
-                        />
-                    </Flex>
-                </Show>
+                <Flex align='center' gap={3} display={{ base: 'flex', xl: 'none' }}>
+                    <ProfileNotification bookmarks={0} people={0} like={0} />
+                    <IconButton
+                        bg='transparent'
+                        icon={!props.isOpen ? <HamburgerIcon /> : <CloseButton />}
+                        aria-label='Menu'
+                        onClick={props.toggleMenu}
+                        _hover={{ bg: 'transparent', color: 'inherit' }}
+                        _active={{ bg: 'transparent', color: 'inherit' }}
+                        _focus={{ boxShadow: 'none' }}
+                        border='none'
+                        data-test-id={!props.isOpen ? 'hamburger-icon' : 'close-icon'}
+                    />
+                </Flex>
             </Flex>
         </Box>
     );

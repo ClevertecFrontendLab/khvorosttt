@@ -27,7 +27,7 @@ export function Juiciest({ title, data }: JuiciestProps) {
                         data-test-id='juiciest-link'
                         rightIcon={<ArrowForwardIcon />}
                         as={Link}
-                        to='/juiciest-link'
+                        to='/the-juiciest'
                         sx={JuiciestButtonStyle}
                     >
                         Вся подборка
@@ -51,7 +51,7 @@ export function Juiciest({ title, data }: JuiciestProps) {
                 rightIcon={<ArrowForwardIcon />}
                 alignSelf='center'
                 as={Link}
-                to='/juiciest-link'
+                to='/the-juiciest'
                 sx={JuiciestButtonStyle}
             >
                 Вся подборка

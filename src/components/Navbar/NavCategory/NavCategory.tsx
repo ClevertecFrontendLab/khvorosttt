@@ -28,6 +28,8 @@ export function NavCategory(data: navCategoryType) {
                         bg: '#c4ff61',
                     },
                 }}
+                border='none'
+                borderRadius={0}
             >
                 <AccordionButton
                     _expanded={{ bg: '#c4ff61' }}
@@ -37,7 +39,7 @@ export function NavCategory(data: navCategoryType) {
                 >
                     <Flex alignItems='center' gap='5px'>
                         <Image src={markFood(data.category)} w='16px' h='16px' />
-                        <Text fontSize='14px' textAlign='left' fontWeight={400}>
+                        <Text fontSize='16px' textAlign='left' fontWeight={500}>
                             {data.category}
                         </Text>
                     </Flex>

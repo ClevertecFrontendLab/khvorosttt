@@ -13,9 +13,9 @@ export const TabFoodListStyle: SystemStyleObject = {
     borderBottom: '1px solid rgba(0, 0, 0, 0.08)',
     position: 'relative',
     margin: '0px 0px 12px 0px',
-    scrollbarWidth: 'none', // Firefox
+    scrollbarWidth: 'none',
     '&::-webkit-scrollbar': {
-        display: 'none', // Chrome, Safari
+        display: 'none',
     },
 };
 

@@ -6,14 +6,19 @@ import { BreadCrumbStyle } from './BreadCrumb.style';
 
 const linkName: Record<string, string> = {
     'vegan-cuisine': 'Веганская кухня',
-    'juiciest-link': 'Самое сочное',
+    'the-juiciest': 'Самое сочное',
 };
 
 export function BreadCrumb() {
     const location = useLocation();
     const paths = location.pathname.split('/').filter((x) => x);
     return (
-        <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
+        <Breadcrumb
+            spacing='8px'
+            separator={<ChevronRightIcon color='gray.500' />}
+            p='0px 20px'
+            data-test-id='breadcrumbs'
+        >
             <BreadcrumbItem>
                 <BreadcrumbLink
                     as={Link}

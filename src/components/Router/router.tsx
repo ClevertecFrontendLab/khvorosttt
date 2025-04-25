@@ -19,7 +19,7 @@ const router = createBrowserRouter([
                 element: <Vegan />,
             },
             {
-                path: 'juiciest-link',
+                path: 'the-juiciest',
                 element: <JuiciestPage />,
             },
         ],
