@@ -24,22 +24,22 @@
             {
                 "stepNumber": 1,
                 "description": "Нарезать картошку и перец.",
-                "image": ""
+                "image": "/images/image (15).png"
             },
             {
                 "stepNumber": 2,
                 "description": "Обжарить лук до золотистого цвета.",
-                "image": ""
+                "image": "/images/image (16).png"
             },
             {
                 "stepNumber": 3,
                 "description": "Добавить картошку, перец и фасоль, залить соусом.",
-                "image": ""
+                "image": "/images/image (17).png"
             },
             {
                 "stepNumber": 4,
                 "description": "Тушить на медленном огне 30 минут.",
-                "image": ""
+                "image": "/images/image (18).png"
             }
         ],
         "meat": "",
@@ -68,7 +68,7 @@
             {
                 "stepNumber": 1,
                 "description": "Отварить картошку и сделать пюре.",
-                "image": ""
+                "image": "/images/image (15).png"
             },
             {
                 "stepNumber": 2,
@@ -78,7 +78,7 @@
             {
                 "stepNumber": 3,
                 "description": "Сформировать рулетики и обжарить.",
-                "image": ""
+                "image": "/images/image (17).png"
             }
         ],
         "side": "potatoes"
@@ -111,7 +111,7 @@
             {
                 "stepNumber": 2,
                 "description": "Сложить слои лазаньи.",
-                "image": ""
+                "image": "/images/image (15).png"
             },
             {
                 "stepNumber": 3,
@@ -143,17 +143,17 @@
             {
                 "stepNumber": 1,
                 "description": "Смешать булгур и чечевицу.",
-                "image": ""
+                "image": "/images/image (15).png"
             },
             {
                 "stepNumber": 2,
                 "description": "Сформировать тефтели и запечь.",
-                "image": ""
+                "image": "/images/image (16).png"
             },
             {
                 "stepNumber": 3,
                 "description": "Подавать с соусом.",
-                "image": ""
+                "image": "/images/image (17).png"
             }
         ]
     },
@@ -180,7 +180,7 @@
             {
                 "stepNumber": 1,
                 "description": "Очистить и нарезать картошку.",
-                "image": ""
+                "image": "/images/image (15).png"
             },
             {
                 "stepNumber": 2,
@@ -190,7 +190,7 @@
             {
                 "stepNumber": 3,
                 "description": "Подавать горячей.",
-                "image": ""
+                "image": "/images/image (20).png"
             }
         ],
         "side": "potatoes"
@@ -217,17 +217,17 @@
             {
                 "stepNumber": 1,
                 "description": "Нарезать капусту и отварить.",
-                "image": ""
+                "image": "/images/image (15).png"
             },
             {
                 "stepNumber": 2,
                 "description": "Смешать с мукой и сформировать котлеты.",
-                "image": ""
+                "image": "/images/image (17).png"
             },
             {
                 "stepNumber": 3,
                 "description": "Обжарить до золотистой корочки.",
-                "image": ""
+                "image": "/images/image (19).png"
             }
         ]
     },
@@ -255,17 +255,17 @@
             {
                 "stepNumber": 1,
                 "description": "Нарезать все овощи.",
-                "image": ""
+                "image": "/images/image (16).png"
             },
             {
                 "stepNumber": 2,
                 "description": "Обжарить на сковороде.",
-                "image": ""
+                "image": "/images/image (18).png"
             },
             {
                 "stepNumber": 3,
                 "description": "Добавить специи и тушить до готовности.",
-                "image": ""
+                "image": "/images/image (20).png"
             }
         ]
     },
@@ -275,7 +275,7 @@
         "description": "Ароматная лапша с курицей и шафраном, идеальное сочетание для сытного обеда.",
         "category": ["second-dish"],
         "subcategory": ["poultry-dish"],
-        "image": "/images/image (12).png",
+        "image": "/images/image (21).png",
         "bookmarks": 258,
         "likes": 1342,
         "date": "2024-03-08T00:00:00Z",
@@ -291,18 +291,43 @@
         "steps": [
             {
                 "stepNumber": 1,
-                "description": "Отварить лапшу.",
-                "image": ""
+                "description": "Зелёный лук нарезать на 1 см. кружочки. Лук и чеснок на мелкие кубики.  ",
+                "image": "/images/image (15).png"
             },
             {
                 "stepNumber": 2,
-                "description": "Обжарить курицу с луком и шафраном.",
-                "image": ""
+                "description": "Мясо помыть, высушить, нарезать на полосочки и обжарить на масле.  Посолить, поперчить и вынуть со сковороды.",
+                "image": "/images/image (16).png"
             },
             {
                 "stepNumber": 3,
-                "description": "Смешать лапшу с курицей и подавать.",
+                "description": "Спагетти отварить в течение  10 минут в подсоленной воде.",
+                "image": "/images/image (17).png"
+            },
+            {
+                "stepNumber": 4,
+                "description": "В сковороде, на оставшемся жире поджарить лук до золотистого цвета, добавить чеснок и прожарить ещё около 1 минуты.",
+                "image": "/images/image (18).png"
+            },
+            {
+                "stepNumber": 5,
+                "description": "Всыпать шафран, корицу и муки, перемешать и коротко прожарить.",
                 "image": ""
+            },
+            {
+                "stepNumber": 6,
+                "description": "В сковороде, на оставшемся жире поджарить лук до золотистого цвета, добавить чеснок и прожарить ещё около 1 минуты.",
+                "image": "/images/image (19).png"
+            },
+            {
+                "stepNumber": 7,
+                "description": "Сливки смешать с бульоном, влить к луку и протушить на среднем огне около 10 минут.",
+                "image": ""
+            },
+            {
+                "stepNumber": 8,
+                "description": "Соус посолить, поперчить, вложить мясо, зелёный лук. Прогреть и осторожно смешать со спагетти. При подаче посыпать нарезанной петрушкой.",
+                "image": "/images/image (20).png"
             }
         ]
     },
@@ -329,12 +354,12 @@
             {
                 "stepNumber": 1,
                 "description": "Обжарить овощи на гриле.",
-                "image": ""
+                "image": "/images/image (15).png"
             },
             {
                 "stepNumber": 2,
                 "description": "Смешать с заправкой и подавать.",
-                "image": ""
+                "image": "/images/image (19).png"
             }
         ]
     },
@@ -361,12 +386,12 @@
             {
                 "stepNumber": 1,
                 "description": "Обжарить овощи на гриле.",
-                "image": ""
+                "image": "/images/image (15).png"
             },
             {
                 "stepNumber": 2,
                 "description": "Смешать с заправкой и подавать.",
-                "image": ""
+                "image": "/images/image (16).png"
             }
         ]
     },
@@ -393,12 +418,12 @@
             {
                 "stepNumber": 1,
                 "description": "Обжарить овощи на гриле.",
-                "image": ""
+                "image": "/images/image (15).png"
             },
             {
                 "stepNumber": 2,
                 "description": "Смешать с заправкой и подавать.",
-                "image": ""
+                "image": "/images/image (16).png"
             }
         ]
     }
