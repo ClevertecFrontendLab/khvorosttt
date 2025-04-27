@@ -18,6 +18,8 @@ import { useState } from 'react';
 
 import { ingredientsI } from '~/data/interface/data';
 
+import { TableHeadStyle } from './Ingredients.style';
+
 export function Ingredients({ data }: { data: ingredientsI[] }) {
     const [count, setCount] = useState(1);
     return (
@@ -27,25 +29,11 @@ export function Ingredients({ data }: { data: ingredientsI[] }) {
                     <Thead>
                         <Tr>
                             <Th>
-                                <Text
-                                    color='#2db100'
-                                    fontStyle='text'
-                                    fontWeight={700}
-                                    fontSize='12px'
-                                >
-                                    ИНГРЕДИЕНТЫ
-                                </Text>
+                                <Text sx={TableHeadStyle}>ИНГРЕДИЕНТЫ</Text>
                             </Th>
                             <Th pr='0px'>
                                 <Flex alignItems='center' gap='16px' justifyContent='flex-end'>
-                                    <Text
-                                        color='#2db100'
-                                        fontStyle='text'
-                                        fontWeight={700}
-                                        fontSize='12px'
-                                    >
-                                        ПОРЦИЙ
-                                    </Text>
+                                    <Text sx={TableHeadStyle}>ПОРЦИЙ</Text>
                                     <NumberInput
                                         size='md'
                                         w='90px'
