@@ -42,7 +42,14 @@ export function CardNew(data: recipeI) {
                 </Box>
             </Flex>
             <CardBody w='100%' padding={0} display='flex' flexDirection='column'>
-                <Image src={data.image} alt={data.title} w='100%' minH='158px' objectFit='cover' />
+                <Image
+                    src={data.image}
+                    alt={data.title}
+                    w='100%'
+                    minH='158px'
+                    maxH='230px'
+                    objectFit='cover'
+                />
                 <Flex sx={CardBodyStyle} direction='column'>
                     <Box mb='10px'>
                         <Heading sx={CardHeadStyle}>{data.title}</Heading>
@@ -53,7 +60,7 @@ export function CardNew(data: recipeI) {
                         </Hide>
                     </Box>
                     <Flex justifyContent='space-between' mt='auto'>
-                        <Hide below='2xl'>
+                        <Hide below='xl'>
                             <Box sx={CardTagMobileElementsStyle}>
                                 <CategoryMarker style={MarkerStyle} data={data} />
                             </Box>

@@ -14,13 +14,7 @@ export function CategoryMarker({ style, data }: markerCategoryProps) {
             {data.category.map((category, index) => (
                 <Box sx={style} key={index} w='fit-content'>
                     <Image src={markFood(category)} w='16px' h='16px' />
-                    <Text
-                        fontSize='14px'
-                        fontWeight={400}
-                        fontFamily='text'
-                        noOfLines={1}
-                        isTruncated
-                    >
+                    <Text fontSize='14px' fontWeight={400} fontFamily='text' noOfLines={1}>
                         {markerFood[category]}
                     </Text>
                 </Box>

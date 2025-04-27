@@ -34,7 +34,7 @@ export const CardTagStyle: SystemStyleObject = {
 
 export const CardTagMobileStyle: SystemStyleObject = {
     justifyContent: { lg: 'space-between' },
-    display: { base: 'flex', '2xl': 'none' },
+    display: { base: 'flex', xl: 'none' },
     gap: { base: '30px' },
     w: '100%',
     position: { base: 'absolute', '2xl': 'relative' },

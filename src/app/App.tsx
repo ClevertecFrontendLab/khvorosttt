@@ -29,7 +29,7 @@ function App() {
             <Hide below='xl'>
                 <Navbar />
             </Hide>
-            <Box p={{ base: '0px', xl: '0px 280px' }}>
+            <Box p={{ base: '0px', xl: '0px 260px' }}>
                 <Grid
                     templateColumns={{
                         base: 'repeat(4, 1fr)',

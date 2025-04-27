@@ -26,6 +26,7 @@ export function NewRecipes({ data }: NewRecipes) {
             </Text>
             <Box overflow='hidden' w='100%' p='10px 0px' m='10px' position='relative'>
                 <Swiper
+                    style={{ width: '100%' }}
                     loop={true}
                     modules={[Navigation]}
                     navigation={{
