@@ -131,6 +131,30 @@ export const markerFood: Record<string, string> = {
     'alcoholic-drinks': 'Алкогольные напитки',
 };
 
+export const allergens = [
+    'milk',
+    'egg',
+    'fish',
+    'molluscs',
+    'nuts',
+    'tomato',
+    'citrus',
+    'berries',
+    'chocolate',
+];
+
+export const russianAllergens: Record<string, string> = {
+    milk: 'Молочные продукты',
+    egg: 'Яйцо',
+    fish: 'Рыба',
+    molluscs: 'Моллюски',
+    nuts: 'Орехи',
+    tomato: 'Томат (помидор)',
+    citrus: 'Цитрусовые',
+    berries: 'Клубника (ягоды)',
+    chocolate: 'Шоколад',
+};
+
 export function markFood(marker: string) {
     switch (marker) {
         case 'first-dish':

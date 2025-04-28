@@ -14,15 +14,6 @@ export const SearchDescriptionStyle: SystemStyleObject = {
     fontFamily: 'text',
 };
 
-export const MenuButtonStyle: SystemStyleObject = {
-    variant: 'outline',
-    bg: 'transparent',
-    fontWeight: 400,
-    fontSize: '16px',
-    color: 'rgba(0, 0, 0, 0.64)',
-    fontFamily: 'text',
-};
-
 export const IconButtonStyle: SystemStyleObject = {
     bg: 'transparent',
     borderRadius: '6',

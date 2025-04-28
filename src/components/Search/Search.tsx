@@ -1,29 +1,18 @@
-import { ChevronDownIcon, SearchIcon } from '@chakra-ui/icons';
+import { SearchIcon } from '@chakra-ui/icons';
 import {
-    Button,
     Flex,
     Hide,
     IconButton,
     Input,
     InputGroup,
     InputRightElement,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuList,
-    Stack,
-    Switch,
     Text,
     VStack,
 } from '@chakra-ui/react';
 
+import { Allergens } from '../Allergens/Allergens';
 import { SearchIcon2 } from '../Icons/SearchIcon';
-import {
-    IconButtonStyle,
-    MenuButtonStyle,
-    SearchDescriptionStyle,
-    SearchHeaderStyle,
-} from './Search.style';
+import { IconButtonStyle, SearchDescriptionStyle, SearchHeaderStyle } from './Search.style';
 
 interface SearchProps {
     name: string;
@@ -62,26 +51,7 @@ export function Search(data: SearchProps) {
                     </InputGroup>
                 </Flex>
                 <Hide below='lg'>
-                    <Stack align='center' direction='row'>
-                        <Text fontWeight={500} fontSize='16px' fontFamily='text'>
-                            Исключить мои аллергены
-                        </Text>
-                        <Switch size='sm' />
-                        <Menu>
-                            <MenuButton
-                                as={Button}
-                                rightIcon={<ChevronDownIcon />}
-                                sx={MenuButtonStyle}
-                            >
-                                Выберите из списка...
-                            </MenuButton>
-                            <MenuList>
-                                <MenuItem>Example 1</MenuItem>
-                                <MenuItem>Example 2</MenuItem>
-                                <MenuItem>Example 3</MenuItem>
-                            </MenuList>
-                        </Menu>
-                    </Stack>
+                    <Allergens type='' />
                 </Hide>
             </VStack>
         </VStack>
