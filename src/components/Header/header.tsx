@@ -1,5 +1,5 @@
-import { HamburgerIcon } from '@chakra-ui/icons';
-import { Avatar, Box, CloseButton, Flex, Hide, IconButton, Text } from '@chakra-ui/react';
+import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
+import { Avatar, Box, Flex, Hide, IconButton, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 
 import avatar from '../../assets/images/kat_konst.jpg';
@@ -30,7 +30,7 @@ export function Header(props: BurgerMenuProps) {
                 </Flex>
                 <Hide below='xl'>
                     <Box flex='1' textAlign='center'>
-                        <BreadCrumb />
+                        <BreadCrumb isOpen={props.isOpen} toggleMenu={props.toggleMenu} />
                     </Box>
                 </Hide>
                 <Hide below='xl'>
@@ -50,7 +50,7 @@ export function Header(props: BurgerMenuProps) {
                     <ProfileNotification bookmarks={0} people={0} like={0} />
                     <IconButton
                         bg='transparent'
-                        icon={!props.isOpen ? <HamburgerIcon /> : <CloseButton />}
+                        icon={!props.isOpen ? <HamburgerIcon /> : <CloseIcon />}
                         aria-label='Menu'
                         onClick={props.toggleMenu}
                         _hover={{ bg: 'transparent', color: 'inherit' }}

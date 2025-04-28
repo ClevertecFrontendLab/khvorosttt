@@ -40,16 +40,13 @@ export function Ingredients({ data }: { data: ingredientsI[] }) {
                                         value={count}
                                         min={1}
                                         max={50}
+                                        step={0.25}
                                         onChange={(value) => setCount(Number(value))}
                                     >
                                         <NumberInputField />
                                         <NumberInputStepper w='24px' h='40px'>
-                                            <NumberIncrementStepper
-                                                onClick={() => setCount((value) => ++value)}
-                                            />
-                                            <NumberDecrementStepper
-                                                onClick={() => setCount((value) => --value)}
-                                            />
+                                            <NumberIncrementStepper data-test-id='increment-stepper' />
+                                            <NumberDecrementStepper data-test-id='decrement-stepper' />
                                         </NumberInputStepper>
                                     </NumberInput>
                                 </Flex>
@@ -67,9 +64,14 @@ export function Ingredients({ data }: { data: ingredientsI[] }) {
                                     color='rgba(0, 0, 0, 0.92)'
                                     fontWeight={400}
                                     fontSize='14px'
+                                    display='flex'
+                                    gap='3px'
+                                    justifyContent='flex-end'
                                 >
-                                    {ingredient.count ? count * ingredient.count : null}{' '}
-                                    {ingredient.measureUnit}
+                                    <Text data-test-id={`ingredient-quantity-${index}`}>
+                                        {ingredient.count ? count * ingredient.count : null}{' '}
+                                    </Text>
+                                    <Text>{ingredient.measureUnit}</Text>
                                 </Td>
                             </Tr>
                         ))}

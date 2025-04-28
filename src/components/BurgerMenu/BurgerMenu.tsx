@@ -14,7 +14,7 @@ export function BurgerMenu(props: BurgerMenuProps) {
         <Collapse in={props.isOpen} onClick={props.toggleMenu}>
             <Box sx={BurgerMenuBGStyle}>
                 <Flex sx={BurgerMenuStyle} onClick={(e) => e.stopPropagation()}>
-                    <BreadCrumb />
+                    <BreadCrumb isOpen={props.isOpen} toggleMenu={props.toggleMenu} />
                     <Navbar />
                 </Flex>
             </Box>

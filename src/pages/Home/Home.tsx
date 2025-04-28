@@ -14,11 +14,11 @@ export function Home() {
     return (
         <Box w='100%' p='90px 0px'>
             <Flex flexDirection='column' gap='40px' p='0px 20px'>
-                <Search name='Приятного аппетита' description={null} />
-                <NewRecipes data={menuRecipes.sort(compareDate).slice(0, 10)} />
+                <Search name='Приятного аппетита!' description={null} />
+                <NewRecipes data={menuRecipes.sort(compareDate).reverse().slice(0, 10)} />
                 <Juiciest
                     title='Самое сочное'
-                    data={menuRecipes.sort(compareLikes).slice(0, 8).reverse()}
+                    data={menuRecipes.sort(compareLikes).reverse().slice(0, 8)}
                 />
                 <CookingBlog data={authors} />
                 <CategoryInfo

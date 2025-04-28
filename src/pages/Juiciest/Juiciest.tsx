@@ -12,7 +12,7 @@ export function JuiciestPage() {
         <Box w='100%' p='90px 0px'>
             <Flex flexDirection='column' gap='40px'>
                 <Search name='Самое сочное' description={null} />
-                <FoodDisplay data={menuRecipes.sort(compareLikes).slice(0, 10).reverse()} />
+                <FoodDisplay data={menuRecipes.sort(compareLikes).reverse().slice(0, 10)} />
                 <CategoryInfo
                     name={shortInfo.name}
                     description={shortInfo.description}

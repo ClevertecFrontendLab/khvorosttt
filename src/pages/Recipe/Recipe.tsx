@@ -31,7 +31,7 @@ export function Recipe() {
                     <AuthorRecipe name='Сергей Разумов' image='' email='@serge25' followers={554} />
                 </Flex>
                 <Box w='100%'>
-                    <NewRecipes data={[...menuRecipes].sort(compareDate).slice(0, 10)} />
+                    <NewRecipes data={[...menuRecipes].sort(compareDate).reverse().slice(0, 10)} />
                 </Box>
             </Flex>
         </Box>

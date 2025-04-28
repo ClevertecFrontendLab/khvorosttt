@@ -1,165 +1,165 @@
 [
     {
         "category": "salads",
-        "subCategory": ["Мясные салаты", "Рыбные салаты", "Овощные салаты", "Теплые салаты"]
+        "subCategory": ["meat-salads", "fish-salads", "vegetable-salads", "warm-salads"]
     },
     {
         "category": "snacks",
         "subCategory": [
-            "Мясные закуски",
-            "Рыбные закуски",
-            "Овощные закуски",
-            "Теплые закуски",
-            "Бутерброды",
-            "Фастфуд"
+            "meat-snacks",
+            "fish-snacks",
+            "vegetable-snacks",
+            "warm-snacks",
+            "sandwiches",
+            "fast-food"
         ]
     },
     {
         "category": "first-dish",
-        "subCategory": [
-            "Мясные супы",
-            "Овощные супы",
-            "Бульоны",
-            "Холодные супы",
-            "Диетические супы"
-        ]
+        "subCategory": ["meat-soups", "vegetable-soups", "broths", "cold-soups", "diet-soups"]
     },
     {
         "category": "second-dish",
         "subCategory": [
-            "Мясные",
-            "Рыбные",
-            "Овощные",
-            "Из птицы",
-            "Из грибов",
-            "Из субпродуктов",
-            "На пару",
-            "Пельмени, вареники",
-            "Мучные гарниры",
-            "Овощные гарниры",
-            "Пицца",
-            "Суши"
+            "meat",
+            "vegetables",
+            "poultry-dish",
+            "mushrooms-dish",
+            "by-products-dish",
+            "steamed",
+            "dumplings",
+            "flour-side-dishes",
+            "vegetable-side-dishes",
+            "pizza",
+            "sushi"
         ]
     },
     {
         "category": "desert",
         "subCategory": [
-            "Блины и оладьи",
-            "Пироги и пончики",
-            "Торты",
-            "Рулеты",
-            "Кексы и маффины",
-            "Сырники и ватрушки",
-            "Из слоеного теста",
-            "Из заварного теста",
-            "Из дрожжевого теста",
-            "Булочки и сдоба",
-            "Хлеб",
-            "Тесто на пиццу",
-            "Кремы"
+            "pancakes-and-fritters",
+            "pies-and-donuts",
+            "cakes",
+            "rolls",
+            "cupcakes-and-muffins",
+            "cheesecakes-and-vatrushki",
+            "puff-pastry",
+            "choux-pastry",
+            "yeast-dough",
+            "buns-and-sweet-pastry",
+            "bread",
+            "pizza-dough",
+            "creams"
         ]
     },
     {
         "category": "grill",
-        "subCategory": ["Говядина", "Свинина", "Птица", "Рыба", "Грибы", "Овощи"]
+        "subCategory": [
+            "beef",
+            "pork",
+            "poultry",
+            "grilled-fish",
+            "grilled-mushrooms",
+            "grilled-vegetables"
+        ]
     },
     {
         "category": "vegan",
         "subCategory": [
-            "Закуски",
-            "Первые блюда",
-            "Вторые блюда",
-            "Гарниры",
-            "Десерты",
-            "Выпечка",
-            "Сыроедческие блюда",
-            "Напитки"
+            "snacks",
+            "first-dish",
+            "second-dish",
+            "side-dishes",
+            "desert",
+            "puff-pastry",
+            "raw-food-dishes",
+            "drinks"
         ]
     },
     {
         "category": "children",
         "subCategory": [
-            "Первые блюда",
-            "Вторые блюда",
-            "Гарниры",
-            "Выпечка",
-            "Без глютена",
-            "Без сахара",
-            "Без аллергенов",
-            "Блюда для прикорма"
+            "first-dish",
+            "second-dish",
+            "side-dishes",
+            "puff-pastry",
+            "gluten-free",
+            "sugar-free",
+            "allergen-free",
+            "baby-food"
         ]
     },
     {
         "category": "therapeutic",
         "subCategory": [
-            "Детская диета",
-            "Диета №1",
-            "Диета №2",
-            "Диета №3",
-            "Диета №4",
-            "Диета №5",
-            "Диета №6",
-            "Диета №7",
-            "Диета №8",
-            "Диета №9",
-            "Диета №10",
-            "Диета №11",
-            "Диета №12",
-            "Диета №13",
-            "Диета №14",
-            "Без глютена",
-            "Без аллергенов"
+            "child-diet",
+            "diet-1",
+            "diet-2",
+            "diet-3",
+            "diet-4",
+            "diet-5",
+            "diet-6",
+            "diet-7",
+            "diet-8",
+            "diet-9",
+            "diet-10",
+            "diet-11",
+            "diet-12",
+            "diet-13",
+            "diet-14",
+            "gluten-free",
+            "allergen-free"
         ]
     },
     {
         "category": "national",
         "subCategory": [
-            "Американская кухня",
-            "Армянская кухня",
-            "Греческая кухня",
-            "Грузинская кухня",
-            "Итальянская кухня",
-            "Испанская кухня",
-            "Китайская кухня",
-            "Мексиканская кухня",
-            "Паназиатская кухня",
-            "Русская кухня",
-            "Турецкая кухня",
-            "Французская кухня",
-            "Шведская кухня",
-            "Японская кухня",
-            "Другая кухня"
+            "american",
+            "armenian",
+            "greek",
+            "georgian",
+            "italian",
+            "spanish",
+            "chinese",
+            "mexican",
+            "pan-asian",
+            "russian",
+            "turkish",
+            "french",
+            "swedish",
+            "japanese",
+            "other-national"
         ]
     },
     {
         "category": "sous",
-        "subCategory": ["Соусы мясные", "Соусы сырные", "Маринады"]
+        "subCategory": ["meat-sauces", "cheese-sauces", "marinades"]
     },
     {
         "category": "home-food",
         "subCategory": [
-            "Мясные заготовки",
-            "Рыбные заготовки",
-            "Из огурцов",
-            "Из томатов",
-            "Из грибов",
-            "Овощные заготовки",
-            "Салаты, икра",
-            "Из фруктов и ягод"
+            "meat-preserves",
+            "fish-preserves",
+            "pickled-cucumbers",
+            "pickled-tomatoes",
+            "mushroom-preserves",
+            "vegetable-preserves",
+            "salads-and-caviar",
+            "fruit-preserves"
         ]
     },
     {
         "category": "drinks",
         "subCategory": [
-            "Соки и фреши",
-            "Смузи",
-            "Компоты",
-            "Кисели",
-            "Кофе",
-            "Лечебный чай",
-            "Квас",
-            "Коктейли",
-            "Алкогольные"
+            "juices-and-fresh",
+            "smoothies",
+            "compotes",
+            "kissels",
+            "coffee",
+            "medicinal-tea",
+            "kvass",
+            "cocktails",
+            "alcoholic-drinks"
         ]
     }
 ]

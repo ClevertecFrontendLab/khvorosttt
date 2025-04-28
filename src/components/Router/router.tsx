@@ -16,11 +16,15 @@ const router = createBrowserRouter([
                 element: <Home />,
             },
             {
-                path: 'vegan-cuisine',
+                path: ':categoryId',
                 element: <Vegan />,
             },
             {
-                path: 'vegan-cuisine/:id',
+                path: ':categoryId/:subcategoryId',
+                element: <Vegan />,
+            },
+            {
+                path: ':categoryId/:subcategoryId/:id',
                 element: <Recipe />,
             },
             {

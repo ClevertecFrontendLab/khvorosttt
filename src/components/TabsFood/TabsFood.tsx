@@ -1,8 +1,10 @@
 import { Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 
 import { markerFood } from '~/data/consts';
-import juiciest from '~/data/juiciest.json';
+import menuCategory from '~/data/menuCategory.json';
+import menuRecipes from '~/data/menuData.json';
 
+import { useCategoryContext } from '../CategoryContext/CategoryContext';
 import { FoodDisplay } from '../FoodDisplay/FoodDisplay';
 import {
     TabFoodIndicatorStyle,
@@ -12,20 +14,39 @@ import {
 } from './TabFood.style';
 
 export function TabsFood() {
+    const { category, subcategory, selectSubcategory, tabIndex } = useCategoryContext();
     return (
-        <Tabs sx={TabFoodStyle} w='100%'>
+        <Tabs sx={TabFoodStyle} w='100%' index={tabIndex}>
             <TabList sx={TabFoodListStyle}>
-                {markerFood.map((name) => (
-                    <Tab sx={TabFoodListItemStyle}>{name}</Tab>
-                ))}
+                {menuCategory
+                    .find((item) => item.category === category)
+                    ?.subCategory.map((name, index) => (
+                        <Tab
+                            key={index}
+                            sx={TabFoodListItemStyle}
+                            onClick={() => selectSubcategory(name)}
+                            data-test-id={subcategory === name ? `tab-${subcategory}-${index}` : ''}
+                            aria-selected={tabIndex === index ? 'true' : 'false'}
+                        >
+                            {markerFood[name]}
+                        </Tab>
+                    ))}
                 <TabIndicator sx={TabFoodIndicatorStyle} />
             </TabList>
             <TabPanels>
-                {markerFood.map((_) => (
-                    <TabPanel p={0}>
-                        <FoodDisplay data={juiciest} />
-                    </TabPanel>
-                ))}
+                {menuCategory
+                    .find((item) => item.category === category)
+                    ?.subCategory.map((_) => (
+                        <TabPanel p={0}>
+                            <FoodDisplay
+                                data={menuRecipes.filter(
+                                    (item) =>
+                                        item.category.includes(category!) &&
+                                        item.subcategory.includes(subcategory!),
+                                )}
+                            />
+                        </TabPanel>
+                    ))}
             </TabPanels>
         </Tabs>
     );

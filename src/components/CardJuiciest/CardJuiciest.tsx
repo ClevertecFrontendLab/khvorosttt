@@ -10,6 +10,7 @@ import {
     Stack,
     Text,
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router';
 
 import { recipeI } from '~/data/interface/data';
 
@@ -26,7 +27,8 @@ import {
     SaveButtonStyle,
 } from './CardJuisiest.style';
 
-export function CardJuiciest(data: recipeI) {
+export function CardJuiciest({ data, index }: { data: recipeI; index: number }) {
+    const navigate = useNavigate();
     return (
         <Card sx={CardStyle} direction={{ sm: 'row' }}>
             <Image sx={CardImageStyle} src={data.image} alt={data.title} />
@@ -54,7 +56,16 @@ export function CardJuiciest(data: recipeI) {
                             <Text>Сохранить</Text>
                         </Hide>
                     </Button>
-                    <Button bg='black' color='white' p='0px 8px' h={{ base: '24px', md: '32px' }}>
+                    <Button
+                        bg='black'
+                        color='white'
+                        p='0px 8px'
+                        h={{ base: '24px', md: '32px' }}
+                        data-test-id={`card-link-${index}`}
+                        onClick={() => {
+                            navigate(`/${data.category[0]}/${data.subcategory[0]}/${data.id}`);
+                        }}
+                    >
                         <Text>Готовить</Text>
                     </Button>
                 </CardFooter>

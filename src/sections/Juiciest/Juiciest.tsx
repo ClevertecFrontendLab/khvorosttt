@@ -41,7 +41,7 @@ export function Juiciest({ title, data }: JuiciestProps) {
             >
                 {data.map((recipe, index) => (
                     <GridItem key={index} colSpan={{ base: 4, sm: 6, xl: 12, '3xl': 6 }}>
-                        <CardJuiciest {...recipe} />
+                        <CardJuiciest index={index} data={recipe} />
                     </GridItem>
                 ))}
             </Grid>
