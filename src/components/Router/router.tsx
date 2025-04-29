@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router';
 import App from '~/app/App';
 import { Home } from '~/pages/Home/Home';
 import { JuiciestPage } from '~/pages/Juiciest/Juiciest';
+import { Recipe } from '~/pages/Recipe/Recipe';
 import { Vegan } from '~/pages/Vegan/Vegan';
 
 const router = createBrowserRouter([
@@ -15,11 +16,19 @@ const router = createBrowserRouter([
                 element: <Home />,
             },
             {
-                path: 'vegan-cuisine',
+                path: ':categoryId',
                 element: <Vegan />,
             },
             {
-                path: 'juiciest-link',
+                path: ':categoryId/:subcategoryId',
+                element: <Vegan />,
+            },
+            {
+                path: ':categoryId/:subcategoryId/:id',
+                element: <Recipe />,
+            },
+            {
+                path: 'the-juiciest',
                 element: <JuiciestPage />,
             },
         ],

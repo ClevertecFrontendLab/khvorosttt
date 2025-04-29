@@ -1,158 +1,165 @@
 [
     {
-        "category": 0,
+        "category": "salads",
+        "subCategory": ["meat-salads", "fish-salads", "vegetable-salads", "warm-salads"]
+    },
+    {
+        "category": "snacks",
         "subCategory": [
-            "Закуски",
-            "Первые блюда",
-            "Вторые блюда",
-            "Гарниры",
-            "Десерты",
-            "Выпечка",
-            "Сыроедческие блюда",
-            "Напитки"
+            "meat-snacks",
+            "fish-snacks",
+            "vegetable-snacks",
+            "warm-snacks",
+            "sandwiches",
+            "fast-food"
         ]
     },
     {
-        "category": 1,
+        "category": "first-dish",
+        "subCategory": ["meat-soups", "vegetable-soups", "broths", "cold-soups", "diet-soups"]
+    },
+    {
+        "category": "second-dish",
         "subCategory": [
-            "Закуски",
-            "Первые блюда",
-            "Вторые блюда",
-            "Гарниры",
-            "Десерты",
-            "Выпечка",
-            "Сыроедческие блюда",
-            "Напитки"
+            "meat",
+            "vegetables",
+            "poultry-dish",
+            "mushrooms-dish",
+            "by-products-dish",
+            "steamed",
+            "dumplings",
+            "flour-side-dishes",
+            "vegetable-side-dishes",
+            "pizza",
+            "sushi"
         ]
     },
     {
-        "category": 2,
+        "category": "desert",
         "subCategory": [
-            "Закуски",
-            "Первые блюда",
-            "Вторые блюда",
-            "Гарниры",
-            "Десерты",
-            "Выпечка",
-            "Сыроедческие блюда",
-            "Напитки"
+            "pancakes-and-fritters",
+            "pies-and-donuts",
+            "cakes",
+            "rolls",
+            "cupcakes-and-muffins",
+            "cheesecakes-and-vatrushki",
+            "puff-pastry",
+            "choux-pastry",
+            "yeast-dough",
+            "buns-and-sweet-pastry",
+            "bread",
+            "pizza-dough",
+            "creams"
         ]
     },
     {
-        "category": 3,
+        "category": "grill",
         "subCategory": [
-            "Закуски",
-            "Первые блюда",
-            "Вторые блюда",
-            "Гарниры",
-            "Десерты",
-            "Выпечка",
-            "Сыроедческие блюда",
-            "Напитки"
+            "beef",
+            "pork",
+            "poultry",
+            "grilled-fish",
+            "grilled-mushrooms",
+            "grilled-vegetables"
         ]
     },
     {
-        "category": 4,
+        "category": "vegan",
         "subCategory": [
-            "Закуски",
-            "Первые блюда",
-            "Вторые блюда",
-            "Гарниры",
-            "Десерты",
-            "Выпечка",
-            "Сыроедческие блюда",
-            "Напитки"
+            "snacks",
+            "first-dish",
+            "second-dish",
+            "side-dishes",
+            "desert",
+            "puff-pastry",
+            "raw-food-dishes",
+            "drinks"
         ]
     },
     {
-        "category": 5,
+        "category": "children",
         "subCategory": [
-            "Закуски",
-            "Первые блюда",
-            "Вторые блюда",
-            "Гарниры",
-            "Десерты",
-            "Выпечка",
-            "Сыроедческие блюда",
-            "Напитки"
+            "first-dish",
+            "second-dish",
+            "side-dishes",
+            "puff-pastry",
+            "gluten-free",
+            "sugar-free",
+            "allergen-free",
+            "baby-food"
         ]
     },
     {
-        "category": 6,
+        "category": "therapeutic",
         "subCategory": [
-            "Закуски",
-            "Первые блюда",
-            "Вторые блюда",
-            "Гарниры",
-            "Десерты",
-            "Выпечка",
-            "Сыроедческие блюда",
-            "Напитки"
+            "child-diet",
+            "diet-1",
+            "diet-2",
+            "diet-3",
+            "diet-4",
+            "diet-5",
+            "diet-6",
+            "diet-7",
+            "diet-8",
+            "diet-9",
+            "diet-10",
+            "diet-11",
+            "diet-12",
+            "diet-13",
+            "diet-14",
+            "gluten-free",
+            "allergen-free"
         ]
     },
     {
-        "category": 7,
+        "category": "national",
         "subCategory": [
-            "Закуски",
-            "Первые блюда",
-            "Вторые блюда",
-            "Гарниры",
-            "Десерты",
-            "Выпечка",
-            "Сыроедческие блюда",
-            "Напитки"
+            "american",
+            "armenian",
+            "greek",
+            "georgian",
+            "italian",
+            "spanish",
+            "chinese",
+            "mexican",
+            "pan-asian",
+            "russian",
+            "turkish",
+            "french",
+            "swedish",
+            "japanese",
+            "other-national"
         ]
     },
     {
-        "category": 8,
+        "category": "sous",
+        "subCategory": ["meat-sauces", "cheese-sauces", "marinades"]
+    },
+    {
+        "category": "home-food",
         "subCategory": [
-            "Закуски",
-            "Первые блюда",
-            "Вторые блюда",
-            "Гарниры",
-            "Десерты",
-            "Выпечка",
-            "Сыроедческие блюда",
-            "Напитки"
+            "meat-preserves",
+            "fish-preserves",
+            "pickled-cucumbers",
+            "pickled-tomatoes",
+            "mushroom-preserves",
+            "vegetable-preserves",
+            "salads-and-caviar",
+            "fruit-preserves"
         ]
     },
     {
-        "category": 9,
+        "category": "drinks",
         "subCategory": [
-            "Закуски",
-            "Первые блюда",
-            "Вторые блюда",
-            "Гарниры",
-            "Десерты",
-            "Выпечка",
-            "Сыроедческие блюда",
-            "Напитки"
-        ]
-    },
-    {
-        "category": 10,
-        "subCategory": [
-            "Закуски",
-            "Первые блюда",
-            "Вторые блюда",
-            "Гарниры",
-            "Десерты",
-            "Выпечка",
-            "Сыроедческие блюда",
-            "Напитки"
-        ]
-    },
-    {
-        "category": 11,
-        "subCategory": [
-            "Закуски",
-            "Первые блюда",
-            "Вторые блюда",
-            "Гарниры",
-            "Десерты",
-            "Выпечка",
-            "Сыроедческие блюда",
-            "Напитки"
+            "juices-and-fresh",
+            "smoothies",
+            "compotes",
+            "kissels",
+            "coffee",
+            "medicinal-tea",
+            "kvass",
+            "cocktails",
+            "alcoholic-drinks"
         ]
     }
 ]

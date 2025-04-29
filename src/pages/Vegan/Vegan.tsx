@@ -2,6 +2,7 @@ import { Box, Flex } from '@chakra-ui/react';
 
 import { Search } from '~/components/Search/Search';
 import { TabsFood } from '~/components/TabsFood/TabsFood';
+import menuRecipes from '~/data/menuData.json';
 import shortInfo from '~/data/vegan.json';
 import { CategoryInfo } from '~/sections/CategoryInfoSection/CategoryInfo';
 
@@ -17,7 +18,7 @@ export function Vegan() {
                 <CategoryInfo
                     name={shortInfo.name}
                     description={shortInfo.description}
-                    data={shortInfo.data}
+                    data={menuRecipes}
                 />
             </Flex>
         </Box>

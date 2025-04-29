@@ -11,13 +11,24 @@ export function CookingBlog({ data }: CookingBlog) {
     return (
         <Flex bg='#c4ff61' borderRadius='16px' p='24px' gap='24px' flexDirection='column'>
             <Flex justifyContent='space-between' alignItems='center'>
-                <Text as='h3' fontWeight={500} fontSize='48px'>
+                <Text
+                    as='h3'
+                    fontWeight={{ '3xl': 400, base: 500 }}
+                    fontSize={{ base: '24px', '3xl': '36px', '2xl': '30px' }}
+                >
                     Кулинарные блоги
                 </Text>
                 <Button
                     display={{ base: 'none', lg: 'block' }}
                     variant='link'
                     rightIcon={<ArrowForwardIcon />}
+                    fontSize={{ base: '16px', '3xl': '18px' }}
+                    fontWeight={600}
+                    color='black'
+                    p='0px 16px'
+                    w='149px'
+                    h='40px'
+                    borderRadius='6px'
                 >
                     Все авторы
                 </Button>
@@ -36,7 +47,13 @@ export function CookingBlog({ data }: CookingBlog) {
             <Button
                 display={{ base: 'block', lg: 'none' }}
                 variant='link'
+                fontSize={{ base: '16px', '3xl': '18px' }}
+                fontWeight={600}
+                color='black'
                 rightIcon={<ArrowForwardIcon />}
+                w='149px'
+                h='40px'
+                borderRadius='6px'
             >
                 Все авторы
             </Button>

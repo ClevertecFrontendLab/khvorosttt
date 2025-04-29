@@ -1,32 +1,34 @@
 import { ArrowForwardIcon } from '@chakra-ui/icons';
-import { Button, Flex, Grid, GridItem, Hide, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Grid, GridItem, Hide, Text } from '@chakra-ui/react';
 import { Link } from 'react-router';
 
 import { CardJuiciest } from '~/components/CardJuiciest/CardJuiciest';
-import { CardNewType } from '~/components/CardNew/CardNew';
+import { recipeI } from '~/data/interface/data';
+
+import { JuiciestButtonStyle, JuiciestSectionHeadingStyle } from './Juiciest.style';
 
 interface JuiciestProps {
-    data: CardNewType[];
+    title: string | null;
+    data: recipeI[];
 }
 
-export function Juiciest({ data }: JuiciestProps) {
+export function Juiciest({ title, data }: JuiciestProps) {
     return (
         <Flex flexDirection='column' gap='16px'>
             <Flex justifyContent='space-between' alignItems='center'>
-                <Text as='h3' fontWeight={500} fontSize='48px'>
-                    Самое сочное
-                </Text>
+                {title! ? (
+                    <Text as='h3' sx={JuiciestSectionHeadingStyle}>
+                        {title}
+                    </Text>
+                ) : null}
+
                 <Hide below='lg'>
                     <Button
                         data-test-id='juiciest-link'
                         rightIcon={<ArrowForwardIcon />}
-                        bg='#b1ff2e'
-                        variant='solid'
-                        p='0px 16px'
-                        fontSize='16px'
-                        fontWeight={600}
                         as={Link}
-                        to='/juiciest-link'
+                        to='/the-juiciest'
+                        sx={JuiciestButtonStyle}
                     >
                         Вся подборка
                     </Button>
@@ -37,9 +39,11 @@ export function Juiciest({ data }: JuiciestProps) {
                 w='100%'
                 gap='24px'
             >
-                {data.map((item, index) => (
+                {data.map((recipe, index) => (
                     <GridItem key={index} colSpan={{ base: 4, sm: 6, xl: 12, '3xl': 6 }}>
-                        <CardJuiciest data={item.data} />
+                        <Box data-test-id={`food-card-${index}`}>
+                            <CardJuiciest index={index} data={recipe} />
+                        </Box>
                     </GridItem>
                 ))}
             </Grid>
@@ -47,14 +51,10 @@ export function Juiciest({ data }: JuiciestProps) {
                 data-test-id='juiciest-link-mobile'
                 display={{ base: 'flex', lg: 'none' }}
                 rightIcon={<ArrowForwardIcon />}
-                bg='#b1ff2e'
-                variant='solid'
-                p='0px 16px'
-                fontSize='16px'
-                fontWeight={600}
                 alignSelf='center'
                 as={Link}
-                to='/juiciest-link'
+                to='/the-juiciest'
+                sx={JuiciestButtonStyle}
             >
                 Вся подборка
             </Button>

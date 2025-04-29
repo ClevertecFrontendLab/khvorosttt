@@ -1,20 +1,24 @@
-import { Accordion, Box } from '@chakra-ui/react';
+import { Accordion, Flex } from '@chakra-ui/react';
 
 import menuCategory from '~/data/menuCategory.json';
 
+import { NavbarStyle } from './Navbar.style';
+import { NavbarFooter } from './NavbarFooter/NavbarFooter';
 import { NavCategory } from './NavCategory/NavCategory';
 
 export function Navbar() {
     return (
-        <Box as='nav' p='90px 0px'>
-            <Accordion allowMultiple maxH='872px' overflowY='auto'>
-                {menuCategory.map((categoryInfo) => (
+        <Flex as='nav' sx={NavbarStyle} data-test-id='nav'>
+            <Accordion maxH={{ base: '416px', md: '644px' }} overflowY='auto'>
+                {menuCategory.map((categoryInfo, index) => (
                     <NavCategory
+                        key={index}
                         category={categoryInfo.category}
                         subCategory={categoryInfo.subCategory}
                     />
                 ))}
             </Accordion>
-        </Box>
+            <NavbarFooter />
+        </Flex>
     );
 }

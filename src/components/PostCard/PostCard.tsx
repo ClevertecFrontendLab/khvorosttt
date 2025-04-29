@@ -1,5 +1,7 @@
 import { Avatar, Card, CardBody, CardHeader, Heading, HStack, Stack, Text } from '@chakra-ui/react';
 
+import { CardDescriptionStyle, CardEmailStyle, CardHeadingStyle } from './PostCard.style';
+
 export type AuthorTypeInfo = {
     name: string;
     email: string;
@@ -18,22 +20,15 @@ export function PostCard({ data }: AuthorType) {
                 <HStack w='100%'>
                     <Avatar name={data.name} src={data.src} />
                     <Stack gap='2px' w='100%' overflow='hidden'>
-                        <Heading size='sm' overflow='hidden' isTruncated>
+                        <Heading size='sm' sx={CardHeadingStyle} isTruncated>
                             {data.name}
                         </Heading>
-                        <Text>{data.email}</Text>
+                        <Text sx={CardEmailStyle}>{data.email}</Text>
                     </Stack>
                 </HStack>
             </CardHeader>
             <CardBody padding='8px 16px 16px 16px' w='100%'>
-                <Text
-                    noOfLines={3}
-                    fontSize='14px'
-                    fontFamily='text'
-                    overflow='hidden'
-                    isTruncated
-                    whiteSpace='normal'
-                >
+                <Text sx={CardDescriptionStyle} isTruncated>
                     {data.text}
                 </Text>
             </CardBody>

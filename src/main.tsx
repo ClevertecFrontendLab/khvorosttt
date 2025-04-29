@@ -8,6 +8,7 @@ import { RouterProvider } from 'react-router';
 
 import { store } from '~/store/configure-store.ts';
 
+import { CategoryContextProvider } from './components/CategoryContext/CategoryContextProvider';
 import router from './components/Router/router';
 import theme from './styles/theme';
 
@@ -15,7 +16,9 @@ createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <Provider store={store}>
             <ChakraProvider theme={theme}>
-                <RouterProvider router={router} />
+                <CategoryContextProvider>
+                    <RouterProvider router={router} />
+                </CategoryContextProvider>
             </ChakraProvider>
         </Provider>
     </StrictMode>,
