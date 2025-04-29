@@ -57,6 +57,7 @@ export const filtersSlice = createSlice({
             state.drawer.selectedSideDishType = [];
         },
         cleanSectionAllergen: (state) => {
+            state.sectionAllergens.allergensActive = false;
             state.sectionAllergens.selectedAllergens = [];
         },
         removeSectionAllergen: (state, action) => {
@@ -108,6 +109,16 @@ export const filtersSlice = createSlice({
                 state.drawer.selectedCategories.push(action.payload);
             }
         },
+        addMeatType: (state, action) => {
+            if (!state.drawer.selectedMeatType.includes(action.payload)) {
+                state.drawer.selectedMeatType.push(action.payload);
+            }
+        },
+        addSideDish: (state, action) => {
+            if (!state.drawer.selectedSideDishType.includes(action.payload)) {
+                state.drawer.selectedSideDishType.push(action.payload);
+            }
+        },
     },
 });
 
@@ -128,6 +139,8 @@ export const {
     addDrawerAllergen,
     addSectionAllergen,
     cleanSectionAllergen,
+    addMeatType,
+    addSideDish,
 } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

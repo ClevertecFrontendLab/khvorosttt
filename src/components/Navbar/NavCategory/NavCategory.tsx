@@ -8,10 +8,13 @@ import {
     Image,
     Text,
 } from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 import { useCategoryContext } from '~/components/CategoryContext/CategoryContext';
 import { markerFood, markFood } from '~/data/consts';
+import { applyFilters } from '~/services/features/recipeSlice';
+import { selectedFilters } from '~/services/features/selectors';
 
 export type navCategoryType = {
     category: string;
@@ -21,6 +24,8 @@ export type navCategoryType = {
 export function NavCategory(data: navCategoryType) {
     const navigate = useNavigate();
     const { category, selectCategory, subcategory, selectSubcategory } = useCategoryContext();
+    const dispatch = useDispatch();
+    const filters = useSelector(selectedFilters);
     return (
         <AccordionItem
             sx={{
@@ -37,6 +42,7 @@ export function NavCategory(data: navCategoryType) {
                 onClick={() => {
                     selectCategory(data.category);
                     navigate(`/${data.category}/${data.subCategory[0]}`);
+                    dispatch(applyFilters({ category, subcategory, filters }));
                 }}
                 data-test-id={data.category === 'vegan' ? 'vegan-cuisine' : data.category}
             >
@@ -56,6 +62,7 @@ export function NavCategory(data: navCategoryType) {
                         key={index}
                         onClick={() => {
                             selectSubcategory(subCategory);
+                            dispatch(applyFilters({ category, subcategory, filters }));
                         }}
                         data-test-id={subcategory === subCategory ? `${subcategory}-active` : ''}
                     >

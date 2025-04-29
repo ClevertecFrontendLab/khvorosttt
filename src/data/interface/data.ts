@@ -34,4 +34,5 @@ export interface recipeI {
     steps: stepI[];
     meat?: string;
     side?: string;
+    author?: string;
 }

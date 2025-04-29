@@ -143,16 +143,58 @@ export const allergens = [
     'chocolate',
 ];
 
+export const allergensRus = [
+    'Молочные продукты',
+    'Яйцо',
+    'Рыба',
+    'Моллюски',
+    'Орехи',
+    'Томат',
+    'Цитрусовые',
+    'Клубника (ягоды)',
+    'Шоколад',
+];
+
 export const russianAllergens: Record<string, string> = {
     milk: 'Молочные продукты',
     egg: 'Яйцо',
     fish: 'Рыба',
     molluscs: 'Моллюски',
     nuts: 'Орехи',
-    tomato: 'Томат (помидор)',
+    tomato: 'Томат',
     citrus: 'Цитрусовые',
     berries: 'Клубника (ягоды)',
     chocolate: 'Шоколад',
+};
+export const meatTypeArray = ['chicken', 'pork', 'beef', 'turkey', 'duck'];
+
+export const russianMeatType: Record<string, string> = {
+    chicken: 'Курица',
+    pork: 'Свинина',
+    beef: 'Говядина',
+    turkey: 'Индейка',
+    duck: 'Утка',
+};
+
+export const sideDishTypeArray = [
+    'potatoes',
+    'buckwheat',
+    'pasta',
+    'spaghetti',
+    'rice',
+    'cabbage',
+    'beans',
+    'other vegetables',
+];
+export const russianSideDishType: Record<string, string> = {
+    potatoes: 'Картошка',
+    buckwheat: 'Гречка',
+    pasta: 'Паста',
+    spaghetti: 'Спагетти',
+    rice: 'Рис',
+    cabbage: 'Капуста',
+    beans: 'Фасоль',
+    'other vegetables': 'Другие овощи',
 };
 
 export function markFood(marker: string) {
@@ -214,5 +256,20 @@ export function categoryPath(marker: string) {
             return 'vegan-cuisine';
         case 'drinks':
             return 'vegan-cuisine';
+    }
+}
+
+export function rusName(filterType: string, item: string) {
+    switch (filterType) {
+        case 'category':
+            return markerFood[item];
+        case 'author':
+            return item;
+        case 'meatType':
+            return russianMeatType[item];
+        case 'sideDishType':
+            return russianSideDishType[item];
+        case 'allergens':
+            return russianAllergens[item];
     }
 }

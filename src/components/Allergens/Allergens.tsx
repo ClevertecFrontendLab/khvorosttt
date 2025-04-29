@@ -16,11 +16,15 @@ import {
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { allergens } from '~/data/consts';
+import { allergensRus } from '~/data/consts';
 import {
+    addDrawerAllergen,
     addSectionAllergen,
+    cleanDrawer,
     cleanSectionAllergen,
+    removeDrawerAllergen,
     removeSectionAllergen,
+    toggleDrawerAllergensActive,
     toggleSectionAllergensActive,
 } from '~/services/features/filtersSlice';
 import { selectedFilters } from '~/services/features/selectors';
@@ -29,67 +33,110 @@ import { AddNewAllergensBtnStyle, AddNewStyle, MenuButtonStyle } from './allerge
 
 export function Allergens({ type }: { type: string }) {
     const dispatch = useDispatch();
-    const { sectionAllergens } = useSelector(selectedFilters);
-    const [allergensList] = useState([...allergens]);
+    const filters = useSelector(selectedFilters);
+    const { sectionAllergens, drawer } = filters;
+    const [allergensList] = useState([...allergensRus]);
     const [newAllergen, setNewAllergen] = useState('');
 
     const handleCheckboxChange = (value: string) => {
-        if (sectionAllergens.selectedAllergens.includes(value)) {
-            dispatch(removeSectionAllergen(value));
+        if (type === 'filter') {
+            if (drawer.selectedAllergens.includes(value)) {
+                dispatch(removeDrawerAllergen(value));
+            } else {
+                dispatch(addDrawerAllergen(value));
+            }
         } else {
-            dispatch(addSectionAllergen(value));
+            if (sectionAllergens.selectedAllergens.includes(value)) {
+                dispatch(removeSectionAllergen(value));
+            } else {
+                dispatch(addSectionAllergen(value));
+            }
         }
     };
 
     const handleAddAllergen = () => {
         const newallergen = newAllergen.trim();
-        if (newallergen && !sectionAllergens.selectedAllergens.includes(newallergen)) {
-            dispatch(addSectionAllergen(newallergen));
+        if (type === 'filter') {
+            if (newallergen && !drawer.selectedAllergens.includes(newallergen)) {
+                dispatch(addDrawerAllergen(newallergen));
+            }
+        } else {
+            if (newallergen && !sectionAllergens.selectedAllergens.includes(newallergen)) {
+                dispatch(addSectionAllergen(newallergen));
+            }
         }
         setNewAllergen('');
     };
 
     const handleSwitch = () => {
-        dispatch(toggleSectionAllergensActive(!sectionAllergens.allergensActive));
-        dispatch(cleanSectionAllergen());
+        if (type === 'filter') {
+            if (drawer.allergensActive) {
+                dispatch(cleanDrawer());
+            } else {
+                dispatch(toggleDrawerAllergensActive(!drawer.allergensActive));
+            }
+        } else {
+            if (sectionAllergens.allergensActive) {
+                dispatch(cleanSectionAllergen());
+            } else {
+                dispatch(toggleSectionAllergensActive(!sectionAllergens.allergensActive));
+            }
+        }
     };
 
     return (
-        <Stack align='center' direction='row'>
-            <Text fontWeight={500} fontSize='16px' fontFamily='text'>
-                Исключить мои аллергены
-            </Text>
-            <Switch
-                size='sm'
-                fill='#b1ff2e'
-                onChange={handleSwitch}
-                data-test-id={`allergens-switcher-${type}`}
-                sx={{
-                    '.chakra-switch__track': {
-                        _checked: {
-                            bg: '#b1ff2e',
+        <Stack align='center' direction={type === 'filter' ? 'column' : 'row'}>
+            <Flex alignItems='center' gap='10px'>
+                <Text fontWeight={500} fontSize='16px' fontFamily='text'>
+                    Исключить мои аллергены
+                </Text>
+                <Switch
+                    size='sm'
+                    fill='#b1ff2e'
+                    onChange={handleSwitch}
+                    data-test-id={
+                        type === 'filter' ? `allergens-switcher-${type}` : 'allergens-switcher'
+                    }
+                    sx={{
+                        '.chakra-switch__track': {
+                            _checked: {
+                                bg: '#b1ff2e',
+                            },
                         },
-                    },
-                }}
-            />
+                    }}
+                />
+            </Flex>
             <Menu>
                 <MenuButton
                     as={Button}
                     rightIcon={<ChevronDownIcon />}
                     sx={MenuButtonStyle}
-                    isDisabled={!sectionAllergens.allergensActive}
+                    isDisabled={
+                        type !== 'filter'
+                            ? !sectionAllergens.allergensActive
+                            : !drawer.allergensActive
+                    }
                     border={
                         sectionAllergens.allergensActive
                             ? '1px solid #b1ff2e'
                             : '1px solid rgba(0, 0, 0, 0.08)'
                     }
-                    data-test-id={`allergens-menu-button-${type}`}
+                    data-test-id={
+                        type === 'filter'
+                            ? `allergens-menu-button-${type}`
+                            : 'allergens-menu-button'
+                    }
                 >
-                    {!sectionAllergens.selectedAllergens.length ? (
+                    {type === 'filter' ? (
+                        'Выберите из списка...'
+                    ) : !sectionAllergens.selectedAllergens.length ? (
                         'Выберите из списка...'
                     ) : (
                         <Flex wrap='wrap' gap='4px'>
-                            {sectionAllergens.selectedAllergens.map((item) => (
+                            {(type !== 'filter'
+                                ? sectionAllergens.selectedAllergens
+                                : drawer.selectedAllergens
+                            ).map((item, index) => (
                                 <Text
                                     border='1px solid #b1ff2e'
                                     borderRadius='6px'
@@ -98,6 +145,7 @@ export function Allergens({ type }: { type: string }) {
                                     fontSize='12px'
                                     fontWeight={500}
                                     fontFamily='text'
+                                    key={index}
                                 >
                                     {item}
                                 </Text>
@@ -115,7 +163,11 @@ export function Allergens({ type }: { type: string }) {
                         >
                             <Checkbox
                                 data-test-id={`allergen-${index}`}
-                                isChecked={sectionAllergens.selectedAllergens.includes(item)}
+                                isChecked={
+                                    type !== 'filter'
+                                        ? sectionAllergens.selectedAllergens.includes(item)
+                                        : drawer.selectedAllergens.includes(item)
+                                }
                                 onChange={() => handleCheckboxChange(item)}
                                 p='6px 16px'
                                 w='100%'

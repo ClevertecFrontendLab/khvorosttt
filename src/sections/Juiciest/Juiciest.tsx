@@ -1,5 +1,5 @@
 import { ArrowForwardIcon } from '@chakra-ui/icons';
-import { Button, Flex, Grid, GridItem, Hide, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Grid, GridItem, Hide, Text } from '@chakra-ui/react';
 import { Link } from 'react-router';
 
 import { CardJuiciest } from '~/components/CardJuiciest/CardJuiciest';
@@ -41,7 +41,9 @@ export function Juiciest({ title, data }: JuiciestProps) {
             >
                 {data.map((recipe, index) => (
                     <GridItem key={index} colSpan={{ base: 4, sm: 6, xl: 12, '3xl': 6 }}>
-                        <CardJuiciest index={index} data={recipe} />
+                        <Box data-test-id={`food-card-${index}`}>
+                            <CardJuiciest index={index} data={recipe} />
+                        </Box>
                     </GridItem>
                 ))}
             </Grid>

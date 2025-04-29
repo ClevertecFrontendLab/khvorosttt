@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { apiSlice } from '~/query/create-api';
 import { filtersSlice } from '~/services/features/filtersSlice';
+import { recipeSlice } from '~/services/features/recipeSlice';
 
 import appReducer, { appSlice } from './app-slice';
 const isProduction = false;
@@ -9,6 +10,7 @@ const rootReducer = combineReducers({
     [appSlice.name]: appReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
     filters: filtersSlice.reducer,
+    recipe: recipeSlice.reducer,
 });
 
 export type ApplicationState = ReturnType<typeof rootReducer>;

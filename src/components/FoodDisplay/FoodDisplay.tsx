@@ -1,4 +1,4 @@
-import { Button, Flex, Grid, GridItem } from '@chakra-ui/react';
+import { Box, Button, Flex, Grid, GridItem } from '@chakra-ui/react';
 
 import { recipeI } from '~/data/interface/data';
 
@@ -15,7 +15,9 @@ export function FoodDisplay({ data }: FoodDisplayProps) {
             <Grid sx={FoodDisplayStyle}>
                 {data.map((recipe, index) => (
                     <GridItem key={index} colSpan={{ base: 4, sm: 6, xl: 12, '3xl': 6 }}>
-                        <CardJuiciest index={index} data={recipe} />
+                        <Box data-test-id={`food-card-${index}`}>
+                            <CardJuiciest index={index} data={recipe} />
+                        </Box>
                     </GridItem>
                 ))}
             </Grid>
