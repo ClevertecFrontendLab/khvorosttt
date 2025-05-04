@@ -65,8 +65,29 @@ export function Filter({ isOpen, onClose }: FilterProps) {
                 <DrawerOverlay />
                 <DrawerContent
                     minW={{ base: '308px', '2xl': '463px' }}
-                    p={{ base: '24px 16px', '2xl': '32px 10px' }}
+                    p={{ base: '24px 16px', '2xl': '32px' }}
                     data-test-id='filter-drawer'
+                    overflowX='hidden'
+                    sx={{
+                        '&::-webkit-scrollbar': {
+                            width: '8px',
+                        },
+                        '&::-webkit-scrollbar-track': {
+                            background: 'rgba(0, 0, 0, 0.04)',
+                        },
+                        '&::-webkit-scrollbar-thumb': {
+                            background: 'rgba(0, 0, 0, 0.16)',
+                            borderRadius: '8px',
+                        },
+                        '&::-webkit-scrollbar-thumb:hover': {
+                            background: 'rgba(0, 0, 0, 0.2)',
+                        },
+                        '&::-webkit-scrollbar-button': {
+                            display: 'none',
+                            height: 0,
+                            width: 0,
+                        },
+                    }}
                 >
                     <DrawerCloseButton
                         borderRadius='50px'
@@ -81,7 +102,12 @@ export function Filter({ isOpen, onClose }: FilterProps) {
                         Фильтр
                     </DrawerHeader>
 
-                    <DrawerBody>
+                    <DrawerBody
+                        p='0px'
+                        gap={{ base: '12px', xl: '24px' }}
+                        display='flex'
+                        flexDirection='column'
+                    >
                         <Selector
                             placeholder='Категория'
                             type='category'

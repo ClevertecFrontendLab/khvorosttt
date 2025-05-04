@@ -3,6 +3,7 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import { BookmarkIcon } from '../Icons/Bookmark';
 import { LikeSmileIcon } from '../Icons/LikeSmile';
 import { PeopleIcon } from '../Icons/People';
+import { ProfileNotificationStyle } from './ProfileNotification.style';
 
 export type notificationInfo = {
     bookmarks: number;
@@ -12,8 +13,8 @@ export type notificationInfo = {
 
 export function ProfileNotification(props: notificationInfo) {
     return (
-        <Flex p='0px 16px' flexDirection={{ xl: 'column', base: 'row' }} alignItems='center'>
-            <Box display='flex' gap='8px' p='0px 8px' alignItems='center'>
+        <Flex sx={ProfileNotificationStyle}>
+            <Box display='flex' gap='10px' p='0px 8px' alignItems='center'>
                 <BookmarkIcon />
                 <Text color='#2db100' fontWeight='600'>
                     {props.bookmarks}

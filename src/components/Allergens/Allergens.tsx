@@ -85,8 +85,12 @@ export function Allergens({ type }: { type: string }) {
     };
 
     return (
-        <Stack align='center' direction={type === 'filter' ? 'column' : 'row'}>
-            <Flex alignItems='center' gap='10px'>
+        <Stack direction={type === 'filter' ? 'column' : 'row'}>
+            <Flex
+                justifyContent={type === 'filter' ? 'flex-start' : 'center'}
+                alignItems='center'
+                gap='10px'
+            >
                 <Text fontWeight={500} fontSize='16px' fontFamily='text'>
                     Исключить мои аллергены
                 </Text>
@@ -106,11 +110,12 @@ export function Allergens({ type }: { type: string }) {
                     }}
                 />
             </Flex>
-            <Menu>
+            <Menu matchWidth>
                 <MenuButton
                     as={Button}
                     rightIcon={<ChevronDownIcon />}
                     sx={MenuButtonStyle}
+                    w={type === 'filter' ? '100%' : '269px'}
                     isDisabled={
                         type !== 'filter'
                             ? !sectionAllergens.allergensActive
@@ -153,7 +158,13 @@ export function Allergens({ type }: { type: string }) {
                         </Flex>
                     )}
                 </MenuButton>
-                <MenuList zIndex={2} w='269px' p='4px 0px' data-test-id='allergens-menu'>
+                <MenuList
+                    zIndex={2}
+                    w={type === 'filter' ? '100%' : '269px'}
+                    minW='unset'
+                    p='4px 0px'
+                    data-test-id='allergens-menu'
+                >
                     {allergensList.map((item, index) => (
                         <MenuItem
                             key={index}

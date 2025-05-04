@@ -49,10 +49,11 @@ export function NewRecipes({ data }: NewRecipes) {
                         },
                         1232: {
                             slidesPerView: 3.2,
-                            spaceBetween: 24,
+                            spaceBetween: 12,
                         },
                         1700: {
                             slidesPerView: 4,
+                            spaceBetween: 24,
                         },
                     }}
                 >

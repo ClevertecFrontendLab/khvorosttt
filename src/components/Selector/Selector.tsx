@@ -37,7 +37,7 @@ export function Selector({ type, placeholder, items }: SelectorProps) {
         }
     };
     return (
-        <Menu>
+        <Menu matchWidth>
             <MenuButton
                 as={Button}
                 sx={{
@@ -47,7 +47,7 @@ export function Selector({ type, placeholder, items }: SelectorProps) {
                     fontSize: '16px',
                     color: 'rgba(0, 0, 0, 0.64)',
                     fontFamily: 'text',
-                    w: '260px',
+                    w: '100%',
                     p: '8px 16px',
                     textAlign: 'left',
                 }}
@@ -57,7 +57,7 @@ export function Selector({ type, placeholder, items }: SelectorProps) {
             >
                 {placeholder}
             </MenuButton>
-            <MenuList zIndex={2} w='308' p='4px 0px'>
+            <MenuList zIndex={2} w='100%' minW='unset' p='4px 0px'>
                 {items.map((item, index) => (
                     <MenuItem
                         key={index}

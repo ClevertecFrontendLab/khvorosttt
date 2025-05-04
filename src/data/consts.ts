@@ -11,6 +11,8 @@ import veg from '../assets/images/list.png';
 import food1 from '../assets/images/pot.png';
 import zakusk from '../assets/images/zakusk.png';
 
+export const IMAGE_BASED_PATH = 'https://training-api.clevertec.ru';
+
 export const markerFood: Record<string, string> = {
     'vegan-cuisine': 'Веганская кухня',
     'the-juiciest': 'Самое сочное',

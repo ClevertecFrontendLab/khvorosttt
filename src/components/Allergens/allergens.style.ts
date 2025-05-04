@@ -31,8 +31,8 @@ export const MenuButtonStyle: SystemStyleObject = {
     fontSize: '16px',
     color: 'rgba(0, 0, 0, 0.64)',
     fontFamily: 'text',
-    w: '269px',
     h: '100%',
     p: '8px 16px',
     _active: { bg: 'white', border: '1px solid #b1ff2e' },
+    textAlign: 'left',
 };
