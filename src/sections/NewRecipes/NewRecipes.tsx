@@ -2,13 +2,12 @@ import 'swiper/swiper-bundle.css';
 
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
-import { useNavigate } from 'react-router';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import { useGetNewRecipesQuery } from '~/api/recipeApi';
 import { CardNew } from '~/components/CardNew/CardNew';
-import { useCategoryContext } from '~/components/CategoryContext/CategoryContext';
-import { recipeI } from '~/data/interface/data';
+import { Loader } from '~/components/Loader/Loader';
 
 import {
     newRecipeheaderStyle,
@@ -16,13 +15,12 @@ import {
     siderButtonPrevStyle,
 } from './newRecipe.style';
 
-interface NewRecipes {
-    data: recipeI[];
-}
+export function NewRecipes() {
+    const { data, isLoading } = useGetNewRecipesQuery();
+    if (isLoading) {
+        return <Loader />;
+    }
 
-export function NewRecipes({ data }: NewRecipes) {
-    const navigate = useNavigate();
-    const { selectCategory, selectSubcategory } = useCategoryContext();
     return (
         <Flex flexDirection='column' gap='24px'>
             <Text as='h3' sx={newRecipeheaderStyle}>
@@ -57,18 +55,11 @@ export function NewRecipes({ data }: NewRecipes) {
                         },
                     }}
                 >
-                    {data.map((recipe, index) => (
+                    {data?.map((recipe, index) => (
                         <SwiperSlide
                             key={index}
                             style={{ height: 'auto' }}
                             data-test-id={`carousel-card-${index}`}
-                            onClick={() => {
-                                selectCategory(recipe.category[0]);
-                                selectSubcategory(recipe.subcategory[0]);
-                                navigate(
-                                    `/${recipe.category[0]}/${recipe.subcategory[0]}/${recipe.id}`,
-                                );
-                            }}
                         >
                             <Box
                                 key={index}

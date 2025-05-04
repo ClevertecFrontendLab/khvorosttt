@@ -1,11 +1,12 @@
 import { Box, Text } from '@chakra-ui/react';
 
-import { recipeI } from '~/data/interface/data';
+import { recipeI } from '~/interfaces/recipeI';
 
 import { BookmarkIcon } from '../Icons/Bookmark';
 import { LikeSmileIcon } from '../Icons/LikeSmile';
 
 export function Interactions({ bookmarks, likes }: recipeI) {
+    console.log(bookmarks);
     return (
         <Box display='flex' gap='5px' alignItems='flex-end'>
             {bookmarks ? (

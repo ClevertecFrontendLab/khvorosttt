@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { useGetCategoryQuery } from '~/api/categoryApi';
 import { categoryI } from '~/interfaces/categoryI';
-import { setCategories } from '~/services/features/categoriesSlice';
+import { setCategories, setSubcategories } from '~/services/features/categoriesSlice';
 import { selectedCategories } from '~/services/features/selectors';
 
 import { Loader } from '../Loader/Loader';
@@ -15,19 +15,23 @@ import { NavCategory } from './NavCategory/NavCategory';
 export function Navbar() {
     const dispatch = useDispatch();
     const categoriesSavedData = useSelector(selectedCategories);
-    const { data: categories, isLoading, isError } = useGetCategoryQuery();
+    const { data, isLoading, isError } = useGetCategoryQuery();
 
     useEffect(() => {
-        if (!categoriesSavedData && categories) {
-            dispatch(setCategories(categories));
+        const noSavedCategories = categoriesSavedData.categories.length === 0;
+        const noSavedSubcategories = categoriesSavedData.subcategories.length === 0;
+
+        if ((noSavedCategories || noSavedSubcategories) && data) {
+            dispatch(setCategories(data.categories));
+            dispatch(setSubcategories(data.subcategories));
         }
-    }, [categories, categoriesSavedData, dispatch]);
+    }, [data, categoriesSavedData, dispatch]);
 
     if (isLoading) {
         return <Loader />;
     }
 
-    let dataToDisplay: categoryI[] | undefined = categories;
+    let dataToDisplay: categoryI[] | undefined = data?.categories;
 
     if (isError || !dataToDisplay) {
         dataToDisplay = categoriesSavedData.categories;
