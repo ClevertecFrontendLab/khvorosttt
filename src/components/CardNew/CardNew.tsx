@@ -36,7 +36,6 @@ export function CardNew(recipe: recipeI) {
     const navigate = useNavigate();
     const categoriesSavedData = useSelector(selectedCategories);
     const { selectCategory, selectSubcategory } = useCategoryContext();
-    console.log(recipe);
     const findCategories = (categoriesIds: string) => {
         const subcategory = categoriesSavedData.subcategories.find(
             (item) => item._id === categoriesIds,
@@ -44,8 +43,8 @@ export function CardNew(recipe: recipeI) {
         const category = categoriesSavedData.categories.find(
             (item) => item._id === subcategory?.rootCategoryId,
         );
-        category ? selectCategory(category.category) : null;
-        subcategory ? selectSubcategory(subcategory.category) : null;
+        category ? selectCategory(category._id) : null;
+        subcategory ? selectSubcategory(subcategory._id) : null;
         return { category, subcategory };
     };
 
