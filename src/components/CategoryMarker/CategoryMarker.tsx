@@ -30,7 +30,10 @@ export function CategoryMarker({ style, data }: markerCategoryProps) {
         });
         return categories;
     };
-    const categories = findCategories(data.categoriesIds);
+    if (!data) {
+        return null;
+    }
+    const categories = findCategories(data.categoriesIds || []);
     return (
         <>
             {categories.map((category, index) => (
