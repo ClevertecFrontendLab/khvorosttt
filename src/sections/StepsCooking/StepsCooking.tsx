@@ -1,10 +1,11 @@
 import { Card, CardBody, Flex, Image, Stack, Text } from '@chakra-ui/react';
 
-import { stepI } from '~/data/interface/data';
+import { IMAGE_BASED_PATH } from '~/data/consts';
+import { stepsI } from '~/interfaces/recipeI';
 
 import { ImageStyle, StepDescriptionStyle, StepNameStyle } from './StepsCooking.style';
 
-export function StepsCooking({ data }: { data: stepI[] }) {
+export function StepsCooking({ data }: { data: stepsI[] }) {
     return (
         <Flex direction='column' gap='20px'>
             <Text fontStyle='text' fontWeight={500} fontSize={{ base: '24px', lg: '48px' }}>
@@ -18,7 +19,11 @@ export function StepsCooking({ data }: { data: stepI[] }) {
                     overflow='hidden'
                 >
                     {step.image ? (
-                        <Image src={step.image} alt={`step ${step.stepNumber}`} sx={ImageStyle} />
+                        <Image
+                            src={`${IMAGE_BASED_PATH}${step.image}`}
+                            alt={`step ${step.stepNumber}`}
+                            sx={ImageStyle}
+                        />
                     ) : null}
 
                     <Stack>
@@ -33,7 +38,7 @@ export function StepsCooking({ data }: { data: stepI[] }) {
                             >
                                 Шаг {step.stepNumber}
                             </Text>
-                            <Text sx={StepDescriptionStyle} noOfLines={3}>
+                            <Text sx={StepDescriptionStyle} /*noOfLines={3}*/>
                                 {step.description}
                             </Text>
                         </CardBody>

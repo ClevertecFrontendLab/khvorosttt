@@ -41,13 +41,14 @@ export function NavCategory(data: navCategoryType) {
                 _expanded={{ bg: '#eaffc7' }}
                 borderRadius={0}
                 onClick={() => {
-                    selectCategory(data.category.title);
+                    selectCategory(data.category._id);
                     navigate(
                         `/${data.category.category}/${data.category.subCategories[0].category}`,
                     );
                     dispatch(applyFilters({ category, subcategory, filters }));
                 }}
-                data-test-id={data.category.title === 'vegan' ? 'vegan-cuisine' : data.category}
+                data-test-id={data.category.category === 'vegan' ? 'vegan-cuisine' : data.category}
+                w='100%'
             >
                 <Flex alignItems='center' gap='5px'>
                     <Image src={`${IMAGE_BASED_PATH}${data.category.icon}`} w='16px' h='16px' />
@@ -64,20 +65,19 @@ export function NavCategory(data: navCategoryType) {
                         gap='10px'
                         key={index}
                         onClick={() => {
-                            selectSubcategory(subCategory.title);
+                            selectSubcategory(subCategory._id);
                             navigate(`/${data.category.category}/${subCategory.category}`);
                             dispatch(applyFilters({ category, subcategory, filters }));
                         }}
                         data-test-id={
-                            subcategory === subCategory.title ? `${subcategory}-active` : ''
+                            subcategory === subCategory._id ? `${subcategory}-active` : ''
                         }
                     >
                         <Box
                             w='1px'
                             h='24px'
                             borderRight={
-                                category === data.category.title &&
-                                subcategory === subCategory.title
+                                category === data.category._id && subcategory === subCategory._id
                                     ? '4px solid #c4ff61'
                                     : '1px solid #c4ff61'
                             }

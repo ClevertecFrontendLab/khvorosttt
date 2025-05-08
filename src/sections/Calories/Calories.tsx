@@ -1,6 +1,6 @@
 import { Flex, Text } from '@chakra-ui/react';
 
-import { nutritionValueI } from '~/data/interface/data';
+import { nutritionValueI } from '~/interfaces/recipeI';
 
 import {
     BoxStyle,
@@ -27,7 +27,7 @@ export function Calories(data: nutritionValueI) {
                 </Flex>
                 <Flex sx={BoxStyle} direction={{ base: 'row', ms: 'column' }}>
                     <Text sx={sectionNameStyle}>белки</Text>
-                    <Text sx={sectionValueStyle}>{data.proteins}</Text>
+                    <Text sx={sectionValueStyle}>{data.protein}</Text>
                     <Text sx={sectionMeasureUnitStyle}>ГРАММ</Text>
                 </Flex>
                 <Flex sx={BoxStyle} direction={{ base: 'row', ms: 'column' }}>

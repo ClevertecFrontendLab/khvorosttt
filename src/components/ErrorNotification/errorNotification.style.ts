@@ -9,6 +9,7 @@ export const ErrorNotificationStyle: SystemStyleObject = {
     p: '12px 18px',
     bg: '#e53e3e',
     justifyContent: 'space-between',
+    zIndex: 100,
 };
 
 export const ErrorHeadingStyle: SystemStyleObject = {

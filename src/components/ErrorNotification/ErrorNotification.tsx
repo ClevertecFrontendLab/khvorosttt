@@ -7,6 +7,10 @@ import {
     CloseButton,
     useDisclosure,
 } from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { clearNotification } from '~/services/features/notificationSlice';
+import { selectedNotification } from '~/services/features/selectors';
 
 import {
     ErrorCloseButtonStyle,
@@ -17,18 +21,29 @@ import {
 
 export function ErrorNotification() {
     const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+    const { title, description } = useSelector(selectedNotification);
+    const dispatch = useDispatch();
 
-    if (!isOpen) {
+    const closeAction = () => {
+        dispatch(clearNotification());
+        onClose();
+    };
+
+    if (!isOpen || !title) {
         return null;
     }
     return (
-        <Alert status='error' sx={ErrorNotificationStyle}>
+        <Alert status='error' sx={ErrorNotificationStyle} data-test-id='error-notification'>
             <AlertIcon color='white' />
             <Box>
-                <AlertTitle sx={ErrorHeadingStyle}>Ошибка сервера</AlertTitle>
-                <AlertDescription sx={ErrorTextStyle}>Попробуйте немного позже</AlertDescription>
+                <AlertTitle sx={ErrorHeadingStyle}>{title}</AlertTitle>
+                <AlertDescription sx={ErrorTextStyle}>{description}</AlertDescription>
             </Box>
-            <CloseButton onClick={onClose} sx={ErrorCloseButtonStyle} />
+            <CloseButton
+                onClick={closeAction}
+                sx={ErrorCloseButtonStyle}
+                data-test-id='close-alert-button'
+            />
         </Alert>
     );
 }
