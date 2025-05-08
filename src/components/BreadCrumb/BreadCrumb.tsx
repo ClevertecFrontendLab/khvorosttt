@@ -1,9 +1,10 @@
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router';
 
-import { markerFood } from '~/data/consts';
-import menuRecipes from '~/data/menuData.json';
+import { useGetRecipeByIdQuery } from '~/api/recipeApi';
+import { selectedCategories } from '~/services/features/selectors';
 
 import { BurgerMenuProps } from '../BurgerMenu/BurgerMenu';
 import { BreadCrumbStyle } from './BreadCrumb.style';
@@ -12,6 +13,23 @@ export function BreadCrumb({ isOpen, toggleMenu }: BurgerMenuProps) {
     const location = useLocation();
     const paths = location.pathname.split('/').filter((x) => x);
     const { id } = useParams();
+    const { data: recipe } = useGetRecipeByIdQuery(id);
+    const categoriesSavedData = useSelector(selectedCategories);
+
+    if (location.pathname === '/not-found') {
+        return null;
+    }
+
+    const getBreadCrumbsTitle = (path: string, index: number) => {
+        if (index === 0) {
+            if (path === 'the-juiciest') return 'Самое сочное';
+            return categoriesSavedData.categories.find((item) => item.category === path)?.title;
+        } else if (id && index === paths.length - 1) {
+            return recipe?.title;
+        } else if (index === 1) {
+            return categoriesSavedData.subcategories.find((item) => item.category === path)?.title;
+        }
+    };
     return (
         <Breadcrumb
             spacing='8px'
@@ -51,9 +69,7 @@ export function BreadCrumb({ isOpen, toggleMenu }: BurgerMenuProps) {
                             isOpen && toggleMenu();
                         }}
                     >
-                        {id && index === paths.length - 1
-                            ? `${menuRecipes.find((item) => item.id === Number(id))?.title}`
-                            : markerFood[linkPath] || linkPath}
+                        {getBreadCrumbsTitle(linkPath, index)}
                     </BreadcrumbLink>
                 </BreadcrumbItem>
             ))}
