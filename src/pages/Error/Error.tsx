@@ -17,7 +17,7 @@ export function ErrorPage() {
             <Flex sx={ErrorContentStyle}>
                 <Image src={error} alt='error page' sx={ErrorImageStyle} />
                 <Flex sx={ErrorContentContainerStyle}>
-                    <Text as='h2' sx={ErrorHeadingStyle}>
+                    <Text as='h1' sx={ErrorHeadingStyle}>
                         Упс! Такой страницы нет
                     </Text>
                     <Text sx={ErrorTextStyle}>
