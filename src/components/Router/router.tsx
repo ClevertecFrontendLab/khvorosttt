@@ -1,6 +1,7 @@
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, Navigate } from 'react-router';
 
 import App from '~/app/App';
+import { ErrorPage } from '~/pages/Error/Error';
 import { Home } from '~/pages/Home/Home';
 import { JuiciestPage } from '~/pages/Juiciest/Juiciest';
 import { Recipe } from '~/pages/Recipe/Recipe';
@@ -16,6 +17,14 @@ const router = createBrowserRouter([
                 element: <Home />,
             },
             {
+                path: 'the-juiciest',
+                element: <JuiciestPage />,
+            },
+            {
+                path: 'the-juiciest/:id',
+                element: <Recipe />,
+            },
+            {
                 path: ':categoryId',
                 element: <Vegan />,
             },
@@ -28,8 +37,12 @@ const router = createBrowserRouter([
                 element: <Recipe />,
             },
             {
-                path: 'the-juiciest',
-                element: <JuiciestPage />,
+                path: 'not-found',
+                element: <ErrorPage />,
+            },
+            {
+                path: '*',
+                element: <Navigate to='/not-found' />,
             },
         ],
     },
