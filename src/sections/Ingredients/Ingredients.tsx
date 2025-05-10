@@ -40,7 +40,7 @@ export function Ingredients({ data, portion }: { data: ingredientsI[]; portion: 
                                         value={count}
                                         min={1}
                                         max={50}
-                                        step={0.25}
+                                        step={1}
                                         onChange={(value) => setCount(Number(value))}
                                     >
                                         <NumberInputField />
@@ -77,7 +77,7 @@ export function Ingredients({ data, portion }: { data: ingredientsI[]; portion: 
                                     <Text data-test-id={`ingredient-quantity-${index}`}>
                                         {ingredient.count
                                             ? (count * ingredient.count) / portion
-                                            : null}{' '}
+                                            : 0}
                                     </Text>
                                     <Text>{ingredient.measureUnit}</Text>
                                 </Td>
