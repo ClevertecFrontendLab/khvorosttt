@@ -17,16 +17,23 @@ interface SearchProps {
 export function Search({ name, description }: SearchProps) {
     const filters = useSelector(selectedFilters);
 
-    const shouldSearch = useMemo(
-        () =>
-            filters.searchQuery.trim().length >= 3 ||
-            filters.selectedAllergens.length > 0 ||
-            filters.selectedAuthors.length > 0 ||
-            filters.selectedCategories.length > 0 ||
-            filters.selectedMeatType.length > 0 ||
-            filters.selectedSideDishType.length > 0,
-        [filters],
-    );
+    const shouldSearch = useMemo(() => {
+        const {
+            searchQuery,
+            selectedAuthors,
+            selectedCategories,
+            selectedMeatType,
+            selectedSideDishType,
+        } = filters;
+
+        const hasRealFilters =
+            searchQuery.trim().length >= 3 ||
+            selectedAuthors.length > 0 ||
+            selectedCategories.length > 0 ||
+            selectedMeatType.length > 0 ||
+            selectedSideDishType.length > 0;
+        return hasRealFilters;
+    }, [filters]);
 
     const { data: findedRecipe, isLoading } = useGetRecipeWithSearchQuery(
         {
