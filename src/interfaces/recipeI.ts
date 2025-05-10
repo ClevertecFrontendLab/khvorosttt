@@ -35,6 +35,14 @@ export interface recipeI {
     ingredients: ingredientsI[];
 }
 
+export interface metaI {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+}
+
 export interface recipeResponceI {
     data: recipeI[];
+    meta: metaI;
 }

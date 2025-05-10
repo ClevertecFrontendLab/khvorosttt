@@ -10,11 +10,72 @@ export const recipesApi = createApi({
             query: () => '',
             transformResponse: (response: recipeResponceI) => response.data,
         }),
-        getNewRecipes: builder.query<recipeI[], void>({
-            query: () => '?sortBy=createdAt&sortOrder=desc&&limit=10',
+        getNewestRecipes: builder.query<recipeI[], void>({
+            query: () => '?sortBy=createdAt&sortOrder=desc&limit=10',
             transformResponse: (response: recipeResponceI) => response.data,
+        }),
+        getRecipeById: builder.query<recipeI, string | undefined>({
+            query: (id) => `/${id}`,
+        }),
+        getJuiciestRecipes: builder.query<
+            { recipes: recipeI[]; totalPages: number },
+            { limit: number; page: number }
+        >({
+            query: ({ limit, page }) => `?sortBy=likes&sortOrder=desc&limit=${limit}&page=${page}`,
+            transformResponse: (response: recipeResponceI) => ({
+                recipes: response.data,
+                totalPages: response.meta.totalPages,
+            }),
+        }),
+        getRecipeBySubcategory: builder.query<
+            { recipes: recipeI[]; totalPages: number },
+            { id: string | undefined }
+        >({
+            query: ({ id }) => `/category/${id}`,
+            transformResponse: (response: recipeResponceI) => ({
+                recipes: response.data,
+                totalPages: response.meta.totalPages,
+            }),
+        }),
+        getRelevant: builder.query<recipeI[], { ids: string[]; limit: number }>({
+            query: ({ ids, limit }) => `/category?limit=${limit}&subcategoriesIds=${ids.join(',')}`,
+            transformResponse: (response: recipeResponceI) => response.data,
+        }),
+        getRecipeWithSearch: builder.query<
+            { recipes: recipeI[]; totalPages: number },
+            {
+                ids: string[];
+                limit: number;
+                page: number;
+                meat: string[];
+                allergens: string[];
+                searchString: string;
+                garnish: string[];
+            }
+        >({
+            query: ({ ids, limit, page, meat, allergens, searchString, garnish }) => {
+                const idsStr = ids.length ? `&subcategoriesIds=${ids.join(',')}` : '';
+                const allergensStr = allergens.length ? `&allergens=${allergens.join(',')}` : '';
+                const meatStr = meat.length ? `&meat=${meat.join(',')}` : '';
+                const garnishStr = garnish.length ? `&garnish=${garnish}` : '';
+                const request: string = `?page=${page}&limit=${limit}${idsStr}${meatStr}${allergensStr}${garnishStr}&searchString=${searchString}`;
+                console.log(request);
+                return request;
+            },
+            transformResponse: (response: recipeResponceI) => ({
+                recipes: response.data,
+                totalPages: response.meta.totalPages,
+            }),
         }),
     }),
 });
 
-export const { useGetRecipesQuery, useGetNewRecipesQuery } = recipesApi;
+export const {
+    useGetRecipesQuery,
+    useGetNewestRecipesQuery,
+    useGetRecipeByIdQuery,
+    useGetJuiciestRecipesQuery,
+    useGetRecipeBySubcategoryQuery,
+    useGetRelevantQuery,
+    useGetRecipeWithSearchQuery,
+} = recipesApi;

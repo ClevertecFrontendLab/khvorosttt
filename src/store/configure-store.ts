@@ -5,6 +5,7 @@ import { recipesApi } from '~/api/recipeApi';
 import { apiSlice } from '~/query/create-api';
 import { categoriesSlice } from '~/services/features/categoriesSlice';
 import { filtersSlice } from '~/services/features/filtersSlice';
+import { notificationSlice } from '~/services/features/notificationSlice';
 import { recipeSlice } from '~/services/features/recipeSlice';
 
 import appReducer, { appSlice } from './app-slice';
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
     filters: filtersSlice.reducer,
     recipe: recipeSlice.reducer,
     category: categoriesSlice.reducer,
+    notification: notificationSlice.reducer,
 });
 
 export type ApplicationState = ReturnType<typeof rootReducer>;
