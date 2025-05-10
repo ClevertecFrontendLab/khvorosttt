@@ -2,12 +2,16 @@ import 'swiper/swiper-bundle.css';
 
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 import { Box, Flex, IconButton, Text } from '@chakra-ui/react';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { useGetNewRecipesQuery } from '~/api/recipeApi';
+import { useGetNewestRecipesQuery } from '~/api/recipeApi';
 import { CardNew } from '~/components/CardNew/CardNew';
 import { Loader } from '~/components/Loader/Loader';
+import { compareDate } from '~/data/comparators';
+import { setNotification } from '~/services/features/notificationSlice';
 
 import {
     newRecipeheaderStyle,
@@ -16,7 +20,19 @@ import {
 } from './newRecipe.style';
 
 export function NewRecipes() {
-    const { data, isLoading } = useGetNewRecipesQuery();
+    const { data, isLoading, isError } = useGetNewestRecipesQuery();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (isError) {
+            dispatch(
+                setNotification({
+                    title: 'Ошибка сервера',
+                    description: 'Попробуйте поискать снова попозже',
+                }),
+            );
+        }
+    }, [isError, dispatch]);
     if (isLoading) {
         return <Loader />;
     }
@@ -26,7 +42,13 @@ export function NewRecipes() {
             <Text as='h3' sx={newRecipeheaderStyle}>
                 Новые рецепты
             </Text>
-            <Box overflow='hidden' w='100%' p='10px 0px' m='10px' position='relative'>
+            <Box
+                overflow='hidden'
+                w='100%'
+                p='10px 0px'
+                m={{ base: '0px', ms: '10px' }}
+                position='relative'
+            >
                 <Swiper
                     style={{ width: '100%' }}
                     loop={true}
@@ -39,7 +61,7 @@ export function NewRecipes() {
                     breakpoints={{
                         0: {
                             slidesPerView: 2,
-                            spaceBetween: 12,
+                            spaceBetween: 8,
                         },
                         768: {
                             slidesPerView: 4.4,
@@ -55,23 +77,26 @@ export function NewRecipes() {
                         },
                     }}
                 >
-                    {data?.map((recipe, index) => (
-                        <SwiperSlide
-                            key={index}
-                            style={{ height: 'auto' }}
-                            data-test-id={`carousel-card-${index}`}
-                        >
-                            <Box
+                    {[...data!]
+                        .sort(compareDate)
+                        .reverse()
+                        .map((recipe, index) => (
+                            <SwiperSlide
                                 key={index}
-                                flex='0 0 auto'
-                                w='100%'
-                                height='100%'
-                                mr={{ base: '0px', xl: '12px' }}
+                                style={{ height: 'auto' }}
+                                data-test-id={`carousel-card-${index}`}
                             >
-                                <CardNew {...recipe} />
-                            </Box>
-                        </SwiperSlide>
-                    ))}
+                                <Box
+                                    key={index}
+                                    flex='0 0 auto'
+                                    w='100%'
+                                    height='100%'
+                                    mr={{ base: '0px', xl: '12px' }}
+                                >
+                                    <CardNew {...recipe} />
+                                </Box>
+                            </SwiperSlide>
+                        ))}
                 </Swiper>
 
                 <IconButton

@@ -6,7 +6,8 @@ import { CategoryMarker } from '~/components/CategoryMarker/CategoryMarker';
 import { BookmarkIcon } from '~/components/Icons/Bookmark';
 import { LikeSmileIcon } from '~/components/Icons/LikeSmile';
 import { Interactions } from '~/components/Interactions/Interactions';
-import { recipeI } from '~/data/interface/data';
+import { IMAGE_BASED_PATH } from '~/data/consts';
+import { recipeI } from '~/interfaces/recipeI';
 
 import {
     ButtonStyle,
@@ -24,7 +25,7 @@ export function RecipeDescription(data: recipeI) {
                 gap={{ base: '16px', '2xl': '24px' }}
                 p='0px 10px'
             >
-                <Image src={data.image} sx={RecipeImageStyle} />
+                <Image src={`${IMAGE_BASED_PATH}${data.image}`} sx={RecipeImageStyle} />
                 <Flex direction='column' justifyContent='space-between' gap='24px'>
                     <Flex direction='column' gap='24px'>
                         <Flex justifyContent='space-between'>
@@ -52,7 +53,7 @@ export function RecipeDescription(data: recipeI) {
                         <Flex sx={TimeStyle}>
                             <TimeIcon />
                             <Text fontFamily='text' fontSize='14px'>
-                                {data.time}
+                                {data.time} минут
                             </Text>
                         </Flex>
                         <Flex gap='16px'>
