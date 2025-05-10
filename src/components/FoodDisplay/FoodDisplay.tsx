@@ -1,15 +1,18 @@
 import { Box, Button, Flex, Grid, GridItem } from '@chakra-ui/react';
 
-import { recipeI } from '~/data/interface/data';
+import { recipeI } from '~/interfaces/recipeI';
 
 import { CardJuiciest } from '../CardJuiciest/CardJuiciest';
 import { ButtonMoreStyle, FoodDisplayStyle } from './FoodDisplay.style';
 
 interface FoodDisplayProps {
     data: recipeI[];
+    loadMore: () => void;
+    hasMore: boolean;
+    isLoading: boolean;
 }
 
-export function FoodDisplay({ data }: FoodDisplayProps) {
+export function FoodDisplay({ data, loadMore, hasMore, isLoading }: FoodDisplayProps) {
     return (
         <Flex flexDirection='column' gap='16px' padding={{ base: '16px', ms: '20px', xl: '24px' }}>
             <Grid sx={FoodDisplayStyle}>
@@ -21,9 +24,11 @@ export function FoodDisplay({ data }: FoodDisplayProps) {
                     </GridItem>
                 ))}
             </Grid>
-            <Button sx={ButtonMoreStyle} onClick={() => {}}>
-                Загрузить ещё
-            </Button>
+            {hasMore ? (
+                <Button sx={ButtonMoreStyle} onClick={loadMore} data-test-id='load-more-button'>
+                    {isLoading ? 'Загрузить ещё' : 'Загрузка'}
+                </Button>
+            ) : null}
         </Flex>
     );
 }

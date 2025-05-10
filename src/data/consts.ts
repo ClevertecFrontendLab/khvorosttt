@@ -169,6 +169,7 @@ export const russianAllergens: Record<string, string> = {
     chocolate: 'Шоколад',
 };
 export const meatTypeArray = ['chicken', 'pork', 'beef', 'turkey', 'duck'];
+export const meatTypeArrayRus = ['Курица', 'Свинина', 'Говядина', 'Индейка', 'Утка'];
 
 export const russianMeatType: Record<string, string> = {
     chicken: 'Курица',
@@ -187,6 +188,17 @@ export const sideDishTypeArray = [
     'cabbage',
     'beans',
     'other vegetables',
+];
+
+export const sideDishTypeArrayRus = [
+    'Картошка',
+    'Гречка',
+    'Паста',
+    'Спагетти',
+    'Рис',
+    'Капуста',
+    'Фасоль',
+    'Другие овощи',
 ];
 export const russianSideDishType: Record<string, string> = {
     potatoes: 'Картошка',
