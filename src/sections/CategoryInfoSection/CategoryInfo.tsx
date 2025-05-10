@@ -1,8 +1,16 @@
 import { Box, Flex, Grid, GridItem, Text } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { useGetRelevantQuery } from '~/api/recipeApi';
+import { useCategoryContext } from '~/components/CategoryContext/CategoryContext';
+import { Loader } from '~/components/Loader/Loader';
 import { ShortCardFood } from '~/components/ShortCardFood/ShortCardFood';
 import { ShortCardTitle } from '~/components/ShortCardFood/ShortCardTitle';
 import { recipeI } from '~/data/interface/data';
+import { categoryI } from '~/interfaces/categoryI';
+import { setNotification } from '~/services/features/notificationSlice';
+import { selectedCategories } from '~/services/features/selectors';
 
 export type CategoryInfoType = {
     name: string;
@@ -10,7 +18,46 @@ export type CategoryInfoType = {
     data: recipeI[];
 };
 
-export function CategoryInfo({ name, description, data }: CategoryInfoType) {
+export function CategoryInfo() {
+    const { category } = useCategoryContext();
+    const categoriesSavedData = useSelector(selectedCategories);
+    const [randomCategory, setRandomCategory] = useState<categoryI>();
+    const [randomSubcategoryIds, setRandomSubcategoryIds] = useState<string[]>([]);
+
+    useEffect(() => {
+        if (categoriesSavedData.categories.length > 0) {
+            const randomIndex = Math.floor(Math.random() * categoriesSavedData.categories.length);
+            const rCategory = categoriesSavedData.categories[randomIndex];
+            const ids = rCategory.subCategories.map((sub) => sub._id);
+            setRandomCategory(rCategory);
+            setRandomSubcategoryIds(ids);
+        }
+    }, [category, categoriesSavedData.categories]);
+
+    const { data, isLoading, isError } = useGetRelevantQuery(
+        { limit: 5, ids: randomSubcategoryIds },
+        { skip: !randomSubcategoryIds },
+    );
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (isError) {
+            dispatch(
+                setNotification({
+                    title: 'Ошибка сервера',
+                    description: 'Попробуйте поискать снова попозже',
+                }),
+            );
+        }
+    }, [isError, dispatch]);
+
+    if (isLoading) {
+        return <Loader />;
+    }
+    if (!data) {
+        return null;
+    }
     return (
         <Box display='flex' flexDirection='column' gap='24px' padding={{ base: '16px' }}>
             <Flex flexDirection={{ base: 'column', lg: 'row' }} alignItems='center' gap='10px'>
@@ -21,7 +68,7 @@ export function CategoryInfo({ name, description, data }: CategoryInfoType) {
                     mr='auto'
                     fontFamily='text'
                 >
-                    {name}
+                    {randomCategory?.title}
                 </Text>
                 <Text
                     ml='auto'
@@ -31,7 +78,7 @@ export function CategoryInfo({ name, description, data }: CategoryInfoType) {
                     maxW={{ xl: '578px', '3xl': '668px' }}
                     fontFamily='text'
                 >
-                    {description}
+                    {randomCategory?.description}
                 </Text>
             </Flex>
             <Grid
@@ -47,9 +94,15 @@ export function CategoryInfo({ name, description, data }: CategoryInfoType) {
                 </GridItem>
                 <GridItem colSpan={{ base: 4, md: 4, '3xl': 6 }}>
                     <Flex flexDirection='column' gap='12px'>
-                        <ShortCardTitle {...data[2]} />
-                        <ShortCardTitle {...data[3]} />
-                        <ShortCardTitle {...data[4]} />
+                        {data && randomCategory ? (
+                            <ShortCardTitle data={data[2]} category={randomCategory} />
+                        ) : null}
+                        {data && randomCategory ? (
+                            <ShortCardTitle data={data[3]} category={randomCategory} />
+                        ) : null}
+                        {data && randomCategory ? (
+                            <ShortCardTitle data={data[4]} category={randomCategory} />
+                        ) : null}
                     </Flex>
                 </GridItem>
             </Grid>

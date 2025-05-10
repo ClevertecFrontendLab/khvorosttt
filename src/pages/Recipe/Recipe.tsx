@@ -1,19 +1,44 @@
 import { Box, Flex } from '@chakra-ui/react';
-import { useParams } from 'react-router';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router';
 
+import { useGetRecipeByIdQuery } from '~/api/recipeApi';
 import { AuthorRecipe } from '~/components/AuthorRecipe/AuthorRecipe';
-import { compareDate } from '~/data/comparators';
-import { recipeI } from '~/data/interface/data';
-import menuRecipes from '~/data/menuData.json';
+import { Loader } from '~/components/Loader/Loader';
 import { Calories } from '~/sections/Calories/Calories';
 import { Ingredients } from '~/sections/Ingredients/Ingredients';
 import { NewRecipes } from '~/sections/NewRecipes/NewRecipes';
 import { RecipeDescription } from '~/sections/RecipeDescription/RecipeDescription';
 import { StepsCooking } from '~/sections/StepsCooking/StepsCooking';
+import { setNotification } from '~/services/features/notificationSlice';
 
 export function Recipe() {
     const { id } = useParams();
-    const data: recipeI = menuRecipes.filter((recipe) => recipe.id === Number(id))[0];
+    console.log(id);
+    const { data, isLoading, isError } = useGetRecipeByIdQuery(id, { skip: id === undefined });
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isError) {
+            dispatch(
+                setNotification({
+                    title: 'Ошибка сервера',
+                    description: 'Попробуйте поискать снова попозже',
+                }),
+            );
+            navigate(-1);
+        }
+    }, [isError, dispatch, navigate]);
+
+    if (isLoading) {
+        return <Loader />;
+    }
+
+    if (!data) {
+        return null;
+    }
     return (
         <Box w='100%' p='90px 0px'>
             <Flex direction='column' alignItems='center' gap='40px'>
@@ -26,12 +51,12 @@ export function Recipe() {
                     p='0px 20px'
                 >
                     <Calories {...data.nutritionValue} />
-                    <Ingredients data={data.ingredients} />
+                    <Ingredients data={data.ingredients} portion={data.portions} />
                     <StepsCooking data={data.steps} />
                     <AuthorRecipe name='Сергей Разумов' image='' email='@serge25' followers={554} />
                 </Flex>
                 <Box w='100%'>
-                    <NewRecipes data={[...menuRecipes].sort(compareDate).reverse().slice(0, 10)} />
+                    <NewRecipes />
                 </Box>
             </Flex>
         </Box>

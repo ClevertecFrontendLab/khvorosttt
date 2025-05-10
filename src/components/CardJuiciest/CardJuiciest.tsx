@@ -12,7 +12,8 @@ import {
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 
-import { recipeI } from '~/data/interface/data';
+import { IMAGE_BASED_PATH } from '~/data/consts';
+import { recipeI } from '~/interfaces/recipeI';
 
 import { CategoryMarker } from '../CategoryMarker/CategoryMarker';
 import { BookmarkIcon } from '../Icons/Bookmark';
@@ -27,11 +28,19 @@ import {
     SaveButtonStyle,
 } from './CardJuisiest.style';
 
-export function CardJuiciest({ data, index }: { data: recipeI; index: number }) {
+export function CardJuiciest({
+    data,
+    index,
+    type,
+}: {
+    data: recipeI;
+    index: number;
+    type?: string;
+}) {
     const navigate = useNavigate();
     return (
         <Card sx={CardStyle} direction={{ sm: 'row' }}>
-            <Image sx={CardImageStyle} src={data.image} alt={data.title} />
+            <Image sx={CardImageStyle} src={`${IMAGE_BASED_PATH}${data.image}`} alt={data.title} />
             <Stack p={{ base: '8px 8px 4px 8px', lg: '20px 24px' }} w='100%' overflow='hidden'>
                 <Flex sx={MarkerInteractionsStyle} alignItems='flex-start'>
                     <Flex wrap='wrap' gap='3px' direction={{ base: 'column', xl: 'row' }}>
@@ -63,7 +72,10 @@ export function CardJuiciest({ data, index }: { data: recipeI; index: number }) 
                         h={{ base: '24px', md: '32px' }}
                         data-test-id={`card-link-${index}`}
                         onClick={() => {
-                            navigate(`/${data.category[0]}/${data.subcategory[0]}/${data.id}`);
+                            if (!data._id) return;
+                            navigate(
+                                type === 'section' ? `the-juiciest/${data._id}` : `${data._id}`,
+                            );
                         }}
                     >
                         <Text>Готовить</Text>

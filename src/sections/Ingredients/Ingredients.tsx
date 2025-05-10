@@ -16,22 +16,22 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
-import { ingredientsI } from '~/data/interface/data';
+import { ingredientsI } from '~/interfaces/recipeI';
 
 import { TableHeadStyle } from './Ingredients.style';
 
-export function Ingredients({ data }: { data: ingredientsI[] }) {
-    const [count, setCount] = useState(1);
+export function Ingredients({ data, portion }: { data: ingredientsI[]; portion: number }) {
+    const [count, setCount] = useState(portion);
     return (
         <Flex direction='column' w='100%'>
             <Box overflowX='auto'>
                 <Table variant='simple'>
                     <Thead>
                         <Tr>
-                            <Th>
+                            <Th p='12px'>
                                 <Text sx={TableHeadStyle}>ИНГРЕДИЕНТЫ</Text>
                             </Th>
-                            <Th pr='0px'>
+                            <Th p='12px' pr='0px'>
                                 <Flex alignItems='center' gap='16px' justifyContent='flex-end'>
                                     <Text sx={TableHeadStyle}>ПОРЦИЙ</Text>
                                     <NumberInput
@@ -40,7 +40,7 @@ export function Ingredients({ data }: { data: ingredientsI[] }) {
                                         value={count}
                                         min={1}
                                         max={50}
-                                        step={0.25}
+                                        step={1}
                                         onChange={(value) => setCount(Number(value))}
                                     >
                                         <NumberInputField />
@@ -56,7 +56,12 @@ export function Ingredients({ data }: { data: ingredientsI[] }) {
                     <Tbody>
                         {data.map((ingredient, index) => (
                             <Tr key={index} bg={index % 2 === 0 ? 'rgba(0, 0, 0, 0.06)' : 'white'}>
-                                <Td color='rgba(0, 0, 0, 0.92)' fontWeight={500} fontSize='14px'>
+                                <Td
+                                    color='rgba(0, 0, 0, 0.92)'
+                                    fontWeight={500}
+                                    fontSize='14px'
+                                    p='12px'
+                                >
                                     {ingredient.title}
                                 </Td>
                                 <Td
@@ -67,9 +72,12 @@ export function Ingredients({ data }: { data: ingredientsI[] }) {
                                     display='flex'
                                     gap='3px'
                                     justifyContent='flex-end'
+                                    p='12px'
                                 >
                                     <Text data-test-id={`ingredient-quantity-${index}`}>
-                                        {ingredient.count ? count * ingredient.count : null}{' '}
+                                        {ingredient.count
+                                            ? (count * ingredient.count) / portion
+                                            : 0}
                                     </Text>
                                     <Text>{ingredient.measureUnit}</Text>
                                 </Td>

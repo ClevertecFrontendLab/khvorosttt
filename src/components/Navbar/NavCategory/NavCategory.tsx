@@ -12,13 +12,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 import { useCategoryContext } from '~/components/CategoryContext/CategoryContext';
-import { markerFood, markFood } from '~/data/consts';
+import { IMAGE_BASED_PATH } from '~/data/consts';
+import { categoryI, subCategoryI } from '~/interfaces/categoryI';
 import { applyFilters } from '~/services/features/recipeSlice';
 import { selectedFilters } from '~/services/features/selectors';
 
 export type navCategoryType = {
-    category: string;
-    subCategory: string[];
+    category: categoryI;
+    subCategory: subCategoryI[];
 };
 
 export function NavCategory(data: navCategoryType) {
@@ -40,16 +41,19 @@ export function NavCategory(data: navCategoryType) {
                 _expanded={{ bg: '#eaffc7' }}
                 borderRadius={0}
                 onClick={() => {
-                    selectCategory(data.category);
-                    navigate(`/${data.category}/${data.subCategory[0]}`);
+                    selectCategory(data.category._id);
+                    navigate(
+                        `/${data.category.category}/${data.category.subCategories[0].category}`,
+                    );
                     dispatch(applyFilters({ category, subcategory, filters }));
                 }}
-                data-test-id={data.category === 'vegan' ? 'vegan-cuisine' : data.category}
+                data-test-id={data.category.category === 'vegan' ? 'vegan-cuisine' : data.category}
+                w='100%'
             >
                 <Flex alignItems='center' gap='5px'>
-                    <Image src={markFood(data.category)} w='16px' h='16px' />
+                    <Image src={`${IMAGE_BASED_PATH}${data.category.icon}`} w='16px' h='16px' />
                     <Text fontSize='16px' textAlign='left' fontWeight={500}>
-                        {markerFood[data.category]}
+                        {data.category.title}
                     </Text>
                 </Flex>
                 <AccordionIcon ml='auto' />
@@ -61,22 +65,25 @@ export function NavCategory(data: navCategoryType) {
                         gap='10px'
                         key={index}
                         onClick={() => {
-                            selectSubcategory(subCategory);
+                            selectSubcategory(subCategory._id);
+                            navigate(`/${data.category.category}/${subCategory.category}`);
                             dispatch(applyFilters({ category, subcategory, filters }));
                         }}
-                        data-test-id={subcategory === subCategory ? `${subcategory}-active` : ''}
+                        data-test-id={
+                            subcategory === subCategory._id ? `${subCategory.category}-active` : ''
+                        }
                     >
                         <Box
                             w='1px'
                             h='24px'
                             borderRight={
-                                category === data.category && subcategory === subCategory
+                                category === data.category._id && subcategory === subCategory._id
                                     ? '4px solid #c4ff61'
                                     : '1px solid #c4ff61'
                             }
                         />
                         <Text fontSize='16px' fontWeight={500} fontFamily='text'>
-                            {markerFood[subCategory]}
+                            {subCategory.title}
                         </Text>
                     </Flex>
                 ))}

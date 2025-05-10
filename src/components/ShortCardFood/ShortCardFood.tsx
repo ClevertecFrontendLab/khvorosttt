@@ -1,6 +1,6 @@
 import { Card, CardBody, CardHeader, Flex, Heading, Text } from '@chakra-ui/react';
 
-import { recipeI } from '~/data/interface/data';
+import { recipeI } from '~/interfaces/recipeI';
 
 import { MarkerStyle } from '../CardNew/CardNew.style';
 import { CategoryMarker } from '../CategoryMarker/CategoryMarker';

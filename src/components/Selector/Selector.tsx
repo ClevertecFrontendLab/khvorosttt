@@ -1,43 +1,17 @@
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Button, Checkbox, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { markerFood } from '~/data/consts';
-import {
-    addAuthor,
-    addCategories,
-    removeAuthor,
-    removeCategories,
-} from '~/services/features/filtersSlice';
-import { selectedFilters } from '~/services/features/selectors';
 
 export interface SelectorProps {
     type: string;
     placeholder: string;
     items: string[];
+    selected: string[];
+    handleFunc: (value: string) => void;
 }
 
-export function Selector({ type, placeholder, items }: SelectorProps) {
-    const dispatch = useDispatch();
-    const { drawer } = useSelector(selectedFilters);
-
-    const handleCheckboxChange = (value: string) => {
-        if (type === 'category') {
-            if (drawer.selectedCategories.includes(value)) {
-                dispatch(removeCategories(value));
-            } else {
-                dispatch(addCategories(value));
-            }
-        } else {
-            if (drawer.selectedAuthors.includes(value)) {
-                dispatch(removeAuthor(value));
-            } else {
-                dispatch(addAuthor(value));
-            }
-        }
-    };
+export function Selector({ type, placeholder, items, selected, handleFunc }: SelectorProps) {
     return (
-        <Menu>
+        <Menu matchWidth>
             <MenuButton
                 as={Button}
                 sx={{
@@ -47,7 +21,7 @@ export function Selector({ type, placeholder, items }: SelectorProps) {
                     fontSize: '16px',
                     color: 'rgba(0, 0, 0, 0.64)',
                     fontFamily: 'text',
-                    w: '260px',
+                    w: '100%',
                     p: '8px 16px',
                     textAlign: 'left',
                 }}
@@ -57,7 +31,7 @@ export function Selector({ type, placeholder, items }: SelectorProps) {
             >
                 {placeholder}
             </MenuButton>
-            <MenuList zIndex={2} w='308' p='4px 0px'>
+            <MenuList zIndex={2} w='100%' minW='unset' p='4px 0px'>
                 {items.map((item, index) => (
                     <MenuItem
                         key={index}
@@ -66,12 +40,8 @@ export function Selector({ type, placeholder, items }: SelectorProps) {
                         borderRadius={0}
                     >
                         <Checkbox
-                            isChecked={
-                                type === 'category'
-                                    ? drawer.selectedCategories.includes(item)
-                                    : drawer.selectedAuthors.includes(item)
-                            }
-                            onChange={() => handleCheckboxChange(item)}
+                            isChecked={selected.includes(item)}
+                            onChange={() => handleFunc(item)}
                             p='6px 16px'
                             w='100%'
                             fontSize='14px'
@@ -89,7 +59,7 @@ export function Selector({ type, placeholder, items }: SelectorProps) {
                             }}
                             data-test-id={item === 'vegan' ? 'checkbox-веганская кухня' : ''}
                         >
-                            {type === 'category' ? markerFood[item] : item}
+                            {item}
                         </Checkbox>
                     </MenuItem>
                 ))}

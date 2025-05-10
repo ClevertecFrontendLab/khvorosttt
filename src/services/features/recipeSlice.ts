@@ -41,25 +41,25 @@ export const recipeSlice = createSlice({
                 result = result.filter((recipe) => recipe.subcategory.includes(subcategory));
             }
 
-            if (filters.sectionAllergens.allergensActive) {
-                if (filters.sectionAllergens.selectedAllergens.length) {
-                    const allergens = filters.sectionAllergens.selectedAllergens.map((a: string) =>
-                        a.toLowerCase(),
-                    );
-                    result = result.filter(
-                        (recipe) =>
-                            !recipe.ingredients.some((ingredient) =>
-                                allergens.some((allergen: string) =>
-                                    ingredient.title.toLowerCase().includes(allergen),
-                                ),
-                            ),
-                    );
-                }
-            }
+            // if (filters.allergensActive) {
+            //     if (filters.selectedAllergens.length) {
+            //         const allergens = filters.selectedAllergens.map((a: string) =>
+            //             a.toLowerCase(),
+            //         );
+            //         result = result.filter(
+            //             (recipe) =>
+            //                 !recipe.ingredients.some((ingredient) =>
+            //                     allergens.some((allergen: string) =>
+            //                         ingredient.title.toLowerCase().includes(allergen),
+            //                     ),
+            //                 ),
+            //         );
+            //     }
+            // }
 
-            if (filters.drawer.allergensActive) {
-                if (filters.drawer.selectedAllergens.length) {
-                    const allergens = filters.drawer.selectedAllergens.map((a: string) =>
+            if (filters.allergensActive) {
+                if (filters.selectedAllergens.length) {
+                    const allergens = filters.selectedAllergens.map((a: string) =>
                         (russianAllergens[a] || a).toLowerCase(),
                     );
                     result = result.filter(
@@ -73,28 +73,28 @@ export const recipeSlice = createSlice({
                 }
             }
 
-            if (filters.drawer.selectedMeatType.length > 0) {
+            if (filters.selectedMeatType.length > 0) {
                 result = result.filter((recipe) =>
-                    filters.drawer.selectedMeatType.includes(recipe.meat || ''),
+                    filters.selectedMeatType.includes(recipe.meat || ''),
                 );
             }
 
-            if (filters.drawer.selectedSideDishType.length > 0) {
+            if (filters.selectedSideDishType.length > 0) {
                 result = result.filter((recipe) =>
-                    filters.drawer.selectedSideDishType.includes(recipe.side || ''),
+                    filters.selectedSideDishType.includes(recipe.side || ''),
                 );
             }
 
-            if (filters.drawer.selectedAuthors.length > 0) {
+            if (filters.selectedAuthors.length > 0) {
                 result = result.filter((recipe) =>
-                    filters.drawer.selectedAuthors.includes(recipe.author || ''),
+                    filters.selectedAuthors.includes(recipe.author || ''),
                 );
             }
 
-            if (filters.drawer.selectedCategories.length > 0) {
+            if (filters.selectedCategories.length > 0) {
                 result = result.filter((recipe) =>
                     recipe.category.some((category) =>
-                        filters.drawer.selectedCategories.includes(category),
+                        filters.selectedCategories.includes(category),
                     ),
                 );
             }
