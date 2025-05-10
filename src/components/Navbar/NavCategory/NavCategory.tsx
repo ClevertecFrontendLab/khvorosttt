@@ -70,7 +70,7 @@ export function NavCategory(data: navCategoryType) {
                             dispatch(applyFilters({ category, subcategory, filters }));
                         }}
                         data-test-id={
-                            subcategory === subCategory._id ? `${subcategory}-active` : ''
+                            subcategory === subCategory._id ? `${subCategory.category}-active` : ''
                         }
                     >
                         <Box

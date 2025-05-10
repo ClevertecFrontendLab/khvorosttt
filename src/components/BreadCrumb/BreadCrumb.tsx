@@ -13,7 +13,7 @@ export function BreadCrumb({ isOpen, toggleMenu }: BurgerMenuProps) {
     const location = useLocation();
     const paths = location.pathname.split('/').filter((x) => x);
     const { id } = useParams();
-    const { data: recipe } = useGetRecipeByIdQuery(id);
+    const { data: recipe } = useGetRecipeByIdQuery(id, { skip: id === undefined });
     const categoriesSavedData = useSelector(selectedCategories);
 
     if (location.pathname === '/not-found') {
