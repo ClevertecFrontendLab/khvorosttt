@@ -1,7 +1,5 @@
 import { Flex, Tag, TagCloseButton, TagLabel } from '@chakra-ui/react';
 
-import { rusName } from '~/data/consts';
-
 export interface FilterTagsProps {
     filterType: string;
     items: string[];
@@ -20,7 +18,7 @@ export function FilterTags({ filterType, items, handleRemoveTag }: FilterTagsPro
                     colorScheme='green'
                     data-test-id='filter-tag'
                 >
-                    <TagLabel>{rusName(filterType, item)}</TagLabel>
+                    <TagLabel>{item}</TagLabel>
                     <TagCloseButton onClick={() => handleRemoveTag(filterType, item)} />
                 </Tag>
             ))}

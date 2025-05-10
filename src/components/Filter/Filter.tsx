@@ -7,26 +7,25 @@ import {
     DrawerFooter,
     DrawerHeader,
     DrawerOverlay,
-    Flex,
 } from '@chakra-ui/react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import { meatTypeArray, sideDishTypeArray } from '~/data/consts';
+import { meatTypeArrayRus, sideDishTypeArrayRus } from '~/data/consts';
 import menuCategory from '~/data/menuCategory.json';
 import {
-    cleanDrawer,
-    removeAuthor,
-    removeCategories,
-    removeDrawerAllergen,
-    removeMeatType,
-    removeSideDishType,
+    cleanAllergen,
+    setAllergen,
+    setAuthors,
+    setCategories,
+    setMeatType,
+    setSideDish,
+    toggleAllergensActive,
 } from '~/services/features/filtersSlice';
-import { applyFilters } from '~/services/features/recipeSlice';
-import { selectedFilters } from '~/services/features/selectors';
 
 import { Allergens } from '../Allergens/Allergens';
-import { FilterTags } from '../FilterTags/FilterTags';
-import { MeatDideFilter } from '../MeatSideFilter/MeatSideFilter';
+import { FilterTagPanel } from '../FilterTagPanel/FilterTagPanel';
+import { MeatSideFilter } from '../MeatSideFilter/MeatSideFilter';
 import { Selector } from '../Selector/Selector';
 
 interface FilterProps {
@@ -36,27 +35,93 @@ interface FilterProps {
 
 export function Filter({ isOpen, onClose }: FilterProps) {
     const dispatch = useDispatch();
-    const { drawer } = useSelector(selectedFilters);
-    const filters = useSelector(selectedFilters);
+    const [categoryTempArray, setCategoryTempArray] = useState<string[]>([]);
+    const [authorsTempArray, setAuthorsTempArray] = useState<string[]>([]);
+    const [meatTypeTempArray, setMeatTempArray] = useState<string[]>([]);
+    const [sideDishTempArray, setSideDishTempArray] = useState<string[]>([]);
+    const [allergensTempArray, setAllergensTempArray] = useState<string[]>([]);
+    const [isActive, setActive] = useState<boolean>(false);
 
     const handleRemoveTag = (filterType: string, item: string) => {
         switch (filterType) {
             case 'category':
-                dispatch(removeCategories(item));
+                setCategoryTempArray((arr) => arr.filter((a) => a !== item));
                 break;
             case 'author':
-                dispatch(removeAuthor(item));
+                setAuthorsTempArray((arr) => arr.filter((a) => a !== item));
                 break;
             case 'meatType':
-                dispatch(removeMeatType(item));
+                setMeatTempArray((arr) => arr.filter((a) => a !== item));
                 break;
             case 'sideDishType':
-                dispatch(removeSideDishType(item));
+                setSideDishTempArray((arr) => arr.filter((a) => a !== item));
                 break;
             case 'allergens':
-                dispatch(removeDrawerAllergen(item));
+                setAllergensTempArray((arr) => arr.filter((a) => a !== item));
                 break;
         }
+    };
+
+    const changeCategorySelector = (item: string) => {
+        if (categoryTempArray.includes(item)) {
+            setCategoryTempArray((arr) => arr.filter((a) => a !== item));
+        } else {
+            setCategoryTempArray((arr) => [...arr, item]);
+        }
+    };
+
+    const changeAuthorsSelector = (item: string) => {
+        if (authorsTempArray.includes(item)) {
+            setAuthorsTempArray((arr) => arr.filter((a) => a !== item));
+        } else {
+            setAuthorsTempArray((arr) => [...arr, item]);
+        }
+    };
+
+    const changeMeatSelector = (item: string) => {
+        if (meatTypeTempArray.includes(item)) {
+            setMeatTempArray((arr) => arr.filter((a) => a !== item));
+        } else {
+            setMeatTempArray((arr) => [...arr, item]);
+        }
+    };
+
+    const changeSideDishSelector = (item: string) => {
+        if (sideDishTempArray.includes(item)) {
+            setSideDishTempArray((arr) => arr.filter((a) => a !== item));
+        } else {
+            setSideDishTempArray((arr) => [...arr, item]);
+        }
+    };
+
+    const changeAllergenSelector = (item: string) => {
+        if (allergensTempArray.includes(item)) {
+            setAllergensTempArray((arr) => arr.filter((a) => a !== item));
+        } else {
+            setAllergensTempArray((arr) => [...arr, item]);
+        }
+    };
+
+    const handleActive = () => {
+        setActive((a) => !a);
+    };
+
+    const cleanTempArrays = () => {
+        toggleAllergensActive(false);
+        setAllergensTempArray([]);
+        setMeatTempArray([]);
+        setAuthorsTempArray([]);
+        setCategoryTempArray([]);
+        setSideDishTempArray([]);
+    };
+
+    const setFilters = () => {
+        dispatch(toggleAllergensActive(isActive));
+        dispatch(setCategories(categoryTempArray));
+        dispatch(setAuthors(authorsTempArray));
+        dispatch(setMeatType(meatTypeTempArray));
+        dispatch(setSideDish(sideDishTempArray));
+        dispatch(setAllergen(allergensTempArray));
     };
 
     return (
@@ -96,7 +161,7 @@ export function Filter({ isOpen, onClose }: FilterProps) {
                         w='24px'
                         color='white'
                         data-test-id='close-filter-drawer'
-                        onClick={() => cleanDrawer()}
+                        onClick={() => cleanAllergen()}
                     />
                     <DrawerHeader fontWeight={700} fontSize='24px' fontFamily='text'>
                         Фильтр
@@ -112,52 +177,52 @@ export function Filter({ isOpen, onClose }: FilterProps) {
                             placeholder='Категория'
                             type='category'
                             items={[...menuCategory.map((item) => item.category)]}
+                            selected={categoryTempArray}
+                            handleFunc={changeCategorySelector}
                         />
-                        <Selector placeholder='Поиск по автору' type='author' items={[]} />
-                        <MeatDideFilter type='meatType' title='Тип мяса:' items={meatTypeArray} />
-                        <MeatDideFilter
-                            type='sideDishType'
+                        <Selector
+                            placeholder='Поиск по автору'
+                            type='author'
+                            items={[]}
+                            selected={authorsTempArray}
+                            handleFunc={changeAuthorsSelector}
+                        />
+                        <MeatSideFilter
+                            title='Тип мяса:'
+                            items={meatTypeArrayRus}
+                            selected={meatTypeTempArray}
+                            handleFunc={changeMeatSelector}
+                        />
+                        <MeatSideFilter
                             title='Тип гарнира:'
-                            items={sideDishTypeArray}
+                            items={sideDishTypeArrayRus}
+                            selected={sideDishTempArray}
+                            handleFunc={changeSideDishSelector}
                         />
 
-                        <Allergens type='filter' />
-                        <Flex w='100%' wrap='wrap'>
-                            <FilterTags
-                                filterType='category'
-                                items={drawer.selectedCategories}
-                                handleRemoveTag={handleRemoveTag}
-                            />
-                            <FilterTags
-                                filterType='author'
-                                items={drawer.selectedAuthors}
-                                handleRemoveTag={handleRemoveTag}
-                            />
-                            <FilterTags
-                                filterType='meatType'
-                                items={drawer.selectedMeatType}
-                                handleRemoveTag={handleRemoveTag}
-                            />
-                            <FilterTags
-                                filterType='sideDishType'
-                                items={drawer.selectedSideDishType}
-                                handleRemoveTag={handleRemoveTag}
-                            />
-                            <FilterTags
-                                filterType='allergens'
-                                items={drawer.selectedAllergens}
-                                handleRemoveTag={handleRemoveTag}
-                            />
-                        </Flex>
+                        <Allergens
+                            type='filter'
+                            handleFunc={changeAllergenSelector}
+                            selected={allergensTempArray}
+                            isActive={isActive}
+                            setActive={handleActive}
+                        />
+                        <FilterTagPanel
+                            type='filter'
+                            category={categoryTempArray}
+                            authors={authorsTempArray}
+                            meatType={meatTypeTempArray}
+                            sideDishType={sideDishTempArray}
+                            allergens={allergensTempArray}
+                            handleRemoveTag={handleRemoveTag}
+                        />
                     </DrawerBody>
 
                     <DrawerFooter p='5px'>
                         <Button
                             variant='outline'
                             mr={3}
-                            onClick={() => {
-                                dispatch(cleanDrawer());
-                            }}
+                            onClick={cleanTempArrays}
                             w={{ base: '146px', '2xl': '205px' }}
                             p={{ base: '0px 12px', '2xl': '0px 24px' }}
                             fontWeight={600}
@@ -178,16 +243,17 @@ export function Filter({ isOpen, onClose }: FilterProps) {
                             data-test-id='find-recipe-button'
                             sx={{
                                 pointerEvents:
-                                    drawer.selectedAllergens.length ||
-                                    drawer.selectedSideDishType.length ||
-                                    drawer.selectedAuthors.length ||
-                                    drawer.selectedCategories.length ||
-                                    drawer.selectedMeatType.length
+                                    allergensTempArray.length ||
+                                    sideDishTempArray.length ||
+                                    authorsTempArray.length ||
+                                    categoryTempArray.length ||
+                                    meatTypeTempArray.length
                                         ? 'auto'
                                         : 'none',
                             }}
                             onClick={() => {
-                                dispatch(applyFilters({ filters }));
+                                setFilters();
+                                cleanTempArrays();
                                 onClose();
                             }}
                         >
