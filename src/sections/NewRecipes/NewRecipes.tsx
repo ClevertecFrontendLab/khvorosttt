@@ -77,26 +77,28 @@ export function NewRecipes() {
                         },
                     }}
                 >
-                    {[...data!]
-                        .sort(compareDate)
-                        .reverse()
-                        .map((recipe, index) => (
-                            <SwiperSlide
-                                key={index}
-                                style={{ height: 'auto' }}
-                                data-test-id={`carousel-card-${index}`}
-                            >
-                                <Box
-                                    key={index}
-                                    flex='0 0 auto'
-                                    w='100%'
-                                    height='100%'
-                                    mr={{ base: '0px', xl: '12px' }}
-                                >
-                                    <CardNew {...recipe} />
-                                </Box>
-                            </SwiperSlide>
-                        ))}
+                    {data
+                        ? data
+                              .sort(compareDate)
+                              .reverse()
+                              .map((recipe, index) => (
+                                  <SwiperSlide
+                                      key={index}
+                                      style={{ height: 'auto' }}
+                                      data-test-id={`carousel-card-${index}`}
+                                  >
+                                      <Box
+                                          key={index}
+                                          flex='0 0 auto'
+                                          w='100%'
+                                          height='100%'
+                                          mr={{ base: '0px', xl: '12px' }}
+                                      >
+                                          <CardNew {...recipe} />
+                                      </Box>
+                                  </SwiperSlide>
+                              ))
+                        : null}
                 </Swiper>
 
                 <IconButton

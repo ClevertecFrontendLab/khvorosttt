@@ -1,0 +1,32 @@
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
+import { authI, errorI, loginI, successI } from '~/interfaces/authI';
+
+export const authApi = createApi({
+    reducerPath: 'auth',
+    baseQuery: fetchBaseQuery({
+        baseUrl: 'https://marathon-api.clevertec.ru/auth',
+        credentials: 'include',
+        prepareHeaders: (headers) => {
+            const token = localStorage.getItem('access_token');
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        },
+    }),
+    endpoints: (builder) => ({
+        check: builder.query<authI, void>({
+            query: () => '/check-auth',
+        }),
+        login: builder.mutation<successI | errorI, loginI>({
+            query: (credentials) => ({
+                url: '/login',
+                method: 'POST',
+                body: credentials,
+            }),
+        }),
+    }),
+});
+
+export const { useCheckQuery, useLoginMutation } = authApi;

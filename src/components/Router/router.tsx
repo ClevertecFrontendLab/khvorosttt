@@ -1,6 +1,9 @@
 import { createBrowserRouter, Navigate } from 'react-router';
 
 import App from '~/app/App';
+import { Auth } from '~/pages/Auth/Auth';
+import { Login } from '~/pages/Auth/Login/Login';
+import { SignUp } from '~/pages/Auth/SignUp/SignUp';
 import { ErrorPage } from '~/pages/Error/Error';
 import { Home } from '~/pages/Home/Home';
 import { JuiciestPage } from '~/pages/Juiciest/Juiciest';
@@ -43,6 +46,20 @@ const router = createBrowserRouter([
             {
                 path: '*',
                 element: <Navigate to='/not-found' />,
+            },
+        ],
+    },
+    {
+        path: '/auth',
+        element: <Auth />,
+        children: [
+            {
+                path: 'login',
+                element: <Login />,
+            },
+            {
+                path: 'signup',
+                element: <SignUp />,
             },
         ],
     },
