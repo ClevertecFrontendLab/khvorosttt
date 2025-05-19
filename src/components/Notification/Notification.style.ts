@@ -1,32 +1,31 @@
 import type { SystemStyleObject } from '@chakra-ui/styled-system';
 
-export const ErrorNotificationStyle: SystemStyleObject = {
+export const NotificationStyle: SystemStyleObject = {
     position: 'fixed',
     bottom: '100px',
     left: '50%',
     transform: 'translateX(-50%)',
     w: { base: '328px', '2xl': '400px' },
     p: '12px 18px',
-    bg: '#e53e3e',
     justifyContent: 'space-between',
     zIndex: 100,
 };
 
-export const ErrorHeadingStyle: SystemStyleObject = {
+export const HeadingStyle: SystemStyleObject = {
     color: 'white',
     fontWeight: 700,
     fontSize: '16px',
     fontFamily: 'text',
 };
 
-export const ErrorTextStyle: SystemStyleObject = {
+export const TextStyle: SystemStyleObject = {
     color: 'white',
     fontWeight: 400,
     fontSize: '16px',
     fontFamily: 'text',
 };
 
-export const ErrorCloseButtonStyle: SystemStyleObject = {
+export const CloseButtonStyle: SystemStyleObject = {
     alignSelf: 'flex-start',
     position: 'relative',
     right: 0,

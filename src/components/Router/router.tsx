@@ -9,6 +9,7 @@ import { Home } from '~/pages/Home/Home';
 import { JuiciestPage } from '~/pages/Juiciest/Juiciest';
 import { Recipe } from '~/pages/Recipe/Recipe';
 import { Vegan } from '~/pages/Vegan/Vegan';
+import { Verification } from '~/pages/Verification/Verification';
 
 const router = createBrowserRouter([
     {
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
                 element: <SignUp />,
             },
         ],
+    },
+    {
+        path: 'verification',
+        element: <Verification />,
     },
 ]);
 
