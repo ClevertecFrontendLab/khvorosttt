@@ -19,6 +19,15 @@ const theme = extendTheme({
     colors: {
         headerBg: '#ffffd3',
     },
+    components: {
+        Progress: {
+            baseStyle: {
+                filledTrack: {
+                    bg: '#c4ff61',
+                },
+            },
+        },
+    },
 });
 
 export default theme;

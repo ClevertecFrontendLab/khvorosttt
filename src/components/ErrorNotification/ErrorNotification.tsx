@@ -1,12 +1,4 @@
-import {
-    Alert,
-    AlertDescription,
-    AlertIcon,
-    AlertTitle,
-    Box,
-    CloseButton,
-    useDisclosure,
-} from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { clearNotification } from '~/services/features/notificationSlice';
@@ -20,18 +12,17 @@ import {
 } from './errorNotification.style';
 
 export function ErrorNotification() {
-    const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
     const { title, description } = useSelector(selectedNotification);
     const dispatch = useDispatch();
 
     const closeAction = () => {
         dispatch(clearNotification());
-        onClose();
     };
 
-    if (!isOpen || !title) {
+    if (!title) {
         return null;
     }
+
     return (
         <Alert status='error' sx={ErrorNotificationStyle} data-test-id='error-notification'>
             <AlertIcon color='white' />

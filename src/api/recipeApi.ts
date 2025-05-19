@@ -38,7 +38,7 @@ export const recipesApi = createApi({
             }),
         }),
         getRelevant: builder.query<recipeI[], { ids: string[]; limit: number }>({
-            query: ({ ids, limit }) => `/category?limit=${limit}&subcategoriesIds=${ids.join(',')}`,
+            query: ({ ids, limit }) => `?limit=${limit}&subcategoriesIds=${ids.join(',')}`,
             transformResponse: (response: recipeResponceI) => response.data,
         }),
         getRecipeWithSearch: builder.query<

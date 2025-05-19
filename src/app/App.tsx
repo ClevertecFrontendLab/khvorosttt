@@ -2,8 +2,9 @@ import './App.css';
 
 import { Box, Grid, GridItem, Hide, Show } from '@chakra-ui/react';
 import { useState } from 'react';
-import { Outlet } from 'react-router';
+import { Outlet, useNavigate } from 'react-router';
 
+import { useCheckQuery } from '~/api/authApi';
 import { BurgerMenu } from '~/components/BurgerMenu/BurgerMenu';
 import { Header } from '~/components/Header/header';
 import { Footer } from '~/components/MTFooter/MTFooter';
@@ -12,7 +13,13 @@ import { NotificationAside } from '~/components/NotificationAside/NotificationAs
 import { useGetPostsQuery } from '~/query/services/posts.ts';
 
 function App() {
+    const { isLoading } = useCheckQuery();
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState<boolean>(false);
+
+    if (isLoading) {
+        navigate('/auth/login');
+    }
 
     const toggleMenu = () => {
         setIsOpen((prev) => !prev);

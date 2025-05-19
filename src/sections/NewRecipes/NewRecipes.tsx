@@ -10,7 +10,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { useGetNewestRecipesQuery } from '~/api/recipeApi';
 import { CardNew } from '~/components/CardNew/CardNew';
 import { Loader } from '~/components/Loader/Loader';
-import { compareDate } from '~/data/comparators';
 import { setNotification } from '~/services/features/notificationSlice';
 
 import {
@@ -78,26 +77,23 @@ export function NewRecipes() {
                     }}
                 >
                     {data
-                        ? data
-                              .sort(compareDate)
-                              .reverse()
-                              .map((recipe, index) => (
-                                  <SwiperSlide
+                        ? data.map((recipe, index) => (
+                              <SwiperSlide
+                                  key={index}
+                                  style={{ height: 'auto' }}
+                                  data-test-id={`carousel-card-${index}`}
+                              >
+                                  <Box
                                       key={index}
-                                      style={{ height: 'auto' }}
-                                      data-test-id={`carousel-card-${index}`}
+                                      flex='0 0 auto'
+                                      w='100%'
+                                      height='100%'
+                                      mr={{ base: '0px', xl: '12px' }}
                                   >
-                                      <Box
-                                          key={index}
-                                          flex='0 0 auto'
-                                          w='100%'
-                                          height='100%'
-                                          mr={{ base: '0px', xl: '12px' }}
-                                      >
-                                          <CardNew {...recipe} />
-                                      </Box>
-                                  </SwiperSlide>
-                              ))
+                                      <CardNew {...recipe} />
+                                  </Box>
+                              </SwiperSlide>
+                          ))
                         : null}
                 </Swiper>
 

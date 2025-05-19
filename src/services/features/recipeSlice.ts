@@ -41,22 +41,6 @@ export const recipeSlice = createSlice({
                 result = result.filter((recipe) => recipe.subcategory.includes(subcategory));
             }
 
-            // if (filters.allergensActive) {
-            //     if (filters.selectedAllergens.length) {
-            //         const allergens = filters.selectedAllergens.map((a: string) =>
-            //             a.toLowerCase(),
-            //         );
-            //         result = result.filter(
-            //             (recipe) =>
-            //                 !recipe.ingredients.some((ingredient) =>
-            //                     allergens.some((allergen: string) =>
-            //                         ingredient.title.toLowerCase().includes(allergen),
-            //                     ),
-            //                 ),
-            //         );
-            //     }
-            // }
-
             if (filters.allergensActive) {
                 if (filters.selectedAllergens.length) {
                     const allergens = filters.selectedAllergens.map((a: string) =>
