@@ -1,5 +1,18 @@
 import type { SystemStyleObject } from '@chakra-ui/styled-system';
 
+export const ButtonStyle: SystemStyleObject = {
+    p: '0px 24px',
+    borderRadius: '6px',
+    color: 'white',
+    border: '1px solid rgba(0, 0, 0, 0.08)',
+    bg: 'rgba(0, 0, 0, 0.92)',
+    h: '48px',
+    fontWeight: 600,
+    fontSize: '18px',
+    fontFamily: 'text',
+    w: '100%',
+};
+
 export const ContentStyle: SystemStyleObject = {
     w: { base: '316px', lg: '396px' },
     bg: 'white',
@@ -22,7 +35,15 @@ export const CloseStyle: SystemStyleObject = {
 };
 
 export const TextStyle: SystemStyleObject = {
-    color: 'rgba(0, 0, 0, 0.92)',
+    color: 'rgba(0, 0, 0, 0.64)',
+    fontWeight: 400,
+    fontSize: '16px',
+    fontFamily: 'text',
+    textAlign: 'center',
+};
+
+export const LabelStyle: SystemStyleObject = {
+    color: 'black',
     fontWeight: 400,
     fontSize: '16px',
     fontFamily: 'text',
@@ -30,13 +51,16 @@ export const TextStyle: SystemStyleObject = {
 };
 
 export const HelpStyle: SystemStyleObject = {
-    color: 'rgba(0, 0, 0, 0.48)',
+    color: 'rgba(0, 0, 0, 0.64)',
     fontWeight: 400,
     fontSize: '12px',
     fontFamily: 'text',
     textAlign: 'center',
 };
 
-export const EmailStyle: SystemStyleObject = {
-    fontWeight: 600,
+export const ViewStyle: SystemStyleObject = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    h: '48px',
 };

@@ -7,7 +7,7 @@ export const LoaderStyle: SystemStyleObject = {
     w: '100%',
     h: '100%',
     bg: 'rgba(0, 0, 0, 0.16)',
-    zIndex: 10,
+    zIndex: 1600,
     backdropFilter: 'blur(4px)',
 };
 

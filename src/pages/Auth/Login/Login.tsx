@@ -21,7 +21,10 @@ import { useLoginMutation } from '~/api/authApi';
 import { Loader } from '~/components/Loader/Loader';
 import { setNotification } from '~/services/features/notificationSlice';
 
+import { ForgotModal } from '../components/ForgotModal/ForgotModal';
+import { PINModal } from '../components/PINModal/PINModal';
 import { RepeatModal } from '../components/RepeatModal/RepeatModal';
+import { RestoreModal } from '../components/RestoreModal/RestoreModal';
 import { schema } from '../shema/loginShema';
 import {
     ForgotButtonStyle,
@@ -50,8 +53,16 @@ export function Login() {
     const [loginUser, { isLoading }] = useLoginMutation();
     const dispatch = useDispatch();
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { isOpen: isForgotOpen, onOpen: onForgotOpen, onClose: onForgotClose } = useDisclosure();
+    const [modalEmail, setModalEmail] = useState('');
+    const { isOpen: isPINOpen, onOpen: onPINOpen, onClose: onPINClose } = useDisclosure();
     const [lastFormData, setLastFormData] = useState<LoginInputs | null>(null);
     const navigate = useNavigate();
+    const {
+        isOpen: isRestoreOpen,
+        onOpen: onRestoreOpen,
+        onClose: onRestoreClose,
+    } = useDisclosure();
 
     const sendLoginRequest = (data: LoginInputs) => {
         loginUser({ login: data.login, password: data.password })
@@ -63,6 +74,7 @@ export function Login() {
                         setNotification({
                             title: err.data?.message || 'Неверный логин или пароль',
                             description: 'Попробуйте снова.',
+                            typeN: 'error',
                         }),
                     );
                 } else if (err.status === 403) {
@@ -70,6 +82,7 @@ export function Login() {
                         setNotification({
                             title: err.data?.message || 'E-mail не верифицирован',
                             description: 'Проверьте почту и перейдите по ссылке.',
+                            typeN: 'error',
                         }),
                     );
                 } else if (err.status === 500) {
@@ -146,7 +159,7 @@ export function Login() {
                         <Button
                             type='button'
                             variant='unstyled'
-                            onClick={() => {}}
+                            onClick={onForgotOpen}
                             sx={ForgotButtonStyle}
                             data-test-id='forgot-password'
                         >
@@ -158,7 +171,20 @@ export function Login() {
                         onClose={onClose}
                         repeater={lastFormData ? () => sendLoginRequest(lastFormData) : undefined}
                     />
+                    <ForgotModal
+                        isOpen={isForgotOpen}
+                        onClose={onForgotClose}
+                        onPINOpen={onPINOpen}
+                        setModalEmail={(value) => setModalEmail(value)}
+                    />
                 </Flex>
+                <PINModal
+                    onClose={onPINClose}
+                    isOpen={isPINOpen}
+                    email={modalEmail}
+                    restoreAction={onRestoreOpen}
+                />
+                <RestoreModal isOpen={isRestoreOpen} onClose={onRestoreClose} email={modalEmail} />
             </form>
         </>
     );

@@ -26,6 +26,7 @@ export function Recipe() {
                 setNotification({
                     title: 'Ошибка сервера',
                     description: 'Попробуйте поискать снова попозже',
+                    typeN: 'error',
                 }),
             );
             navigate(-1);

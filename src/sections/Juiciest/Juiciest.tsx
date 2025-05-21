@@ -25,6 +25,7 @@ export function Juiciest({ title }: JuiciestProps) {
                 setNotification({
                     title: 'Ошибка сервера',
                     description: 'Попробуйте поискать снова попозже',
+                    typeN: 'error',
                 }),
             );
         }

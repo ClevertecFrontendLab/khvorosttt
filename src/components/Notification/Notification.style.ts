@@ -8,7 +8,7 @@ export const NotificationStyle: SystemStyleObject = {
     w: { base: '328px', '2xl': '400px' },
     p: '12px 18px',
     justifyContent: 'space-between',
-    zIndex: 100,
+    zIndex: 1600,
 };
 
 export const HeadingStyle: SystemStyleObject = {

@@ -17,17 +17,19 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router';
 
 import { useSignupMutation } from '~/api/authApi';
 import { Loader } from '~/components/Loader/Loader';
+import { VerificationModal } from '~/pages/Verification/components/VerificationModal/VerificationModal';
 import { setNotification } from '~/services/features/notificationSlice';
 
+import { LastStepModal } from '../components/LastStepModal/LastStepModal';
 import { InputStyle, LabelStyle, SubmitButtonStyle, ViewStyle } from '../Login/login.style';
 import { schema } from '../shema/signupShema';
-import { LastStepModal } from './components/LastStepModal/LastStepModal';
 import { FormStyle } from './signUp.style';
 
-type SignUpInputs = {
+export type SignUpInputs = {
     name: string;
     surname: string;
     email: string;
@@ -87,8 +89,25 @@ export function SignUp() {
     const [step, setStep] = useState(1);
     const [signUpUser, { isLoading }] = useSignupMutation();
     const dispatch = useDispatch();
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const {
+        isOpen: isLastStepOpen,
+        onOpen: onLastStepOpen,
+        onClose: onLastStepClose,
+    } = useDisclosure();
     const [email, setEmail] = useState('');
+    const location = useLocation();
+    const verificationError = location.state?.verificationError;
+    const {
+        isOpen: isVerificationOpen,
+        onOpen: onVerificationOpen,
+        onClose: onVerificationClose,
+    } = useDisclosure();
+
+    useEffect(() => {
+        if (verificationError) {
+            onVerificationOpen();
+        }
+    }, [verificationError, onVerificationOpen]);
 
     const handleSignUp = (data: SignUpInputs) => {
         setEmail(data.email);
@@ -100,13 +119,14 @@ export function SignUp() {
             password: data.password,
         })
             .unwrap()
-            .then(() => onOpen())
+            .then(() => onLastStepOpen())
             .catch((err) => {
                 if (err.status === 400) {
                     dispatch(
                         setNotification({
                             title: err.data?.message,
                             description: '',
+                            typeN: 'error',
                         }),
                     );
                 } else if (err.status >= 500 && err.status < 600) {
@@ -114,6 +134,7 @@ export function SignUp() {
                         setNotification({
                             title: 'Ошибка сервера',
                             description: 'Попробуйте немного позже',
+                            typeN: 'error',
                         }),
                     );
                 }
@@ -302,7 +323,8 @@ export function SignUp() {
                     ) : null}
                 </Flex>
             </form>
-            <LastStepModal isOpen={isOpen} onClose={onClose} email={email} />
+            <LastStepModal isOpen={isLastStepOpen} onClose={onLastStepClose} email={email} />
+            <VerificationModal isOpen={isVerificationOpen} onClose={onVerificationClose} />
         </>
     );
 }

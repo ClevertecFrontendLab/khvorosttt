@@ -25,3 +25,15 @@ export interface successI {
     statusText: string;
     message: string;
 }
+
+export interface verifyOtpI {
+    email: string;
+    otpToken: string;
+}
+
+export interface restoreI {
+    login: string;
+    email: string;
+    password: string;
+    passwordConfirm: string;
+}

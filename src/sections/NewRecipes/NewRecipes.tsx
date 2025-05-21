@@ -28,6 +28,7 @@ export function NewRecipes() {
                 setNotification({
                     title: 'Ошибка сервера',
                     description: 'Попробуйте поискать снова попозже',
+                    typeN: 'error',
                 }),
             );
         }

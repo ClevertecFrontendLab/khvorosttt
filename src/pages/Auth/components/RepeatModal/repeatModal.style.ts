@@ -10,6 +10,7 @@ export const ButtonStyle: SystemStyleObject = {
     fontWeight: 600,
     fontSize: '18px',
     w: '100%',
+    fontFamily: 'text',
 };
 
 export const ContentStyle: SystemStyleObject = {
