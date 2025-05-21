@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { authI, errorI, loginI, signUpI, successI } from '~/interfaces/authI';
+import { authI, errorI, loginI, restoreI, signUpI, successI, verifyOtpI } from '~/interfaces/authI';
 
 export const authApi = createApi({
     reducerPath: 'auth',
@@ -33,7 +33,35 @@ export const authApi = createApi({
                 body: credentials,
             }),
         }),
+        forgot: builder.mutation<successI | errorI, Pick<signUpI, 'email'>>({
+            query: (credentials) => ({
+                url: '/forgot-password',
+                method: 'POST',
+                body: credentials,
+            }),
+        }),
+        verifyOtp: builder.mutation<successI | errorI, verifyOtpI>({
+            query: (credentials) => ({
+                url: '/verify-otp',
+                method: 'POST',
+                body: credentials,
+            }),
+        }),
+        restore: builder.mutation<successI | errorI, restoreI>({
+            query: (credentials) => ({
+                url: '/reset-password',
+                method: 'POST',
+                body: credentials,
+            }),
+        }),
     }),
 });
 
-export const { useCheckQuery, useLoginMutation, useSignupMutation } = authApi;
+export const {
+    useCheckQuery,
+    useLoginMutation,
+    useSignupMutation,
+    useForgotMutation,
+    useVerifyOtpMutation,
+    useRestoreMutation,
+} = authApi;
