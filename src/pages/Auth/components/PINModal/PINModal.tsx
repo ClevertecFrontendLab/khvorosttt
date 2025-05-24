@@ -45,7 +45,16 @@ export function PINModal({ isOpen, onClose, email, restoreAction }: PINModalProp
     const handlePIN = () => {
         verifyOtp({ email: email, otpToken: pin })
             .unwrap()
-            .then(() => restoreAction())
+            .then(() => {
+                restoreAction();
+                dispatch(
+                    setNotification({
+                        title: '',
+                        description: '',
+                        typeN: 'success',
+                    }),
+                );
+            })
             .catch((err) => {
                 if (err.status === 403) {
                     setError(true);

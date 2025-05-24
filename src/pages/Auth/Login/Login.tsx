@@ -67,7 +67,16 @@ export function Login() {
     const sendLoginRequest = (data: LoginInputs) => {
         loginUser({ login: data.login, password: data.password })
             .unwrap()
-            .then(() => navigate('/'))
+            .then(() => {
+                navigate('/');
+                dispatch(
+                    setNotification({
+                        title: '',
+                        description: '',
+                        typeN: 'success',
+                    }),
+                );
+            })
             .catch((err) => {
                 if (err.status === 401) {
                     dispatch(

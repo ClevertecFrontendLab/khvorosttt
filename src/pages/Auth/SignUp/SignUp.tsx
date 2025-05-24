@@ -119,7 +119,16 @@ export function SignUp() {
             password: data.password,
         })
             .unwrap()
-            .then(() => onLastStepOpen())
+            .then(() => {
+                onLastStepOpen();
+                dispatch(
+                    setNotification({
+                        title: '',
+                        description: '',
+                        typeN: 'success',
+                    }),
+                );
+            })
             .catch((err) => {
                 if (err.status === 400) {
                     dispatch(

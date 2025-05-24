@@ -15,7 +15,6 @@ import { setNotification } from '~/services/features/notificationSlice';
 
 export function Recipe() {
     const { id } = useParams();
-    console.log(id);
     const { data, isLoading, isError } = useGetRecipeByIdQuery(id, { skip: id === undefined });
     const dispatch = useDispatch();
     const navigate = useNavigate();

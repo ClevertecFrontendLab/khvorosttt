@@ -45,7 +45,6 @@ export function CardNew(recipe: recipeI) {
         );
         category ? selectCategory(category._id) : null;
         subcategory ? selectSubcategory(subcategory._id) : null;
-        console.log(category, subcategory);
         return { category, subcategory };
     };
 

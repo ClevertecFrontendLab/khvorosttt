@@ -11,10 +11,17 @@ import { Recipe } from '~/pages/Recipe/Recipe';
 import { Vegan } from '~/pages/Vegan/Vegan';
 import { Verification } from '~/pages/Verification/Verification';
 
+import { AuthRoute } from './components/AuthRoute';
+import { PrivateRoute } from './components/PrivateRoute';
+
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <App />,
+        element: (
+            <PrivateRoute>
+                <App />
+            </PrivateRoute>
+        ),
         children: [
             {
                 index: true,
@@ -52,7 +59,11 @@ const router = createBrowserRouter([
     },
     {
         path: '/auth',
-        element: <Auth />,
+        element: (
+            <AuthRoute>
+                <Auth />
+            </AuthRoute>
+        ),
         children: [
             {
                 path: 'login',

@@ -45,7 +45,7 @@ export function Juiciest({ title }: JuiciestProps) {
                 ) : null}
 
                 <Button
-                    display={{ base: 'none', md: 'flex' }}
+                    display={{ base: 'none', lg: 'flex' }}
                     data-test-id='juiciest-link'
                     rightIcon={<ArrowForwardIcon />}
                     as={Link}
