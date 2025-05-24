@@ -2,13 +2,13 @@ import type { SystemStyleObject } from '@chakra-ui/styled-system';
 
 export const NotificationStyle: SystemStyleObject = {
     position: 'fixed',
-    bottom: '10px',
+    bottom: '50px',
     left: '50%',
     transform: 'translateX(-50%)',
     w: { base: '328px', '2xl': '400px' },
     p: '12px 18px',
     justifyContent: 'space-between',
-    zIndex: 1601,
+    zIndex: 1600,
 };
 
 export const HeadingStyle: SystemStyleObject = {
