@@ -1,17 +1,13 @@
 import { Box, Flex } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
-// import { useSelector } from 'react-redux';
 import { Search } from '~/components/Search/Search';
 import authors from '~/data/authorsPosts.json';
-// import { compareDate, compareLikes } from '~/data/comparators';
-// import shortInfo from '~/data/vegan.json';
 import { CategoryInfo } from '~/sections/CategoryInfoSection/CategoryInfo';
 import { CookingBlog } from '~/sections/CookingBlog/CookingBlog';
 import { Juiciest } from '~/sections/Juiciest/Juiciest';
 import { NewRecipes } from '~/sections/NewRecipes/NewRecipes';
 import { selectedFilters } from '~/services/features/selectors';
-// import { selectedRecipes } from '~/services/features/selectors';
 
 export function Home() {
     const filters = useSelector(selectedFilters);

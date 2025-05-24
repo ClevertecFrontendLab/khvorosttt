@@ -2,12 +2,13 @@ import type { SystemStyleObject } from '@chakra-ui/styled-system';
 
 export const BurgerMenuBGStyle: SystemStyleObject = {
     position: 'fixed',
-    h: '100%',
-    w: '100vw',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vh',
     zIndex: 4,
-    backdropFilter: 'blur(4px)',
     bg: 'rgba(0, 0, 0, 0.16)',
-    right: 0,
+    backdropFilter: 'blur(4px)',
 };
 
 export const BurgerMenuStyle: SystemStyleObject = {

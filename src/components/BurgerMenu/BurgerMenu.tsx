@@ -10,14 +10,16 @@ export interface BurgerMenuProps {
 }
 
 export function BurgerMenu(props: BurgerMenuProps) {
-    return props.isOpen ? (
-        <Collapse in={props.isOpen} onClick={props.toggleMenu}>
-            <Box sx={BurgerMenuBGStyle}>
+    if (!props.isOpen) return null;
+
+    return (
+        <Collapse in={props.isOpen} unmountOnExit>
+            <Box sx={BurgerMenuBGStyle} onClick={props.toggleMenu}>
                 <Flex sx={BurgerMenuStyle} onClick={(e) => e.stopPropagation()}>
                     <BreadCrumb isOpen={props.isOpen} toggleMenu={props.toggleMenu} />
                     <Navbar />
                 </Flex>
             </Box>
         </Collapse>
-    ) : null;
+    );
 }

@@ -15,7 +15,6 @@ import { setNotification } from '~/services/features/notificationSlice';
 
 export function Recipe() {
     const { id } = useParams();
-    console.log(id);
     const { data, isLoading, isError } = useGetRecipeByIdQuery(id, { skip: id === undefined });
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -26,6 +25,7 @@ export function Recipe() {
                 setNotification({
                     title: 'Ошибка сервера',
                     description: 'Попробуйте поискать снова попозже',
+                    typeN: 'error',
                 }),
             );
             navigate(-1);

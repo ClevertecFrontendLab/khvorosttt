@@ -1,16 +1,27 @@
 import { createBrowserRouter, Navigate } from 'react-router';
 
 import App from '~/app/App';
+import { Auth } from '~/pages/Auth/Auth';
+import { Login } from '~/pages/Auth/Login/Login';
+import { SignUp } from '~/pages/Auth/SignUp/SignUp';
 import { ErrorPage } from '~/pages/Error/Error';
 import { Home } from '~/pages/Home/Home';
 import { JuiciestPage } from '~/pages/Juiciest/Juiciest';
 import { Recipe } from '~/pages/Recipe/Recipe';
 import { Vegan } from '~/pages/Vegan/Vegan';
+import { Verification } from '~/pages/Verification/Verification';
+
+import { AuthRoute } from './components/AuthRoute';
+import { PrivateRoute } from './components/PrivateRoute';
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <App />,
+        element: (
+            <PrivateRoute>
+                <App />
+            </PrivateRoute>
+        ),
         children: [
             {
                 index: true,
@@ -45,6 +56,28 @@ const router = createBrowserRouter([
                 element: <Navigate to='/not-found' />,
             },
         ],
+    },
+    {
+        path: '/auth',
+        element: (
+            <AuthRoute>
+                <Auth />
+            </AuthRoute>
+        ),
+        children: [
+            {
+                path: 'login',
+                element: <Login />,
+            },
+            {
+                path: 'signup',
+                element: <SignUp />,
+            },
+        ],
+    },
+    {
+        path: 'verification',
+        element: <Verification />,
     },
 ]);
 

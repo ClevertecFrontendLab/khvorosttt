@@ -10,7 +10,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { useGetNewestRecipesQuery } from '~/api/recipeApi';
 import { CardNew } from '~/components/CardNew/CardNew';
 import { Loader } from '~/components/Loader/Loader';
-import { compareDate } from '~/data/comparators';
 import { setNotification } from '~/services/features/notificationSlice';
 
 import {
@@ -29,6 +28,7 @@ export function NewRecipes() {
                 setNotification({
                     title: 'Ошибка сервера',
                     description: 'Попробуйте поискать снова попозже',
+                    typeN: 'error',
                 }),
             );
         }
@@ -43,13 +43,14 @@ export function NewRecipes() {
                 Новые рецепты
             </Text>
             <Box
-                overflow='hidden'
+                overflowX='clip'
                 w='100%'
                 p='10px 0px'
                 m={{ base: '0px', ms: '10px' }}
                 position='relative'
             >
                 <Swiper
+                    observer={true}
                     style={{ width: '100%' }}
                     loop={true}
                     modules={[Navigation]}
@@ -77,26 +78,25 @@ export function NewRecipes() {
                         },
                     }}
                 >
-                    {[...data!]
-                        .sort(compareDate)
-                        .reverse()
-                        .map((recipe, index) => (
-                            <SwiperSlide
-                                key={index}
-                                style={{ height: 'auto' }}
-                                data-test-id={`carousel-card-${index}`}
-                            >
-                                <Box
-                                    key={index}
-                                    flex='0 0 auto'
-                                    w='100%'
-                                    height='100%'
-                                    mr={{ base: '0px', xl: '12px' }}
-                                >
-                                    <CardNew {...recipe} />
-                                </Box>
-                            </SwiperSlide>
-                        ))}
+                    {data
+                        ? data.map((recipe, index) => (
+                              <SwiperSlide
+                                  key={index}
+                                  style={{ height: 'auto' }}
+                                  data-test-id={`carousel-card-${index}`}
+                              >
+                                  <Box
+                                      key={index}
+                                      flex='0 0 auto'
+                                      w='100%'
+                                      height='100%'
+                                      mr={{ base: '0px', xl: '12px' }}
+                                  >
+                                      <CardNew {...recipe} />
+                                  </Box>
+                              </SwiperSlide>
+                          ))
+                        : null}
                 </Swiper>
 
                 <IconButton

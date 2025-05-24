@@ -38,7 +38,8 @@ export const recipesApi = createApi({
             }),
         }),
         getRelevant: builder.query<recipeI[], { ids: string[]; limit: number }>({
-            query: ({ ids, limit }) => `/category?limit=${limit}&subcategoriesIds=${ids.join(',')}`,
+            query: ({ ids, limit }) =>
+                `/category/?limit=${limit}&subcategoriesIds=${ids.join(',')}`,
             transformResponse: (response: recipeResponceI) => response.data,
         }),
         getRecipeWithSearch: builder.query<
@@ -59,7 +60,6 @@ export const recipesApi = createApi({
                 const meatStr = meat.length ? `&meat=${meat.join(',')}` : '';
                 const garnishStr = garnish.length ? `&garnish=${garnish}` : '';
                 const request: string = `?page=${page}&limit=${limit}${idsStr}${meatStr}${allergensStr}${garnishStr}&searchString=${searchString}`;
-                console.log(request);
                 return request;
             },
             transformResponse: (response: recipeResponceI) => ({

@@ -30,6 +30,25 @@ export function BreadCrumb({ isOpen, toggleMenu }: BurgerMenuProps) {
             return categoriesSavedData.subcategories.find((item) => item.category === path)?.title;
         }
     };
+
+    const getPath = (index: number) => {
+        if (index === 0) {
+            const category = categoriesSavedData.categories.find((c) => c.category === paths[0]);
+            console.log(category);
+            if (category?.subCategories?.[0]) {
+                return `/${paths[0]}/${category.subCategories[0].category}`;
+            } else return `/${paths[0]}`;
+        }
+        // else if (index === 0&&paths.length===1) {
+        //     const category = categoriesSavedData.categories.find(c => c.category === paths[0]);
+        //     console.log(category);
+        //     if (category?.subCategories?.[0]) {
+        //         return `/${paths[0]}/${category.subCategories[0].category}`;
+        //     } else return `/${paths[0]}`;
+        // }
+        return `/${paths.slice(0, index + 1).join('/')}`;
+    };
+
     return (
         <Breadcrumb
             spacing='8px'
@@ -62,7 +81,7 @@ export function BreadCrumb({ isOpen, toggleMenu }: BurgerMenuProps) {
                 <BreadcrumbItem key={index}>
                     <BreadcrumbLink
                         as={Link}
-                        to={`/${paths.slice(0, index + 1).join('/')}`}
+                        to={getPath(index)}
                         sx={BreadCrumbStyle}
                         color={index + 1 == paths.length ? 'black' : 'rgba(0, 0, 0, 0.64)'}
                         onClick={() => {

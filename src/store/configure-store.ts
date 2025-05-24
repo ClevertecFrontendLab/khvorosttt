@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
+import { authApi } from '~/api/authApi';
 import { categoriesApi } from '~/api/categoryApi';
 import { recipesApi } from '~/api/recipeApi';
 import { apiSlice } from '~/query/create-api';
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     [apiSlice.reducerPath]: apiSlice.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
     [recipesApi.reducerPath]: recipesApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
     filters: filtersSlice.reducer,
     recipe: recipeSlice.reducer,
     category: categoriesSlice.reducer,
@@ -28,7 +30,8 @@ export const store = configureStore({
         getDefaultMiddleware()
             .concat(apiSlice.middleware)
             .concat(categoriesApi.middleware)
-            .concat(recipesApi.middleware),
+            .concat(recipesApi.middleware)
+            .concat(authApi.middleware),
     devTools: !isProduction,
 });
 

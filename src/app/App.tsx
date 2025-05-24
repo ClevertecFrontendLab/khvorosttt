@@ -9,16 +9,12 @@ import { Header } from '~/components/Header/header';
 import { Footer } from '~/components/MTFooter/MTFooter';
 import { Navbar } from '~/components/Navbar/Navbar';
 import { NotificationAside } from '~/components/NotificationAside/NotificationAside';
-import { useGetPostsQuery } from '~/query/services/posts.ts';
 
 function App() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-
     const toggleMenu = () => {
         setIsOpen((prev) => !prev);
     };
-
-    const { data: _data, isLoading: _isLoading } = useGetPostsQuery();
 
     return (
         <Box display='flex' flexDirection='column' overflow={isOpen ? 'hidden' : 'auto'} h='100%'>

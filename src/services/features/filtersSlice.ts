@@ -109,6 +109,9 @@ export const filtersSlice = createSlice({
         setFinding: (state, action) => {
             state.doFinding = action.payload;
         },
+        addOtherAllergen: (state, action) => {
+            state.selectedAllergens.push(action.payload);
+        },
     },
 });
 
@@ -133,6 +136,7 @@ export const {
     setMeatType,
     setSideDish,
     setFinding,
+    addOtherAllergen,
 } = filtersSlice.actions;
 
 export default filtersSlice.reducer;
