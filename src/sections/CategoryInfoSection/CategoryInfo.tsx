@@ -36,13 +36,13 @@ export function CategoryInfo() {
 
     const { data, isLoading, isError } = useGetRelevantQuery(
         { limit: 5, ids: randomSubcategoryIds },
-        { skip: !randomSubcategoryIds },
+        { skip: !randomSubcategoryIds.length },
     );
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (isError) {
+        if (isError || !data) {
             dispatch(
                 setNotification({
                     title: 'Ошибка сервера',
@@ -51,7 +51,7 @@ export function CategoryInfo() {
                 }),
             );
         }
-    }, [isError, dispatch]);
+    }, [data, isError, dispatch]);
 
     if (isLoading) {
         return <Loader />;

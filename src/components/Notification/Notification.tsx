@@ -1,5 +1,4 @@
 import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton } from '@chakra-ui/react';
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { clearNotification } from '~/services/features/notificationSlice';
@@ -14,15 +13,6 @@ export function Notification() {
     const closeAction = () => {
         dispatch(clearNotification());
     };
-
-    useEffect(() => {
-        if (!title) return;
-        const timer = setTimeout(() => {
-            closeAction();
-        }, 15000);
-
-        return () => clearTimeout(timer);
-    }, [title, dispatch]);
 
     if (!title) {
         return null;

@@ -43,13 +43,14 @@ export function NewRecipes() {
                 Новые рецепты
             </Text>
             <Box
-                overflow='hidden'
+                overflowX='clip'
                 w='100%'
                 p='10px 0px'
                 m={{ base: '0px', ms: '10px' }}
                 position='relative'
             >
                 <Swiper
+                    observer={true}
                     style={{ width: '100%' }}
                     loop={true}
                     modules={[Navigation]}
