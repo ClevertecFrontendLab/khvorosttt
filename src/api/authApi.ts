@@ -1,20 +1,57 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {
+    BaseQueryFn,
+    createApi,
+    FetchArgs,
+    fetchBaseQuery,
+    FetchBaseQueryError,
+} from '@reduxjs/toolkit/query/react';
 
 import { authI, errorI, loginI, restoreI, signUpI, successI, verifyOtpI } from '~/interfaces/authI';
 
+const rawBaseQuery = fetchBaseQuery({
+    baseUrl: 'https://marathon-api.clevertec.ru/auth',
+    credentials: 'include',
+    prepareHeaders: (headers) => {
+        const token = localStorage.getItem('access_token');
+        if (token) {
+            headers.set('Authorization', `Bearer ${token}`);
+        }
+        return headers;
+    },
+});
+
+const baseQueryWithTokenHandler: BaseQueryFn<
+    string | FetchArgs,
+    unknown,
+    FetchBaseQueryError
+> = async (args, api, extraOptions) => {
+    let result = await rawBaseQuery(args, api, extraOptions);
+
+    if (result.error?.status === 401) {
+        const refreshResult = await rawBaseQuery(
+            { url: '/refresh', method: 'POST' },
+            api,
+            extraOptions,
+        );
+
+        if (refreshResult.data) {
+            const token = refreshResult.meta?.response?.headers.get('Authentication-Access');
+            if (token) localStorage.setItem('access_token', token);
+            result = await rawBaseQuery(args, api, extraOptions);
+        } else {
+            localStorage.removeItem('access_token');
+        }
+    }
+
+    const token = result.meta?.response?.headers.get('Authentication-Access');
+    if (token) localStorage.setItem('access_token', token);
+
+    return result;
+};
+
 export const authApi = createApi({
     reducerPath: 'auth',
-    baseQuery: fetchBaseQuery({
-        baseUrl: 'https://marathon-api.clevertec.ru/auth',
-        credentials: 'include',
-        prepareHeaders: (headers) => {
-            const token = localStorage.getItem('access_token');
-            if (token) {
-                headers.set('Authorization', `Bearer ${token}`);
-            }
-            return headers;
-        },
-    }),
+    baseQuery: baseQueryWithTokenHandler,
     endpoints: (builder) => ({
         check: builder.query<authI, void>({
             query: () => '/check-auth',
@@ -59,6 +96,7 @@ export const authApi = createApi({
 
 export const {
     useCheckQuery,
+    useLazyCheckQuery,
     useLoginMutation,
     useSignupMutation,
     useForgotMutation,
