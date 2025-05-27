@@ -42,7 +42,7 @@ export function CategoryInfo() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (isError || !data) {
+        if (isError) {
             dispatch(
                 setNotification({
                     title: 'Ошибка сервера',

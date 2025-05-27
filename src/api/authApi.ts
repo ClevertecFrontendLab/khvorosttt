@@ -29,22 +29,29 @@ const baseQueryWithTokenHandler: BaseQueryFn<
 
     if (result.error?.status === 401) {
         const refreshResult = await rawBaseQuery(
-            { url: '/refresh', method: 'POST' },
+            { url: '/refresh', method: 'GET' },
             api,
             extraOptions,
         );
 
-        if (refreshResult.data) {
-            const token = refreshResult.meta?.response?.headers.get('Authentication-Access');
-            if (token) localStorage.setItem('access_token', token);
-            result = await rawBaseQuery(args, api, extraOptions);
+        if (refreshResult.meta?.response?.ok) {
+            const newToken = refreshResult.meta.response.headers.get('Authentication-Access');
+            if (newToken) {
+                localStorage.setItem('access_token', newToken);
+
+                result = await rawBaseQuery(args, api, extraOptions);
+            } else {
+                localStorage.removeItem('access_token');
+            }
         } else {
             localStorage.removeItem('access_token');
         }
     }
 
-    const token = result.meta?.response?.headers.get('Authentication-Access');
-    if (token) localStorage.setItem('access_token', token);
+    const freshToken = result.meta?.response?.headers.get('Authentication-Access');
+    if (freshToken) {
+        localStorage.setItem('access_token', freshToken);
+    }
 
     return result;
 };

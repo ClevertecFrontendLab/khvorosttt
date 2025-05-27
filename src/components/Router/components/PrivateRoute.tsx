@@ -1,5 +1,5 @@
 import { JSX, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import { useLazyCheckQuery } from '~/api/authApi';
 import { Loader } from '~/components/Loader/Loader';
@@ -9,22 +9,35 @@ type Props = {
 };
 
 export const PrivateRoute = ({ children }: Props) => {
+    const location = useLocation();
     const navigate = useNavigate();
-
     const [checkAuth, { isError, isLoading }] = useLazyCheckQuery();
     const [authChecked, setAuthChecked] = useState(false);
 
+    const justLoggedIn = location.state?.justLoggedIn;
+
     useEffect(() => {
         const token = localStorage.getItem('access_token');
-        if (token) {
+
+        if (!token) {
+            navigate('/auth/login');
+            return;
+        }
+
+        if (justLoggedIn) {
+            setAuthChecked(true);
+            navigate(location.pathname, { replace: true, state: {} });
+        } else {
             checkAuth()
                 .unwrap()
-                .catch(() => {});
-        } else {
-            setAuthChecked(true);
-            navigate('/auth/login');
+                .then(() => {
+                    setAuthChecked(true);
+                })
+                .catch(() => {
+                    setAuthChecked(true);
+                });
         }
-    }, [checkAuth, navigate]);
+    }, [checkAuth, justLoggedIn, location.pathname, navigate]);
 
     useEffect(() => {
         if (authChecked && isError) {
@@ -32,10 +45,9 @@ export const PrivateRoute = ({ children }: Props) => {
         }
     }, [authChecked, isError, navigate]);
 
-    return (
-        <>
-            {isLoading && <Loader />}
-            {children}
-        </>
-    );
+    if (!authChecked || isLoading) {
+        return <Loader />;
+    }
+
+    return children;
 };

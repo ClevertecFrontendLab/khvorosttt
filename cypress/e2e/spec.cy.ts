@@ -1,5 +1,8 @@
 /// <reference types="cypress" />
-import { RouteMatcherOptions, StaticResponseWithOptions } from 'cypress/types/net-stubbing';
+import {
+    RouteMatcherOptions,
+    StaticResponseWithOptions,
+} from 'node_modules/cypress/types/net-stubbing';
 
 const RESOLUTION = {
     desktop: [1887, 1120],

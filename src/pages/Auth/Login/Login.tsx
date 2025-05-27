@@ -68,7 +68,7 @@ export function Login() {
         loginUser({ login: data.login, password: data.password })
             .unwrap()
             .then(() => {
-                navigate('/');
+                navigate('/', { state: { justLoggedIn: true } });
                 dispatch(
                     setNotification({
                         title: '',
