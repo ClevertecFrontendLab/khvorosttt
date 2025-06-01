@@ -17,6 +17,7 @@ import {
     verifyOtpI,
 } from '~/interfaces/authI';
 import { MeasureUnitsI } from '~/interfaces/recipeI';
+import { RecipeInputs, RecipeInputsOptional } from '~/pages/NewRecipe/NewRecipe';
 
 const rawBaseQuery = fetchBaseQuery({
     baseUrl: 'https://marathon-api.clevertec.ru',
@@ -134,6 +135,26 @@ export const authApi = createApi({
                 body: credentials,
             }),
         }),
+        addRecipe: builder.mutation<{ _id: string }, RecipeInputs>({
+            query: (body) => ({
+                url: '/recipe',
+                method: 'POST',
+                body,
+            }),
+        }),
+        addDraft: builder.mutation<{ _id: string }, RecipeInputsOptional>({
+            query: (body) => ({
+                url: '/recipe/draft',
+                method: 'POST',
+                body,
+            }),
+        }),
+        deleteRecipe: builder.mutation<void, string>({
+            query: (id) => ({
+                url: `/recipe/${id}`,
+                method: 'DELETE',
+            }),
+        }),
     }),
 });
 
@@ -147,4 +168,7 @@ export const {
     useVerifyOtpMutation,
     useRestoreMutation,
     useUploadFileMutation,
+    useAddDraftMutation,
+    useAddRecipeMutation,
+    useDeleteRecipeMutation,
 } = authApi;

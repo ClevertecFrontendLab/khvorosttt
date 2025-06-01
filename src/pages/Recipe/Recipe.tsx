@@ -39,6 +39,7 @@ export function Recipe() {
     if (!data) {
         return null;
     }
+
     return (
         <Box w='100%' p='90px 0px'>
             <Flex direction='column' alignItems='center' gap='40px'>

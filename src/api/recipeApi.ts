@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { recipeI, recipeResponceI } from '~/interfaces/recipeI';
-import { RecipeInputs, RecipeInputsOptional } from '~/pages/NewRecipe/NewRecipe';
 
 export const recipesApi = createApi({
     reducerPath: 'recipes',
@@ -68,20 +67,6 @@ export const recipesApi = createApi({
                 totalPages: response.meta.totalPages,
             }),
         }),
-        addRecipe: builder.mutation<{ _id: string }, RecipeInputs>({
-            query: (body) => ({
-                url: '/',
-                method: 'POST',
-                body,
-            }),
-        }),
-        addDraft: builder.mutation<{ _id: string }, RecipeInputsOptional>({
-            query: (body) => ({
-                url: '/draft',
-                method: 'POST',
-                body,
-            }),
-        }),
     }),
 });
 
@@ -93,6 +78,4 @@ export const {
     useGetRecipeBySubcategoryQuery,
     useGetRelevantQuery,
     useGetRecipeWithSearchQuery,
-    useAddRecipeMutation,
-    useAddDraftMutation,
 } = recipesApi;

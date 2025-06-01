@@ -4,11 +4,12 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
-import { useAddDraftMutation, useAddRecipeMutation } from '~/api/recipeApi';
+import { useAddDraftMutation, useAddRecipeMutation } from '~/api/authApi';
 import { Loader } from '~/components/Loader/Loader';
 import { ingredientsI, ingredientsOptionalI, stepsI, stepsOptionalI } from '~/interfaces/recipeI';
 import { setNotification } from '~/services/features/notificationSlice';
 import { selectedCategories } from '~/services/features/selectors';
+import { getUserIdFromToken } from '~/services/utils';
 
 import { RecipeButtons } from './components/RecipeButtons/RecipeButtons';
 import { RecipeImageUpload } from './components/RecipeImageUpload/RecipeImageUpload';
@@ -40,11 +41,17 @@ export type RecipeInputsOptional = {
 };
 
 export function NewRecipe() {
+    getUserIdFromToken();
     const methods = useForm<RecipeInputs>({
         mode: 'onSubmit',
         shouldFocusError: false,
         resolver: yupResolver(schema),
         defaultValues: {
+            title: '',
+            description: '',
+            time: 0,
+            portions: 1,
+            categoriesIds: [],
             image: '',
             ingredients: [{ title: '', count: 1, measureUnit: '' }],
             steps: [{ stepNumber: 1, description: '', image: '' }],
@@ -90,6 +97,7 @@ export function NewRecipe() {
 
     const publishRecipe = (data: RecipeInputs) => {
         const normalizedData = normalizeRecipeData(data);
+        console.log('nbhvgfcdxs');
         addRecipe(normalizedData)
             .unwrap()
             .then((res) => {
