@@ -12,7 +12,7 @@ export function RecipeImageUpload() {
         formState: { errors },
     } = useFormContext();
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const formImage = watch('mainImg');
+    const formImage = watch('image');
 
     const {
         previewImage,
@@ -25,7 +25,7 @@ export function RecipeImageUpload() {
         handleImageSave,
         openModal,
         closeModal,
-    } = useImageUpload('mainImg');
+    } = useImageUpload('image');
 
     useEffect(() => {
         if (formImage) {

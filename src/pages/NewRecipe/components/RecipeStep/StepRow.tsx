@@ -101,11 +101,10 @@ export function StepRow({ index, onRemove, isFirst }: StepRowProps) {
                         position='absolute'
                         right='0px'
                         top='10px'
-                        icon={<DeleteIcon />}
+                        icon={<DeleteIcon color='#2db100' />}
                         onClick={onRemove}
                         aria-label='Удалить шаг'
                         variant='ghost'
-                        colorScheme='red'
                         size='sm'
                         data-test-id={`recipe-steps-remove-button-${index}`}
                     />

@@ -22,7 +22,7 @@ export function Header(props: BurgerMenuProps) {
             bg={{ base: props.isOpen ? 'white' : 'headerBg', xl: 'headerBg' }}
         >
             <Flex align='center' justify='space-between' pb={0} pt={0}>
-                <Flex align='center' gap={2} w='256px'>
+                <Flex align='center' gap={2} w='256px' data-test-id='header-logo'>
                     <PotIcon w='33px' h='32px' />
                     <Hide below='ms'>
                         <NameIcon w='96px' h='26px' />

@@ -124,11 +124,10 @@ function IngredientRow({
 
                 {!isLast ? (
                     <IconButton
-                        icon={<DeleteIcon />}
+                        icon={<DeleteIcon color='#2db100' />}
                         onClick={onRemove}
                         aria-label='Удалить ингредиент'
                         variant='ghost'
-                        colorScheme='red'
                         data-test-id={`recipe-ingredients-remove-ingredients-${index}`}
                     />
                 ) : (

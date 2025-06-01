@@ -1,7 +1,23 @@
 import { EditIcon } from '@chakra-ui/icons';
 import { Button, Flex } from '@chakra-ui/react';
+import { useFormContext } from 'react-hook-form';
 
-export function RecipeButtons() {
+import { RecipeInputs } from '../../NewRecipe';
+
+interface RecipeButtonsProps {
+    onSaveDraft: (data: RecipeInputs) => Promise<void>;
+}
+
+export function RecipeButtons({ onSaveDraft }: RecipeButtonsProps) {
+    const methods = useFormContext<RecipeInputs>();
+
+    const handleSaveDraft = async () => {
+        const isValid = await methods.trigger('title');
+        if (isValid) {
+            const formData = methods.getValues();
+            await onSaveDraft(formData);
+        }
+    };
     return (
         <Flex
             flexDirection={{ base: 'column', md: 'row' }}
@@ -21,6 +37,7 @@ export function RecipeButtons() {
                 fontSize='18px'
                 fontFamily='text'
                 w={{ base: '328px', md: '246px' }}
+                onClick={handleSaveDraft}
             >
                 Сохранить черновик
             </Button>

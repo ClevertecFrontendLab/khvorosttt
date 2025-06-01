@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 export const schema = yup.object().shape({
-    mainImg: yup.string().required(),
+    image: yup.string().required(),
     title: yup.string().trim().required().max(50),
     description: yup.string().trim().required().max(500),
     portions: yup.number().positive().required(),
@@ -24,7 +24,7 @@ export const schema = yup.object().shape({
             yup.object().shape({
                 stepNumber: yup.number().positive().required(),
                 description: yup.string().required().max(500),
-                image: yup.string(),
+                image: yup.string().nullable().optional(),
             }),
         )
         .min(1)
