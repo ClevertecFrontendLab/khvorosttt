@@ -37,3 +37,11 @@ export interface restoreI {
     password: string;
     passwordConfirm: string;
 }
+
+export interface fileI {
+    name: string;
+    url: string;
+    _id: string;
+}
+
+export const DATA_PATH = ' https://training-api.clevertec.ru';

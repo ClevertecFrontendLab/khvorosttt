@@ -7,7 +7,7 @@ export function Loader() {
         <Box sx={LoaderStyle}>
             <Center height='100%'>
                 <Box sx={LoaderSpinnerStyle}>
-                    <Spinner size='xl' data-test-id='app-loader' />
+                    <Spinner size='xl' data-test-id='app-loader' pointerEvents='auto' />
                 </Box>
             </Center>
         </Box>

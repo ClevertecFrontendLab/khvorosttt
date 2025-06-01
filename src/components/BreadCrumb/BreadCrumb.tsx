@@ -39,13 +39,6 @@ export function BreadCrumb({ isOpen, toggleMenu }: BurgerMenuProps) {
                 return `/${paths[0]}/${category.subCategories[0].category}`;
             } else return `/${paths[0]}`;
         }
-        // else if (index === 0&&paths.length===1) {
-        //     const category = categoriesSavedData.categories.find(c => c.category === paths[0]);
-        //     console.log(category);
-        //     if (category?.subCategories?.[0]) {
-        //         return `/${paths[0]}/${category.subCategories[0].category}`;
-        //     } else return `/${paths[0]}`;
-        // }
         return `/${paths.slice(0, index + 1).join('/')}`;
     };
 

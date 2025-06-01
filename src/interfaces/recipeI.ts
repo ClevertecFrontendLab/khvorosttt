@@ -1,7 +1,7 @@
 export interface stepsI {
     stepNumber: number;
     description: string;
-    image: string;
+    image?: string | undefined;
 }
 
 export interface nutritionValueI {
@@ -45,4 +45,9 @@ export interface metaI {
 export interface recipeResponceI {
     data: recipeI[];
     meta: metaI;
+}
+
+export interface MeasureUnitsI {
+    _id: string;
+    name: string;
 }
