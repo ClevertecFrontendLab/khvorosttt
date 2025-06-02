@@ -5,6 +5,7 @@ import { recipeI, recipeResponceI } from '~/interfaces/recipeI';
 export const recipesApi = createApi({
     reducerPath: 'recipes',
     baseQuery: fetchBaseQuery({ baseUrl: 'https://marathon-api.clevertec.ru/recipe' }),
+    tagTypes: ['Recipe'],
     endpoints: (builder) => ({
         getRecipes: builder.query<recipeI[], void>({
             query: () => '',
@@ -14,9 +15,10 @@ export const recipesApi = createApi({
             query: () => '?sortBy=createdAt&sortOrder=desc&limit=10',
             transformResponse: (response: recipeResponceI) => response.data,
         }),
-        getRecipeById: builder.query<recipeI, string | undefined>({
-            query: (id) => `/${id}`,
-        }),
+        // getRecipeById: builder.query<recipeI, string | undefined>({
+        //     query: (id) => `/${id}`,
+        //     providesTags: (result, error, id) => [{ type: 'Recipe', id }],
+        // }),
         getJuiciestRecipes: builder.query<
             { recipes: recipeI[]; totalPages: number },
             { limit: number; page: number }
@@ -73,7 +75,7 @@ export const recipesApi = createApi({
 export const {
     useGetRecipesQuery,
     useGetNewestRecipesQuery,
-    useGetRecipeByIdQuery,
+    // useGetRecipeByIdQuery,
     useGetJuiciestRecipesQuery,
     useGetRecipeBySubcategoryQuery,
     useGetRelevantQuery,

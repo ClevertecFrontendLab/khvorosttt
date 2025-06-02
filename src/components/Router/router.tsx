@@ -7,6 +7,8 @@ import { SignUp } from '~/pages/Auth/SignUp/SignUp';
 import { ErrorPage } from '~/pages/Error/Error';
 import { Home } from '~/pages/Home/Home';
 import { JuiciestPage } from '~/pages/Juiciest/Juiciest';
+import { EditRecipe } from '~/pages/NewRecipe/EditRecipe';
+import { NewRecipe } from '~/pages/NewRecipe/NewRecipe';
 import { Recipe } from '~/pages/Recipe/Recipe';
 import { Vegan } from '~/pages/Vegan/Vegan';
 import { Verification } from '~/pages/Verification/Verification';
@@ -55,6 +57,11 @@ const router = createBrowserRouter([
                 path: '*',
                 element: <Navigate to='/not-found' />,
             },
+            {
+                path: 'new-recipe',
+                element: <NewRecipe />,
+            },
+            { path: 'edit-recipe/*', element: <EditRecipe /> },
         ],
     },
     {

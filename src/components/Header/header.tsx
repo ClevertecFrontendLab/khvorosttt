@@ -1,6 +1,7 @@
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import { Avatar, Box, Flex, Hide, IconButton, Text } from '@chakra-ui/react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import avatar from '../../assets/images/kat_konst.jpg';
 import { BreadCrumb } from '../BreadCrumb/BreadCrumb';
@@ -13,6 +14,7 @@ import { avatarStyle, headerStyle } from './header.style.ts';
 export function Header(props: BurgerMenuProps) {
     const [name] = useState('Екатерина Константинопольская');
     const [email] = useState('@bake_and_pie');
+    const navigate = useNavigate();
     return (
         <Box
             as='header'
@@ -22,7 +24,13 @@ export function Header(props: BurgerMenuProps) {
             bg={{ base: props.isOpen ? 'white' : 'headerBg', xl: 'headerBg' }}
         >
             <Flex align='center' justify='space-between' pb={0} pt={0}>
-                <Flex align='center' gap={2} w='256px'>
+                <Flex
+                    align='center'
+                    gap={2}
+                    w='256px'
+                    data-test-id='header-logo'
+                    onClick={() => navigate('/')}
+                >
                     <PotIcon w='33px' h='32px' />
                     <Hide below='ms'>
                         <NameIcon w='96px' h='26px' />

@@ -50,7 +50,8 @@ export function NewRecipes() {
                 position='relative'
             >
                 <Swiper
-                    observer={true}
+                    observer
+                    observeParents
                     style={{ width: '100%' }}
                     loop={true}
                     modules={[Navigation]}

@@ -6,10 +6,21 @@ import {
     FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
 
-import { authI, errorI, loginI, restoreI, signUpI, successI, verifyOtpI } from '~/interfaces/authI';
+import {
+    authI,
+    errorI,
+    fileI,
+    loginI,
+    restoreI,
+    signUpI,
+    successI,
+    verifyOtpI,
+} from '~/interfaces/authI';
+import { MeasureUnitsI, recipeI } from '~/interfaces/recipeI';
+import { RecipeInputs, RecipeInputsOptional } from '~/pages/NewRecipe/NewRecipe';
 
 const rawBaseQuery = fetchBaseQuery({
-    baseUrl: 'https://marathon-api.clevertec.ru/auth',
+    baseUrl: 'https://marathon-api.clevertec.ru',
     credentials: 'include',
     prepareHeaders: (headers) => {
         const token = localStorage.getItem('access_token');
@@ -25,26 +36,49 @@ const baseQueryWithTokenHandler: BaseQueryFn<
     unknown,
     FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-    let result = await rawBaseQuery(args, api, extraOptions);
-
-    if (result.error?.status === 401) {
+    let token = localStorage.getItem('access_token');
+    if (!token) {
         const refreshResult = await rawBaseQuery(
-            { url: '/refresh', method: 'POST' },
+            { url: '/auth/refresh', method: 'GET' },
             api,
             extraOptions,
         );
 
-        if (refreshResult.data) {
-            const token = refreshResult.meta?.response?.headers.get('Authentication-Access');
-            if (token) localStorage.setItem('access_token', token);
-            result = await rawBaseQuery(args, api, extraOptions);
+        if (refreshResult.meta?.response?.ok) {
+            const newToken = refreshResult.meta.response.headers.get('Authentication-Access');
+            if (newToken) {
+                localStorage.setItem('access_token', newToken);
+                token = newToken;
+            }
+        }
+    }
+    let result = await rawBaseQuery(args, api, extraOptions);
+
+    if (result.error?.status) {
+        const refreshResult = await rawBaseQuery(
+            { url: '/auth/refresh', method: 'GET' },
+            api,
+            extraOptions,
+        );
+
+        if (refreshResult.meta?.response?.ok) {
+            const newToken = refreshResult.meta.response.headers.get('Authentication-Access');
+            if (newToken) {
+                localStorage.setItem('access_token', newToken);
+
+                result = await rawBaseQuery(args, api, extraOptions);
+            } else {
+                localStorage.removeItem('access_token');
+            }
         } else {
             localStorage.removeItem('access_token');
         }
     }
 
-    const token = result.meta?.response?.headers.get('Authentication-Access');
-    if (token) localStorage.setItem('access_token', token);
+    const freshToken = result.meta?.response?.headers.get('Authentication-Access');
+    if (freshToken) {
+        localStorage.setItem('access_token', freshToken);
+    }
 
     return result;
 };
@@ -52,54 +86,118 @@ const baseQueryWithTokenHandler: BaseQueryFn<
 export const authApi = createApi({
     reducerPath: 'auth',
     baseQuery: baseQueryWithTokenHandler,
+    tagTypes: ['Recipe'],
     endpoints: (builder) => ({
         check: builder.query<authI, void>({
-            query: () => '/check-auth',
+            query: () => '/auth/check-auth',
         }),
         login: builder.mutation<successI | errorI, loginI>({
             query: (credentials) => ({
-                url: '/login',
+                url: '/auth/login',
                 method: 'POST',
                 body: credentials,
             }),
         }),
         signup: builder.mutation<successI | errorI, signUpI>({
             query: (credentials) => ({
-                url: '/signup',
+                url: '/auth/signup',
                 method: 'POST',
                 body: credentials,
             }),
         }),
         forgot: builder.mutation<successI | errorI, Pick<signUpI, 'email'>>({
             query: (credentials) => ({
-                url: '/forgot-password',
+                url: '/auth/forgot-password',
                 method: 'POST',
                 body: credentials,
             }),
         }),
         verifyOtp: builder.mutation<successI | errorI, verifyOtpI>({
             query: (credentials) => ({
-                url: '/verify-otp',
+                url: '/auth/verify-otp',
                 method: 'POST',
                 body: credentials,
             }),
         }),
         restore: builder.mutation<successI | errorI, restoreI>({
             query: (credentials) => ({
-                url: '/reset-password',
+                url: '/auth/reset-password',
                 method: 'POST',
                 body: credentials,
             }),
+        }),
+        measureUnits: builder.query<MeasureUnitsI[], void>({
+            query: () => '/measure-units',
+        }),
+        uploadFile: builder.mutation<fileI, FormData>({
+            query: (credentials) => ({
+                url: '/file/upload',
+                method: 'POST',
+                body: credentials,
+            }),
+        }),
+        addRecipe: builder.mutation<{ _id: string }, RecipeInputs>({
+            query: (body) => ({
+                url: '/recipe',
+                method: 'POST',
+                body,
+            }),
+        }),
+        addDraft: builder.mutation<{ _id: string }, RecipeInputsOptional>({
+            query: (body) => ({
+                url: '/recipe/draft',
+                method: 'POST',
+                body,
+            }),
+        }),
+        deleteRecipe: builder.mutation<void, string>({
+            query: (id) => ({
+                url: `/recipe/${id}`,
+                method: 'DELETE',
+            }),
+        }),
+        likeRecipe: builder.mutation<void, string>({
+            query: (id) => ({
+                url: `/recipe/${id}/like`,
+                method: 'POST',
+            }),
+        }),
+        bookmarkRecipe: builder.mutation<void, string>({
+            query: (id) => ({
+                url: `/recipe/${id}/bookmark`,
+                method: 'POST',
+            }),
+        }),
+        updateRecipe: builder.mutation<void, { id: string; data: RecipeInputs }>({
+            query: ({ id, data }) => ({
+                url: `/recipe/${id}`,
+                method: 'PATCH',
+                body: data,
+            }),
+            invalidatesTags: (_result, _error, { id }) => [{ type: 'Recipe', id }],
+        }),
+        getRecipeById: builder.query<recipeI, string | undefined>({
+            query: (id) => `/recipe/${id}`,
+            providesTags: (_result, _error, id) => [{ type: 'Recipe', id }],
         }),
     }),
 });
 
 export const {
     useCheckQuery,
+    useMeasureUnitsQuery,
     useLazyCheckQuery,
     useLoginMutation,
     useSignupMutation,
     useForgotMutation,
     useVerifyOtpMutation,
     useRestoreMutation,
+    useUploadFileMutation,
+    useAddDraftMutation,
+    useAddRecipeMutation,
+    useDeleteRecipeMutation,
+    useBookmarkRecipeMutation,
+    useLikeRecipeMutation,
+    useUpdateRecipeMutation,
+    useGetRecipeByIdQuery,
 } = authApi;

@@ -68,6 +68,7 @@ export function Login() {
         loginUser({ login: data.login, password: data.password })
             .unwrap()
             .then(() => {
+                sessionStorage.setItem('justLoggedIn', 'true');
                 navigate('/');
                 dispatch(
                     setNotification({

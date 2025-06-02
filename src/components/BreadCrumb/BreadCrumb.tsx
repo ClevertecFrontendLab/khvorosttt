@@ -3,7 +3,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router';
 
-import { useGetRecipeByIdQuery } from '~/api/recipeApi';
+import { useGetRecipeByIdQuery } from '~/api/authApi';
 import { selectedCategories } from '~/services/features/selectors';
 
 import { BurgerMenuProps } from '../BurgerMenu/BurgerMenu';
@@ -34,18 +34,10 @@ export function BreadCrumb({ isOpen, toggleMenu }: BurgerMenuProps) {
     const getPath = (index: number) => {
         if (index === 0) {
             const category = categoriesSavedData.categories.find((c) => c.category === paths[0]);
-            console.log(category);
             if (category?.subCategories?.[0]) {
                 return `/${paths[0]}/${category.subCategories[0].category}`;
             } else return `/${paths[0]}`;
         }
-        // else if (index === 0&&paths.length===1) {
-        //     const category = categoriesSavedData.categories.find(c => c.category === paths[0]);
-        //     console.log(category);
-        //     if (category?.subCategories?.[0]) {
-        //         return `/${paths[0]}/${category.subCategories[0].category}`;
-        //     } else return `/${paths[0]}`;
-        // }
         return `/${paths.slice(0, index + 1).join('/')}`;
     };
 

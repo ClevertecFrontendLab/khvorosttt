@@ -2,7 +2,7 @@ import type { SystemStyleObject } from '@chakra-ui/styled-system';
 
 export const NotificationStyle: SystemStyleObject = {
     position: 'fixed',
-    bottom: '50px',
+    bottom: '20px',
     left: '50%',
     transform: 'translateX(-50%)',
     w: { base: '328px', '2xl': '400px' },

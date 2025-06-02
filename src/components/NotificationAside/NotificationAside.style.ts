@@ -12,7 +12,7 @@ export const NotificationAsideStyle: SystemStyleObject = {
 export const NoteElementStyle: SystemStyleObject = {
     flexDirection: 'column',
     mt: 'auto',
-    h: '100%',
+    h: '84px',
     alignItems: 'center',
     justifyContent: 'flex-end',
     gap: '5px',

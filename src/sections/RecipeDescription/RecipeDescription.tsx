@@ -1,13 +1,24 @@
-import { TimeIcon } from '@chakra-ui/icons';
-import { Button, Flex, Image, Text } from '@chakra-ui/react';
+import { EditIcon, TimeIcon } from '@chakra-ui/icons';
+import { Button, Flex, IconButton, Image, Text } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 
+import {
+    useBookmarkRecipeMutation,
+    useDeleteRecipeMutation,
+    useLikeRecipeMutation,
+} from '~/api/authApi';
+import { useGetRecipeByIdQuery } from '~/api/authApi';
 import { MarkerStyle } from '~/components/CardNew/CardNew.style';
 import { CategoryMarker } from '~/components/CategoryMarker/CategoryMarker';
 import { BookmarkIcon } from '~/components/Icons/Bookmark';
+import { DeleteIcon } from '~/components/Icons/DeleteIcon';
 import { LikeSmileIcon } from '~/components/Icons/LikeSmile';
 import { Interactions } from '~/components/Interactions/Interactions';
 import { IMAGE_BASED_PATH } from '~/data/consts';
 import { recipeI } from '~/interfaces/recipeI';
+import { setNotification } from '~/services/features/notificationSlice';
+import { getUserIdFromToken } from '~/services/utils';
 
 import {
     ButtonStyle,
@@ -18,6 +29,72 @@ import {
 } from './RecipeDescription.style';
 
 export function RecipeDescription(data: recipeI) {
+    const userId = getUserIdFromToken();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [deleteRecipe] = useDeleteRecipeMutation();
+    const [likeRecipe] = useLikeRecipeMutation();
+    const [bookmarksRecipe] = useBookmarkRecipeMutation();
+    const { refetch } = useGetRecipeByIdQuery(data._id);
+
+    const handleDelete = (id: string) => {
+        deleteRecipe(id)
+            .unwrap()
+            .then(() => {
+                dispatch(
+                    setNotification({
+                        title: 'Рецепт успешно удален',
+                        description: '',
+                        typeN: 'success',
+                    }),
+                );
+                navigate('/');
+            })
+            .catch(() => {
+                dispatch(
+                    setNotification({
+                        title: 'Ошибка сервера',
+                        description: 'Не удалось удалить рецепт',
+                        typeN: 'error',
+                    }),
+                );
+            });
+    };
+
+    const handleLike = (id: string) => {
+        likeRecipe(id)
+            .unwrap()
+            .then(() => {
+                refetch();
+            })
+            .catch(() => {
+                dispatch(
+                    setNotification({
+                        title: 'Ошибка сервера',
+                        description: 'Попробуйте немного позже',
+                        typeN: 'error',
+                    }),
+                );
+            });
+    };
+
+    const handleBookmarks = (id: string) => {
+        bookmarksRecipe(id)
+            .unwrap()
+            .then(() => {
+                refetch();
+            })
+            .catch(() => {
+                dispatch(
+                    setNotification({
+                        title: 'Ошибка сервера',
+                        description: 'Попробуйте немного позже',
+                        typeN: 'error',
+                    }),
+                );
+            });
+    };
+
     return (
         <Flex sx={RecipeDescriptionStyle}>
             <Flex
@@ -46,7 +123,7 @@ export function RecipeDescription(data: recipeI) {
                         </Flex>
                     </Flex>
                     <Flex
-                        justifyContent='space-between'
+                        justifyContent='center'
                         direction={{ base: 'column', md: 'row', xl: 'column', '2xl': 'row' }}
                         gap='12px'
                     >
@@ -56,24 +133,56 @@ export function RecipeDescription(data: recipeI) {
                                 {data.time} минут
                             </Text>
                         </Flex>
-                        <Flex gap='16px'>
-                            <Button
-                                leftIcon={<LikeSmileIcon />}
-                                colorScheme='gray'
-                                variant='outline'
-                                sx={ButtonStyle}
-                            >
-                                Оценить рецепт
-                            </Button>
-                            <Button
-                                bg='#b1ff2e'
-                                color='#000'
-                                leftIcon={<BookmarkIcon />}
-                                sx={ButtonStyle}
-                            >
-                                Сохранить в закладки
-                            </Button>
-                        </Flex>
+                        {data.authorId === userId ? (
+                            <Flex gap='16px'>
+                                <IconButton
+                                    icon={<DeleteIcon color='black' />}
+                                    aria-label='Удалить рецепт'
+                                    variant='ghost'
+                                    onClick={() => handleDelete(data._id)}
+                                    data-test-id='recipe-delete-button'
+                                />
+                                <Button
+                                    leftIcon={<EditIcon />}
+                                    data-test-id='recipe-save-draft-button'
+                                    border='1px solid rgba(0, 0, 0, 0.08)'
+                                    borderRadius='6px'
+                                    p='0px 24px'
+                                    variant='outline'
+                                    color='rgba(0, 0, 0, 0.8)'
+                                    fontWeight={600}
+                                    fontSize='18px'
+                                    fontFamily='text'
+                                    w={{ base: '328px', md: '246px' }}
+                                    onClick={() => {
+                                        navigate(`/edit-recipe${location.pathname}`);
+                                    }}
+                                >
+                                    Редактировать рецепт
+                                </Button>
+                            </Flex>
+                        ) : (
+                            <Flex gap='16px'>
+                                <Button
+                                    leftIcon={<LikeSmileIcon />}
+                                    colorScheme='gray'
+                                    variant='outline'
+                                    sx={ButtonStyle}
+                                    onClick={() => handleLike(data._id)}
+                                >
+                                    Оценить рецепт
+                                </Button>
+                                <Button
+                                    bg='#b1ff2e'
+                                    color='#000'
+                                    leftIcon={<BookmarkIcon />}
+                                    sx={ButtonStyle}
+                                    onClick={() => handleBookmarks(data._id)}
+                                >
+                                    Сохранить в закладки
+                                </Button>
+                            </Flex>
+                        )}
                     </Flex>
                 </Flex>
             </Flex>

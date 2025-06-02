@@ -9,6 +9,7 @@ export const LoaderStyle: SystemStyleObject = {
     bg: 'rgba(0, 0, 0, 0.16)',
     zIndex: 1600,
     backdropFilter: 'blur(4px)',
+    pointerEvents: 'none',
 };
 
 export const LoaderSpinnerStyle: SystemStyleObject = {

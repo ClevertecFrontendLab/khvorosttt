@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 
-import { useGetRecipeByIdQuery } from '~/api/recipeApi';
+import { useGetRecipeByIdQuery } from '~/api/authApi';
 import { AuthorRecipe } from '~/components/AuthorRecipe/AuthorRecipe';
 import { Loader } from '~/components/Loader/Loader';
 import { Calories } from '~/sections/Calories/Calories';
@@ -15,7 +15,9 @@ import { setNotification } from '~/services/features/notificationSlice';
 
 export function Recipe() {
     const { id } = useParams();
-    const { data, isLoading, isError } = useGetRecipeByIdQuery(id, { skip: id === undefined });
+    const { data, isLoading, isError } = useGetRecipeByIdQuery(id, {
+        skip: id === undefined /*refetchOnMountOrArgChange: true,*/,
+    });
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -39,6 +41,7 @@ export function Recipe() {
     if (!data) {
         return null;
     }
+
     return (
         <Box w='100%' p='90px 0px'>
             <Flex direction='column' alignItems='center' gap='40px'>
