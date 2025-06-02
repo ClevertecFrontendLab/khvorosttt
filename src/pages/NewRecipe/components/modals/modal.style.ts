@@ -2,7 +2,7 @@ import type { SystemStyleObject } from '@chakra-ui/styled-system';
 
 export const ContentStyle: SystemStyleObject = {
     w: { base: '316px', md: '396px' },
-    p: '32px',
+    p: { base: '16px', md: '32px' },
     borderRadius: '16px',
     alignItems: 'center',
     gap: '32px',
@@ -22,6 +22,8 @@ export const CloseStyle: SystemStyleObject = {
     borderRadius: '50px',
     w: '24px',
     h: '24px',
+    top: '24px',
+    right: '20px',
 };
 
 export const ImageBoxStyle: SystemStyleObject = {
@@ -48,6 +50,17 @@ export const ButtonStyle: SystemStyleObject = {
     p: '0px 24px',
     bg: 'black',
     color: 'white',
+    fontFamily: 'text',
+    fontWeight: 600,
+    fontSize: '18px',
+};
+
+export const OutButtonStyle: SystemStyleObject = {
+    w: { base: '252px', md: '332px' },
+    h: '48px',
+    borderRadius: '6px',
+    p: '0px 24px',
+    color: 'black',
     fontFamily: 'text',
     fontWeight: 600,
     fontSize: '18px',

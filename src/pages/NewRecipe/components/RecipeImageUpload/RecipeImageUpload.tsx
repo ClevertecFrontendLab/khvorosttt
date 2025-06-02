@@ -45,11 +45,12 @@ export function RecipeImageUpload() {
     };
 
     return (
-        <FormControl isInvalid={!!errors.mainImg} w='fit-content'>
+        <FormControl isInvalid={!!errors.image} w='fit-content'>
             <ImageUploadBox
                 previewImage={previewImage}
                 onClick={handleClick}
                 testId='recipe-image-block'
+                hasError={!!errors.image}
             />
 
             <input

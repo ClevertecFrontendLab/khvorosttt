@@ -9,12 +9,14 @@ interface ImageUploadBoxProps {
     previewImage: string | null;
     onClick: () => void;
     testId?: string;
+    hasError: boolean;
 }
 
-export function ImageUploadBox({ previewImage, onClick, testId }: ImageUploadBoxProps) {
+export function ImageUploadBox({ previewImage, onClick, testId, hasError }: ImageUploadBoxProps) {
     return (
         <Box
             data-test-id={testId}
+            border={hasError ? '2px solid red' : 'none'}
             w={
                 testId === 'recipe-image-block'
                     ? { base: '328px', md: '232px', xl: '353px', '3xl': '553px' }
