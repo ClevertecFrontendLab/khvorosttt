@@ -16,7 +16,7 @@ import {
     successI,
     verifyOtpI,
 } from '~/interfaces/authI';
-import { MeasureUnitsI } from '~/interfaces/recipeI';
+import { MeasureUnitsI, recipeI } from '~/interfaces/recipeI';
 import { RecipeInputs, RecipeInputsOptional } from '~/pages/NewRecipe/NewRecipe';
 
 const rawBaseQuery = fetchBaseQuery({
@@ -86,6 +86,7 @@ const baseQueryWithTokenHandler: BaseQueryFn<
 export const authApi = createApi({
     reducerPath: 'auth',
     baseQuery: baseQueryWithTokenHandler,
+    tagTypes: ['Recipe'],
     endpoints: (builder) => ({
         check: builder.query<authI, void>({
             query: () => '/auth/check-auth',
@@ -167,6 +168,18 @@ export const authApi = createApi({
                 method: 'POST',
             }),
         }),
+        updateRecipe: builder.mutation<void, { id: string; data: RecipeInputs }>({
+            query: ({ id, data }) => ({
+                url: `/recipe/${id}`,
+                method: 'PATCH',
+                body: data,
+            }),
+            invalidatesTags: (_result, _error, { id }) => [{ type: 'Recipe', id }],
+        }),
+        getRecipeById: builder.query<recipeI, string | undefined>({
+            query: (id) => `/recipe/${id}`,
+            providesTags: (_result, _error, id) => [{ type: 'Recipe', id }],
+        }),
     }),
 });
 
@@ -185,4 +198,6 @@ export const {
     useDeleteRecipeMutation,
     useBookmarkRecipeMutation,
     useLikeRecipeMutation,
+    useUpdateRecipeMutation,
+    useGetRecipeByIdQuery,
 } = authApi;

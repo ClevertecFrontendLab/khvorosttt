@@ -8,7 +8,7 @@ import {
     useDeleteRecipeMutation,
     useLikeRecipeMutation,
 } from '~/api/authApi';
-import { useGetRecipeByIdQuery } from '~/api/recipeApi';
+import { useGetRecipeByIdQuery } from '~/api/authApi';
 import { MarkerStyle } from '~/components/CardNew/CardNew.style';
 import { CategoryMarker } from '~/components/CategoryMarker/CategoryMarker';
 import { BookmarkIcon } from '~/components/Icons/Bookmark';
@@ -154,7 +154,9 @@ export function RecipeDescription(data: recipeI) {
                                     fontSize='18px'
                                     fontFamily='text'
                                     w={{ base: '328px', md: '246px' }}
-                                    onClick={() => {}}
+                                    onClick={() => {
+                                        navigate(`/edit-recipe${location.pathname}`);
+                                    }}
                                 >
                                     Редактировать рецепт
                                 </Button>

@@ -3,14 +3,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useBlocker, useNavigate } from 'react-router';
+import { useBlocker, useNavigate, useParams } from 'react-router';
 
-import { useAddDraftMutation, useAddRecipeMutation } from '~/api/authApi';
+import { useAddDraftMutation, useUpdateRecipeMutation } from '~/api/authApi';
+import { useGetRecipeByIdQuery } from '~/api/authApi';
 import { Loader } from '~/components/Loader/Loader';
-import { ingredientsI, ingredientsOptionalI, stepsI, stepsOptionalI } from '~/interfaces/recipeI';
 import { setNotification } from '~/services/features/notificationSlice';
 import { selectedCategories } from '~/services/features/selectors';
-import { getUserIdFromToken } from '~/services/utils';
 
 import { PreventiveModal } from './components/modals/PreventiveModal';
 import { RecipeButtons } from './components/RecipeButtons/RecipeButtons';
@@ -18,58 +17,32 @@ import { RecipeImageUpload } from './components/RecipeImageUpload/RecipeImageUpl
 import { RecipeIngredients } from './components/RecipeIngredients/RecipeIngredients';
 import { RecipeMainInfo } from './components/RecipeMainInfo/RecipeMainInfo';
 import { RecipeSteps } from './components/RecipeStep/RecipeSteps';
+import { RecipeInputs, RecipeInputsOptional } from './NewRecipe';
 import { schema } from './shema/shema';
 
-export type RecipeInputs = {
-    title: string;
-    description: string;
-    time: number;
-    portions: number;
-    categoriesIds: string[];
-    image: string;
-    ingredients: ingredientsI[];
-    steps: stepsI[];
-};
+export function EditRecipe() {
+    const { '*': pathTail } = useParams();
+    const id = pathTail?.split('/').pop() ?? '';
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-export type RecipeInputsOptional = {
-    title: string;
-    description?: string | null;
-    time?: number | null;
-    portions?: number | null;
-    categoriesIds?: string[] | null;
-    image?: string | null;
-    ingredients?: ingredientsOptionalI[];
-    steps?: stepsOptionalI[];
-};
-
-export function NewRecipe() {
-    getUserIdFromToken();
     const methods = useForm<RecipeInputs>({
         mode: 'onSubmit',
         shouldFocusError: false,
         resolver: yupResolver(schema),
-        defaultValues: {
-            title: '',
-            description: '',
-            time: 0,
-            portions: 1,
-            categoriesIds: [],
-            image: '',
-            ingredients: [{ title: '', count: 1, measureUnit: '' }],
-            steps: [{ stepNumber: 1, description: '', image: '' }],
-        },
     });
+
     const {
         formState: { isDirty },
     } = methods;
 
-    const [addRecipe, { isLoading: publishLoading }] = useAddRecipeMutation();
-    const [addDraft, { isLoading: draftLoading }] = useAddDraftMutation();
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const { data, isLoading } = useGetRecipeByIdQuery(id /*{refetchOnMountOrArgChange: true}*/);
+    const [updateRecipe, { isLoading: updating }] = useUpdateRecipeMutation();
     const categoriesSavedData = useSelector(selectedCategories);
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [addDraft] = useAddDraftMutation();
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const [pendingNavigation, setPendingNavigation] = useState<string | null>(null);
 
@@ -160,16 +133,6 @@ export function NewRecipe() {
         }
     };
 
-    function normalizeRecipeData(data: RecipeInputs): RecipeInputs {
-        return {
-            ...data,
-            steps: data.steps.map((step) => ({
-                ...step,
-                image: step.image || null,
-            })),
-        };
-    }
-
     function normalizeRecipeDataOptianal(data: RecipeInputs): RecipeInputsOptional {
         return {
             ...data,
@@ -192,24 +155,30 @@ export function NewRecipe() {
         };
     }
 
-    const publishRecipe = (data: RecipeInputs) => {
+    useEffect(() => {
+        if (data) {
+            methods.reset(data);
+        }
+    }, [data]);
+
+    const handleUpdate = (formData: RecipeInputs) => {
         setIsSubmitting(true);
-        const normalizedData = normalizeRecipeData(data);
-        addRecipe(normalizedData)
+        updateRecipe({ id, data: formData })
             .unwrap()
-            .then((res) => {
+            .then(() => {
                 const subcategoryName = categoriesSavedData.subcategories.find(
-                    (item) => item._id === data.categoriesIds[0],
+                    (item) => item._id === formData.categoriesIds[0],
                 );
                 const category = categoriesSavedData.categories.find(
                     (item) => item._id === subcategoryName?.rootCategoryId,
                 );
-                navigate(`/${category?.category}/${subcategoryName?.category}/${res._id}`);
+
+                navigate(`/${category?.category}/${subcategoryName?.category}/${id}`);
                 dispatch(
                     setNotification({
                         title: 'Рецепт успешно опубликован',
-                        description: '',
                         typeN: 'success',
+                        description: '',
                     }),
                 );
             })
@@ -237,6 +206,8 @@ export function NewRecipe() {
             });
     };
 
+    if (isLoading || updating) return <Loader />;
+
     return (
         <Box
             w='100%'
@@ -246,8 +217,7 @@ export function NewRecipe() {
             paddingRight={{ base: '16px', ms: '0px' }}
         >
             <FormProvider {...methods}>
-                <form onSubmit={methods.handleSubmit(publishRecipe)} data-test-id='recipe-form'>
-                    {(publishLoading || draftLoading) && <Loader />}
+                <form onSubmit={methods.handleSubmit(handleUpdate)} data-test-id='recipe-form'>
                     <Flex flexDirection='column' gap='40px' alignItems='center'>
                         <Flex
                             gap={{ base: '16px', lg: '24px' }}

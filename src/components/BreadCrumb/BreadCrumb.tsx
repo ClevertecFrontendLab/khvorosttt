@@ -3,7 +3,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router';
 
-import { useGetRecipeByIdQuery } from '~/api/recipeApi';
+import { useGetRecipeByIdQuery } from '~/api/authApi';
 import { selectedCategories } from '~/services/features/selectors';
 
 import { BurgerMenuProps } from '../BurgerMenu/BurgerMenu';

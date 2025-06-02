@@ -83,7 +83,17 @@ export function RecipePortions() {
             alignItems='center'
         >
             <FormLabel>На сколько человек ваш рецепт?</FormLabel>
-            <NumberInput size='md' w='90px' max={50} step={1}>
+            <NumberInput
+                value={field.value}
+                onChange={(val) => {
+                    const numberVal = parseInt(val, 10);
+                    field.onChange(isNaN(numberVal) ? 1 : numberVal);
+                }}
+                size='md'
+                w='90px'
+                max={50}
+                step={1}
+            >
                 <NumberInputField {...field} data-test-id='recipe-portions' />
                 <NumberInputStepper w='24px' h='40px'>
                     <NumberIncrementStepper />
@@ -108,7 +118,16 @@ export function RecipeTime() {
             alignItems='center'
         >
             <FormLabel>Сколько времени готовить в минутах?</FormLabel>
-            <NumberInput size='md' w='90px' step={1}>
+            <NumberInput
+                value={field.value}
+                onChange={(val) => {
+                    const numberVal = parseInt(val, 10);
+                    field.onChange(isNaN(numberVal) ? 0 : numberVal);
+                }}
+                size='md'
+                w='90px'
+                step={1}
+            >
                 <NumberInputField {...field} data-test-id='recipe-time' />
                 <NumberInputStepper w='24px' h='40px'>
                     <NumberIncrementStepper />
