@@ -3,7 +3,12 @@ import { Button, Flex, IconButton, Image, Text } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 
-import { useDeleteRecipeMutation } from '~/api/authApi';
+import {
+    useBookmarkRecipeMutation,
+    useDeleteRecipeMutation,
+    useLikeRecipeMutation,
+} from '~/api/authApi';
+import { useGetRecipeByIdQuery } from '~/api/recipeApi';
 import { MarkerStyle } from '~/components/CardNew/CardNew.style';
 import { CategoryMarker } from '~/components/CategoryMarker/CategoryMarker';
 import { BookmarkIcon } from '~/components/Icons/Bookmark';
@@ -28,6 +33,9 @@ export function RecipeDescription(data: recipeI) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [deleteRecipe] = useDeleteRecipeMutation();
+    const [likeRecipe] = useLikeRecipeMutation();
+    const [bookmarksRecipe] = useBookmarkRecipeMutation();
+    const { refetch } = useGetRecipeByIdQuery(data._id);
 
     const handleDelete = (id: string) => {
         deleteRecipe(id)
@@ -47,6 +55,40 @@ export function RecipeDescription(data: recipeI) {
                     setNotification({
                         title: 'Ошибка сервера',
                         description: 'Не удалось удалить рецепт',
+                        typeN: 'error',
+                    }),
+                );
+            });
+    };
+
+    const handleLike = (id: string) => {
+        likeRecipe(id)
+            .unwrap()
+            .then(() => {
+                refetch();
+            })
+            .catch(() => {
+                dispatch(
+                    setNotification({
+                        title: 'Ошибка сервера',
+                        description: 'Попробуйте немного позже',
+                        typeN: 'error',
+                    }),
+                );
+            });
+    };
+
+    const handleBookmarks = (id: string) => {
+        bookmarksRecipe(id)
+            .unwrap()
+            .then(() => {
+                refetch();
+            })
+            .catch(() => {
+                dispatch(
+                    setNotification({
+                        title: 'Ошибка сервера',
+                        description: 'Попробуйте немного позже',
                         typeN: 'error',
                     }),
                 );
@@ -124,6 +166,7 @@ export function RecipeDescription(data: recipeI) {
                                     colorScheme='gray'
                                     variant='outline'
                                     sx={ButtonStyle}
+                                    onClick={() => handleLike(data._id)}
                                 >
                                     Оценить рецепт
                                 </Button>
@@ -132,6 +175,7 @@ export function RecipeDescription(data: recipeI) {
                                     color='#000'
                                     leftIcon={<BookmarkIcon />}
                                     sx={ButtonStyle}
+                                    onClick={() => handleBookmarks(data._id)}
                                 >
                                     Сохранить в закладки
                                 </Button>

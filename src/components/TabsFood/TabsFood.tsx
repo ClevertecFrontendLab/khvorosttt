@@ -69,7 +69,6 @@ export function TabsFood() {
         { skip: onlyAllergensActive, refetchOnMountOrArgChange: true },
     );
 
-    console.log(subcategoryQuery);
     const allergensQuery = useGetRecipeWithSearchQuery(
         {
             limit: 8,

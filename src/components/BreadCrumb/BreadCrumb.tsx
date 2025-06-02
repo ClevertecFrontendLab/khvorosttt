@@ -34,7 +34,6 @@ export function BreadCrumb({ isOpen, toggleMenu }: BurgerMenuProps) {
     const getPath = (index: number) => {
         if (index === 0) {
             const category = categoriesSavedData.categories.find((c) => c.category === paths[0]);
-            console.log(category);
             if (category?.subCategories?.[0]) {
                 return `/${paths[0]}/${category.subCategories[0].category}`;
             } else return `/${paths[0]}`;

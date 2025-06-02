@@ -155,6 +155,18 @@ export const authApi = createApi({
                 method: 'DELETE',
             }),
         }),
+        likeRecipe: builder.mutation<void, string>({
+            query: (id) => ({
+                url: `/recipe/${id}/like`,
+                method: 'POST',
+            }),
+        }),
+        bookmarkRecipe: builder.mutation<void, string>({
+            query: (id) => ({
+                url: `/recipe/${id}/bookmark`,
+                method: 'POST',
+            }),
+        }),
     }),
 });
 
@@ -171,4 +183,6 @@ export const {
     useAddDraftMutation,
     useAddRecipeMutation,
     useDeleteRecipeMutation,
+    useBookmarkRecipeMutation,
+    useLikeRecipeMutation,
 } = authApi;
