@@ -3,11 +3,11 @@ import {
     FormControl,
     FormLabel,
     Input,
-    NumberDecrementStepper,
-    NumberIncrementStepper,
-    NumberInput,
-    NumberInputField,
-    NumberInputStepper,
+    // NumberDecrementStepper,
+    // NumberIncrementStepper,
+    // NumberInput,
+    // NumberInputField,
+    // NumberInputStepper,
     Textarea,
 } from '@chakra-ui/react';
 import { useController } from 'react-hook-form';
@@ -83,7 +83,7 @@ export function RecipePortions() {
             alignItems='center'
         >
             <FormLabel>На сколько человек ваш рецепт?</FormLabel>
-            <NumberInput
+            {/* <NumberInput
                 value={field.value}
                 onChange={(val) => {
                     const numberVal = parseInt(val, 10);
@@ -94,12 +94,22 @@ export function RecipePortions() {
                 max={50}
                 step={1}
             >
-                <NumberInputField {...field} data-test-id='recipe-portions' />
+                <NumberInputField data-test-id='recipe-portions' />
                 <NumberInputStepper w='24px' h='40px'>
                     <NumberIncrementStepper />
                     <NumberDecrementStepper />
                 </NumberInputStepper>
-            </NumberInput>
+            </NumberInput> */}
+            <Input
+                type='number'
+                {...field}
+                placeholder='Введите время'
+                data-test-id='recipe-portions'
+                onChange={(e) => {
+                    const val = e.target.value;
+                    field.onChange(val === '' ? null : Number(val));
+                }}
+            />
         </FormControl>
     );
 }
@@ -118,22 +128,22 @@ export function RecipeTime() {
             alignItems='center'
         >
             <FormLabel>Сколько времени готовить в минутах?</FormLabel>
-            <NumberInput
-                value={field.value}
-                onChange={(val) => {
-                    const numberVal = parseInt(val, 10);
-                    field.onChange(isNaN(numberVal) ? 0 : numberVal);
+            <Input
+                type='number'
+                {...field}
+                placeholder='Введите время'
+                data-test-id='recipe-time'
+                onChange={(e) => {
+                    const val = e.target.value;
+                    field.onChange(val === '' ? null : Number(val));
                 }}
-                size='md'
-                w='90px'
-                step={1}
-            >
-                <NumberInputField {...field} data-test-id='recipe-time' />
+            />
+            {/* <NumberInputField data-test-id='recipe-time' />
                 <NumberInputStepper w='24px' h='40px'>
                     <NumberIncrementStepper />
                     <NumberDecrementStepper />
                 </NumberInputStepper>
-            </NumberInput>
+            </NumberInput> */}
         </FormControl>
     );
 }
