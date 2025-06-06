@@ -1,4 +1,5 @@
 import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton } from '@chakra-ui/react';
+import { useEffect } from 'react';
 // import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -15,14 +16,14 @@ export function Notification() {
         dispatch(clearNotification());
     };
 
-    // useEffect(() => {
-    //     if (!title) return;
-    //     const timer = setTimeout(() => {
-    //         closeAction();
-    //     }, 20000);
+    useEffect(() => {
+        if (!title) return;
+        const timer = setTimeout(() => {
+            closeAction();
+        }, 15000);
 
-    //     return () => clearTimeout(timer);
-    // }, [title, dispatch]);
+        return () => clearTimeout(timer);
+    }, [title, dispatch]);
 
     if (!title) {
         return null;
@@ -37,8 +38,12 @@ export function Notification() {
         >
             <AlertIcon color='white' />
             <Box>
-                <AlertTitle sx={HeadingStyle}>{title}</AlertTitle>
-                <AlertDescription sx={TextStyle}>{description}</AlertDescription>
+                <AlertTitle sx={HeadingStyle} data-test-id='error-notification-title'>
+                    {title}
+                </AlertTitle>
+                <AlertDescription sx={TextStyle} data-test-id='error-notification-description'>
+                    {description}
+                </AlertDescription>
             </Box>
             <CloseButton
                 onClick={closeAction}

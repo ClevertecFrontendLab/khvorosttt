@@ -2,7 +2,6 @@ import { Box, Flex } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 import { Search } from '~/components/Search/Search';
-import authors from '~/data/authorsPosts.json';
 import { CategoryInfo } from '~/sections/CategoryInfoSection/CategoryInfo';
 import { CookingBlog } from '~/sections/CookingBlog/CookingBlog';
 import { Juiciest } from '~/sections/Juiciest/Juiciest';
@@ -21,7 +20,7 @@ export function Home() {
                         <Juiciest title='Самое сочное' />
                     </>
                 ) : null}
-                <CookingBlog data={authors} />
+                <CookingBlog />
                 <CategoryInfo />
             </Flex>
         </Box>

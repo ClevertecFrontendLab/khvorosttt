@@ -83,6 +83,7 @@ export function NewRecipes() {
                         ? data.map((recipe, index) => (
                               <SwiperSlide
                                   key={index}
+                                  virtualIndex={index}
                                   style={{ height: 'auto' }}
                                   data-test-id={`carousel-card-${index}`}
                               >

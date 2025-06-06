@@ -16,6 +16,7 @@ import {
     successI,
     verifyOtpI,
 } from '~/interfaces/authI';
+import { bloggersResponce } from '~/interfaces/bloggerI';
 import { MeasureUnitsI, recipeI } from '~/interfaces/recipeI';
 import { RecipeInputs, RecipeInputsOptional } from '~/pages/NewRecipe/NewRecipe';
 
@@ -180,6 +181,10 @@ export const authApi = createApi({
             query: (id) => `/recipe/${id}`,
             providesTags: (_result, _error, id) => [{ type: 'Recipe', id }],
         }),
+        getBloggers: builder.query<bloggersResponce, { currentUserId: string; limit?: number }>({
+            query: ({ currentUserId, limit }) =>
+                `/bloggers?currentUserId=${currentUserId}&limit=${limit !== undefined ? limit : ''}`,
+        }),
     }),
 });
 
@@ -200,4 +205,5 @@ export const {
     useLikeRecipeMutation,
     useUpdateRecipeMutation,
     useGetRecipeByIdQuery,
+    useGetBloggersQuery,
 } = authApi;
