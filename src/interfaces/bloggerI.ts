@@ -19,3 +19,8 @@ export interface bloggersResponce {
     favorites: bloggerI[];
     others: bloggerI[];
 }
+
+export type toggleSubscriptionI = {
+    fromUserId: string;
+    toUserId: string;
+};

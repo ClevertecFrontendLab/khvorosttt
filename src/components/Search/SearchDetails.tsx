@@ -26,7 +26,7 @@ import { Allergens } from '../Allergens/Allergens';
 import { Filter } from '../Filter/Filter';
 import { FilterTagPanel } from '../FilterTagPanel/FilterTagPanel';
 import { SearchIcon2 } from '../Icons/SearchIcon';
-import { SearchLoader } from '../SearchLoader/SearchLoader';
+import { SmallLoader } from '../SmallLoader/SmallLoader';
 import { IconButtonStyle } from './Search.style';
 
 export function SearchDetails({
@@ -61,7 +61,7 @@ export function SearchDetails({
     };
 
     if (isLoading) {
-        return <SearchLoader />;
+        return <SmallLoader testId='loader-search-block' />;
     }
 
     return (

@@ -87,7 +87,7 @@ const baseQueryWithTokenHandler: BaseQueryFn<
 export const authApi = createApi({
     reducerPath: 'auth',
     baseQuery: baseQueryWithTokenHandler,
-    tagTypes: ['Recipe'],
+    tagTypes: ['Recipe', 'toggleSubscription'],
     endpoints: (builder) => ({
         check: builder.query<authI, void>({
             query: () => '/auth/check-auth',
@@ -181,9 +181,21 @@ export const authApi = createApi({
             query: (id) => `/recipe/${id}`,
             providesTags: (_result, _error, id) => [{ type: 'Recipe', id }],
         }),
-        getBloggers: builder.query<bloggersResponce, { currentUserId: string; limit?: number }>({
+        getBloggers: builder.query<bloggersResponce, { currentUserId: string; limit?: string }>({
             query: ({ currentUserId, limit }) =>
                 `/bloggers?currentUserId=${currentUserId}&limit=${limit !== undefined ? limit : ''}`,
+            providesTags: (_result, _error) => [{ type: 'toggleSubscription' }],
+        }),
+        toggleSubscription: builder.mutation<void, { fromUserId: string; toUserId: string }>({
+            query: ({ fromUserId, toUserId }) => ({
+                url: `/users/toggle-subscription`,
+                method: 'PATCH',
+                body: {
+                    fromUserId: fromUserId,
+                    toUserId: toUserId,
+                },
+            }),
+            invalidatesTags: (_result, _error) => [{ type: 'toggleSubscription' }],
         }),
     }),
 });
@@ -206,4 +218,5 @@ export const {
     useUpdateRecipeMutation,
     useGetRecipeByIdQuery,
     useGetBloggersQuery,
+    useToggleSubscriptionMutation,
 } = authApi;

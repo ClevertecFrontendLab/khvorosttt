@@ -81,6 +81,7 @@ export function CookingBlog() {
                 w='149px'
                 h='40px'
                 borderRadius='6px'
+                onClick={() => navigate('/blogs')}
             >
                 Все авторы
             </Button>
