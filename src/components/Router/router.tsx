@@ -4,6 +4,7 @@ import App from '~/app/App';
 import { Auth } from '~/pages/Auth/Auth';
 import { Login } from '~/pages/Auth/Login/Login';
 import { SignUp } from '~/pages/Auth/SignUp/SignUp';
+import { Blogger } from '~/pages/Blogger/Blogger';
 import { Bloggers } from '~/pages/Bloggers/Bloggers';
 import { ErrorPage } from '~/pages/Error/Error';
 import { Home } from '~/pages/Home/Home';
@@ -72,7 +73,7 @@ const router = createBrowserRouter([
             },
             {
                 path: 'blogs/:bloggerId',
-                element: <></>,
+                element: <Blogger />,
             },
         ],
     },

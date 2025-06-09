@@ -16,7 +16,7 @@ import {
     successI,
     verifyOtpI,
 } from '~/interfaces/authI';
-import { bloggersResponce } from '~/interfaces/bloggerI';
+import { bloggerInfoI, bloggersResponce, RecipesUserI } from '~/interfaces/bloggerI';
 import { MeasureUnitsI, recipeI } from '~/interfaces/recipeI';
 import { RecipeInputs, RecipeInputsOptional } from '~/pages/NewRecipe/NewRecipe';
 
@@ -197,6 +197,14 @@ export const authApi = createApi({
             }),
             invalidatesTags: (_result, _error) => [{ type: 'toggleSubscription' }],
         }),
+        getUserById: builder.query<bloggerInfoI, { userId: string; currentUserId: string }>({
+            query: ({ userId, currentUserId }) =>
+                `/bloggers/${userId}?currentUserId=${currentUserId}`,
+            providesTags: (_result, _error) => [{ type: 'toggleSubscription' }],
+        }),
+        getRecipeByUser: builder.query<RecipesUserI, string | undefined>({
+            query: (id) => `/recipe/user/${id}`,
+        }),
     }),
 });
 
@@ -219,4 +227,6 @@ export const {
     useGetRecipeByIdQuery,
     useGetBloggersQuery,
     useToggleSubscriptionMutation,
+    useGetUserByIdQuery,
+    useGetRecipeByUserQuery,
 } = authApi;

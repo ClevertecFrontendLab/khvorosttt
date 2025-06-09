@@ -101,7 +101,7 @@ export function BloggerCard({ blogger }: BloggerCardProps) {
                     <Button
                         variant='outline'
                         sx={ReadButtonStyle}
-                        onClick={() => navigate(`blogs/${blogger._id}#notes`)}
+                        onClick={() => navigate(`${blogger._id}#notes`)}
                     >
                         Читать
                     </Button>

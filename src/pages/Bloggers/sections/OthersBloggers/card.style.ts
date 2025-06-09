@@ -22,7 +22,7 @@ export const FollowStyle: SystemStyleObject = {
 };
 
 export const FollowedStyle: SystemStyleObject = {
-    w: '114px',
+    w: '122px',
     h: '24px',
     bg: 'transparent',
     color: 'black',

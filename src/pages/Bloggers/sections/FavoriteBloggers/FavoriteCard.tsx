@@ -66,7 +66,7 @@ export function FavoriteCard({ blogger }: FavoriteCardProps) {
                         variant='solid'
                         sx={RecipeButtonStyle}
                         data-test-id='blogs-card-recipes-button'
-                        onClick={() => navigate(`blogs/${blogger._id}`)}
+                        onClick={() => navigate(`${blogger._id}`)}
                     >
                         Рецепты
                     </Button>
@@ -74,7 +74,7 @@ export function FavoriteCard({ blogger }: FavoriteCardProps) {
                         variant='outline'
                         sx={ReadButtonStyle}
                         data-test-id='blogs-card-notes-button'
-                        onClick={() => navigate(`blogs/${blogger._id}#notes`)}
+                        onClick={() => navigate(`${blogger._id}#notes`)}
                     >
                         Читать
                     </Button>

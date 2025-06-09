@@ -1,5 +1,5 @@
 import { ArrowForwardIcon } from '@chakra-ui/icons';
-import { Box, Button, Flex, Grid, GridItem, Text } from '@chakra-ui/react';
+import { Box, Button, Flex, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router';
@@ -55,19 +55,13 @@ export function Juiciest({ title }: JuiciestProps) {
                     Вся подборка
                 </Button>
             </Flex>
-            <Grid
-                templateColumns={{ base: 'repeat(4, 1fr)', ms: 'repeat(12, 1fr)' }}
-                w='100%'
-                gap='24px'
-            >
+            <Flex w='100%' gap='24px' wrap='wrap' justifyContent='center'>
                 {data.recipes.map((recipe, index) => (
-                    <GridItem key={index} colSpan={{ base: 4, sm: 6, xl: 12, '3xl': 6 }}>
-                        <Box data-test-id={`food-card-${index}`}>
-                            <CardJuiciest index={index} data={recipe} type='section' />
-                        </Box>
-                    </GridItem>
+                    <Box key={index} data-test-id={`food-card-${index}`}>
+                        <CardJuiciest index={index} data={recipe} type='section' />
+                    </Box>
                 ))}
-            </Grid>
+            </Flex>
             <Button
                 data-test-id='juiciest-link-mobile'
                 display={{ base: 'flex', lg: 'none' }}
