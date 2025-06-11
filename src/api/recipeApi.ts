@@ -71,7 +71,6 @@ export const recipesApi = createApi({
 export const {
     useGetRecipesQuery,
     useGetNewestRecipesQuery,
-    // useGetRecipeByIdQuery,
     useGetJuiciestRecipesQuery,
     useGetRecipeBySubcategoryQuery,
     useGetRelevantQuery,

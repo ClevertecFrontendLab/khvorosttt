@@ -184,23 +184,28 @@ export const authApi = createApi({
         getBloggers: builder.query<bloggersResponce, { currentUserId: string; limit?: string }>({
             query: ({ currentUserId, limit }) =>
                 `/bloggers?currentUserId=${currentUserId}&limit=${limit !== undefined ? limit : ''}`,
-            providesTags: (_result, _error) => [{ type: 'toggleSubscription' }],
+            providesTags: (result) =>
+                result?.others
+                    ? result.others.map((b) => ({ type: 'toggleSubscription', id: b._id }))
+                    : [{ type: 'toggleSubscription' }],
         }),
         toggleSubscription: builder.mutation<void, { fromUserId: string; toUserId: string }>({
             query: ({ fromUserId, toUserId }) => ({
                 url: `/users/toggle-subscription`,
                 method: 'PATCH',
-                body: {
-                    fromUserId: fromUserId,
-                    toUserId: toUserId,
-                },
+                body: { fromUserId, toUserId },
             }),
-            invalidatesTags: (_result, _error) => [{ type: 'toggleSubscription' }],
+            invalidatesTags: (_result, _error, { toUserId }) => [
+                { type: 'toggleSubscription', id: toUserId },
+            ],
         }),
         getUserById: builder.query<bloggerInfoI, { userId: string; currentUserId: string }>({
             query: ({ userId, currentUserId }) =>
                 `/bloggers/${userId}?currentUserId=${currentUserId}`,
-            providesTags: (_result, _error) => [{ type: 'toggleSubscription' }],
+            providesTags: (result) =>
+                result
+                    ? [{ type: 'toggleSubscription', id: result.bloggerInfo._id }]
+                    : ['toggleSubscription'],
         }),
         getRecipeByUser: builder.query<RecipesUserI, string | undefined>({
             query: (id) => `/recipe/user/${id}`,

@@ -1,4 +1,5 @@
-import { Avatar, Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
+import { Avatar, Box, Button, Flex, Heading, Text, Tooltip } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Navigate, useParams } from 'react-router';
 
@@ -12,7 +13,7 @@ import { setNotification } from '~/services/features/notificationSlice';
 import { getUserIdFromToken } from '~/services/utils';
 
 import { FollowedStyle, FollowStyle } from '../../../Bloggers/sections/OthersBloggers/card.style';
-import { AvatarStyle, ContentStyle, InfoCardStyle, LoginStyle, NameStyle } from '../infoCard.style';
+import { AvatarStyle, ContentStyle, InfoCardStyle, LoginStyle, NameStyle } from './infoCard.style';
 
 export function InfoCard() {
     const { bloggerId } = useParams();
@@ -23,8 +24,20 @@ export function InfoCard() {
     });
     const [toggleSubscription, { isLoading }] = useToggleSubscriptionMutation();
     const dispatch = useDispatch();
+    const [isFavorite, setIsFavorite] = useState(blogger?.isFavorite);
+
+    useEffect(() => {
+        setIsFavorite(blogger?.isFavorite);
+    }, [blogger?.isFavorite]);
 
     if (isError) {
+        dispatch(
+            setNotification({
+                title: 'Ошибка сервера',
+                typeN: 'error',
+                description: 'Попробуйте немного позже.',
+            }),
+        );
         return <Navigate to='/not-found' />;
     }
 
@@ -34,6 +47,7 @@ export function InfoCard() {
             toUserId: blogger ? blogger.bloggerInfo._id : '',
         })
             .unwrap()
+            .then(() => setIsFavorite((prev) => !prev))
             .catch(() => {
                 dispatch(
                     setNotification({
@@ -60,19 +74,26 @@ export function InfoCard() {
                     @{blogger?.bloggerInfo.login}
                 </Text>
                 <Flex w='100%' justifyContent='space-between'>
-                    <Button
-                        variant={blogger?.isFavorite ? 'outline' : 'solid'}
-                        leftIcon={blogger?.isFavorite ? <FollowedIcon /> : <FollowIcon />}
-                        sx={blogger?.isFavorite ? FollowedStyle : FollowStyle}
-                        onClick={handleFollowButton}
-                        data-test-id={
-                            blogger?.isFavorite
-                                ? 'blog-toggle-unsubscribe'
-                                : 'blog-toggle-subscribe'
-                        }
+                    <Tooltip
+                        hasArrow
+                        label='Нажмите, если хотите отписаться'
+                        bg='black'
+                        color='white'
+                        data-test-id='blog-tooltip'
+                        isDisabled={!isFavorite}
                     >
-                        {blogger?.isFavorite ? 'Вы подписаны' : 'Подписаться'}
-                    </Button>
+                        <Button
+                            variant={isFavorite ? 'outline' : 'solid'}
+                            leftIcon={isFavorite ? <FollowedIcon /> : <FollowIcon />}
+                            sx={isFavorite ? FollowedStyle : FollowStyle}
+                            onClick={handleFollowButton}
+                            data-test-id={
+                                isFavorite ? 'blog-toggle-unsubscribe' : 'blog-toggle-subscribe'
+                            }
+                        >
+                            {isFavorite ? 'Вы подписаны' : 'Подписаться'}
+                        </Button>
+                    </Tooltip>
                     <Flex gap='8px'>
                         <Box display='flex' alignItems='center' gap='5px'>
                             <BookmarkIcon w='12px' h='12px' />
