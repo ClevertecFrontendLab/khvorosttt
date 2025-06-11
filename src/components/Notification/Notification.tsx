@@ -1,6 +1,5 @@
 import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton } from '@chakra-ui/react';
 import { useEffect } from 'react';
-// import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { clearNotification } from '~/services/features/notificationSlice';

@@ -10,10 +10,13 @@ import {
     Stack,
     Text,
 } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 
+import { useBookmarkRecipeMutation } from '~/api/authApi';
 import { IMAGE_BASED_PATH } from '~/data/consts';
 import { recipeI } from '~/interfaces/recipeI';
+import { setNotification } from '~/services/features/notificationSlice';
 
 import { CategoryMarker } from '../CategoryMarker/CategoryMarker';
 import { BookmarkIcon } from '../Icons/Bookmark';
@@ -38,6 +41,22 @@ export function CardJuiciest({
     type?: string;
 }) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [bookmarksRecipe] = useBookmarkRecipeMutation();
+
+    const handleBookmarks = (id: string) => {
+        bookmarksRecipe(id)
+            .unwrap()
+            .catch(() => {
+                dispatch(
+                    setNotification({
+                        title: 'Ошибка сервера',
+                        description: 'Попробуйте немного позже',
+                        type: 'error',
+                    }),
+                );
+            });
+    };
     return (
         <Card sx={CardStyle} direction={{ sm: 'row' }}>
             <Image sx={CardImageStyle} src={`${IMAGE_BASED_PATH}${data.image}`} alt={data.title} />
@@ -59,7 +78,7 @@ export function CardJuiciest({
                     </Hide>
                 </CardBody>
                 <CardFooter display='flex' gap='5px' p={0} justifyContent='flex-end'>
-                    <Button sx={SaveButtonStyle}>
+                    <Button sx={SaveButtonStyle} onClick={() => handleBookmarks(data._id)}>
                         <BookmarkIcon />
                         <Hide below='lg'>
                             <Text>Сохранить</Text>
