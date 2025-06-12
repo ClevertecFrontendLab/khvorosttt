@@ -16,24 +16,30 @@ interface SearchProps {
 
 export function Search({ name, description }: SearchProps) {
     const filters = useSelector(selectedFilters);
+    const {
+        searchQuery,
+        selectedAuthors,
+        selectedCategories,
+        selectedMeatType,
+        selectedSideDishType,
+    } = filters;
 
     const shouldSearch = useMemo(() => {
-        const {
-            searchQuery,
-            selectedAuthors,
-            selectedCategories,
-            selectedMeatType,
-            selectedSideDishType,
-        } = filters;
-
         const hasRealFilters =
             searchQuery.trim().length >= 3 ||
             selectedAuthors.length > 0 ||
             selectedCategories.length > 0 ||
             selectedMeatType.length > 0 ||
             selectedSideDishType.length > 0;
+
         return hasRealFilters;
-    }, [filters]);
+    }, [
+        searchQuery,
+        selectedAuthors.length,
+        selectedCategories.length,
+        selectedMeatType.length,
+        selectedSideDishType.length,
+    ]);
 
     const { data: findedRecipe, isLoading } = useGetRecipeWithSearchQuery(
         {
@@ -45,7 +51,7 @@ export function Search({ name, description }: SearchProps) {
             searchString: filters.searchQuery,
             garnish: filters.selectedSideDishType,
         },
-        { skip: !shouldSearch },
+        { skip: !(shouldSearch || filters.doFinding) }, // запускать, если doFinding или реальные фильтры
     );
 
     return (

@@ -47,9 +47,8 @@ export function SearchDetails({
 
     const handleSearch = () => {
         const query = search.trim().toLowerCase();
-        if (query.length >= 3) {
-            dispatch(setSearchQuery(query));
-        }
+        dispatch(setSearchQuery(query));
+        dispatch(setFinding(true));
     };
 
     const changeAllergenSelector = (item: string) => {
@@ -85,7 +84,12 @@ export function SearchDetails({
                                 : 'none'
                         }
                         data-test-id='search-button'
-                        cursor={search.trim().length >= 3 && !isLoading ? 'pointer' : 'default'}
+                        cursor={
+                            (search.trim().length >= 3 || filters.selectedAllergens.length > 0) &&
+                            !isLoading
+                                ? 'pointer'
+                                : 'default'
+                        }
                         onClick={handleSearch}
                     >
                         <SearchIcon color='black' />
