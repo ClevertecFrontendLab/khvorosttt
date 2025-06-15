@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Navigate } from 'react-router';
 
 import { useGetBloggersQuery } from '~/api/authApi';
+import { errorI } from '~/interfaces/authI';
 import { NewRecipes } from '~/sections/NewRecipes/NewRecipes';
 import { setNotification } from '~/services/features/notificationSlice';
 import { getUserIdFromToken } from '~/services/utils';
@@ -14,7 +15,7 @@ import { OthersBloggers } from './sections/OthersBloggers/OthersBlogers';
 export function Bloggers() {
     const currentUserId = getUserIdFromToken();
     const [limit, setLimit] = useState('9');
-    const { data, isError } = useGetBloggersQuery({ currentUserId: currentUserId!, limit: limit });
+    const { data, error } = useGetBloggersQuery({ currentUserId: currentUserId!, limit: limit });
     const dispatch = useDispatch();
     const [showAll, setShowAll] = useState(false);
 
@@ -26,16 +27,20 @@ export function Bloggers() {
         }
     }, [showAll]);
 
-    if (isError) {
-        dispatch(
-            setNotification({
-                title: 'Ошибка сервера',
-                typeN: 'error',
-                description: 'Попробуйте немного позже.',
-            }),
-        );
+    if (error) {
+        if ((error as errorI).status === 400) {
+            return <Navigate to='/' />;
+        } else {
+            dispatch(
+                setNotification({
+                    title: 'Ошибка сервера',
+                    typeN: 'error',
+                    description: 'Попробуйте немного позже.',
+                }),
+            );
 
-        return <Navigate to='/' />;
+            return <Navigate to='/' />;
+        }
     }
 
     return (

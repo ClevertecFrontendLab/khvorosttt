@@ -16,7 +16,7 @@ interface JuiciestProps {
 }
 
 export function Juiciest({ title }: JuiciestProps) {
-    const { data, isLoading, isError } = useGetJuiciestRecipesQuery({ limit: 4, page: 1 });
+    const { data, isLoading, isError, refetch } = useGetJuiciestRecipesQuery({ limit: 4, page: 1 });
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -58,7 +58,12 @@ export function Juiciest({ title }: JuiciestProps) {
             <Flex w='100%' gap='24px' wrap='wrap' justifyContent='center'>
                 {data.recipes.map((recipe, index) => (
                     <Box key={index} data-test-id={`food-card-${index}`}>
-                        <CardJuiciest index={index} data={recipe} type='section' />
+                        <CardJuiciest
+                            index={index}
+                            data={recipe}
+                            type='section'
+                            refetch={refetch}
+                        />
                     </Box>
                 ))}
             </Flex>

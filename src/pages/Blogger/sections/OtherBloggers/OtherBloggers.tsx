@@ -41,8 +41,8 @@ export function OtherBloggers() {
             <Flex
                 data-test-id='blogger-user-other-blogs-grid'
                 gap='16px'
-                h={{ base: '720px', sm: '216px', lg: '264px', '3xl': '224px' }}
                 flexDirection={{ base: 'column', md: 'row' }}
+                alignItems='center'
             >
                 {bloggers?.others?.slice(0, 3).map((blogger) => <BloggerCard blogger={blogger} />)}
             </Flex>

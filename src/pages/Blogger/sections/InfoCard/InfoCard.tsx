@@ -44,7 +44,7 @@ export function InfoCard() {
     const handleFollowButton = () => {
         toggleSubscription({
             fromUserId: currentUserId ? currentUserId : '',
-            toUserId: blogger ? blogger.bloggerInfo._id : '',
+            toUserId: bloggerId ? bloggerId : '',
         })
             .unwrap()
             .then(() => setIsFavorite((prev) => !prev))
@@ -81,6 +81,12 @@ export function InfoCard() {
                         color='white'
                         data-test-id='blog-tooltip'
                         isDisabled={!isFavorite}
+                        w='144px'
+                        h='40px'
+                        fontSize='14px'
+                        fontWeight={400}
+                        borderRadius='4px'
+                        p='0px 8px'
                     >
                         <Button
                             variant={isFavorite ? 'outline' : 'solid'}

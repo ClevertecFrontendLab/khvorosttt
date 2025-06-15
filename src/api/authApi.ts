@@ -156,18 +156,21 @@ export const authApi = createApi({
                 url: `/recipe/${id}`,
                 method: 'DELETE',
             }),
+            invalidatesTags: (_result, _error, id) => [{ type: 'Recipe', id }, { type: 'Recipe' }],
         }),
         likeRecipe: builder.mutation<void, string>({
             query: (id) => ({
                 url: `/recipe/${id}/like`,
                 method: 'POST',
             }),
+            invalidatesTags: (_result, _error, id) => [{ type: 'Recipe', id }],
         }),
         bookmarkRecipe: builder.mutation<void, string>({
             query: (id) => ({
                 url: `/recipe/${id}/bookmark`,
                 method: 'POST',
             }),
+            invalidatesTags: (_result, _error, id) => [{ type: 'Recipe', id }],
         }),
         updateRecipe: builder.mutation<void, { id: string; data: RecipeInputs }>({
             query: ({ id, data }) => ({
@@ -202,13 +205,16 @@ export const authApi = createApi({
         getUserById: builder.query<bloggerInfoI, { userId: string; currentUserId: string }>({
             query: ({ userId, currentUserId }) =>
                 `/bloggers/${userId}?currentUserId=${currentUserId}`,
-            providesTags: (result) =>
-                result
-                    ? [{ type: 'toggleSubscription', id: result.bloggerInfo._id }]
-                    : ['toggleSubscription'],
+            providesTags: (_result, _error, { userId }) => [
+                { type: 'toggleSubscription', id: userId },
+            ],
         }),
         getRecipeByUser: builder.query<RecipesUserI, string | undefined>({
             query: (id) => `/recipe/user/${id}`,
+            providesTags: (result) =>
+                result?.recipes
+                    ? result.recipes.map((r) => ({ type: 'Recipe', id: r._id }))
+                    : [{ type: 'Recipe' }],
         }),
     }),
 });

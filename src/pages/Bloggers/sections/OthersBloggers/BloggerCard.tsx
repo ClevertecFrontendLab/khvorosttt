@@ -62,10 +62,7 @@ export function BloggerCard({ blogger }: BloggerCardProps) {
     return (
         <Card sx={CardStyle}>
             {isLoading && <SmallLoader testId='mobile-loader' />}
-            <CardHeader
-                padding={{ base: '24px 16px 8px 16px', lg: '24px 24px 16px 24px' }}
-                w='100%'
-            >
+            <CardHeader padding={{ base: '8px', lg: '24px 24px 16px 24px' }} w='100%'>
                 <HStack w='100%'>
                     <Avatar name={`${blogger.firstName} ${blogger.lastName}`} />
                     <Stack gap='2px' w='100%' overflow='hidden'>
@@ -76,15 +73,18 @@ export function BloggerCard({ blogger }: BloggerCardProps) {
                     </Stack>
                 </HStack>
             </CardHeader>
-            <CardBody padding='8px 16px 12px 16px' w='100%'>
+            <CardBody padding={{ base: '8px', lg: '8px 16px 12px 16px' }} w='100%'>
                 <Text sx={CardDescriptionStyle} isTruncated fontSize='14px'>
                     {blogger.notes.length ? blogger.notes[0].text : ''}
                 </Text>
             </CardBody>
             <CardFooter
                 justifyContent='space-between'
-                p='12px 24px 20px 24px'
+                p={{ base: '8px', lg: '12px 24px 20px 24px' }}
                 justifySelf='flex-end'
+                alignItems='end'
+                flexDirection={{ base: 'column-reverse' }}
+                gap='8px'
             >
                 <Flex gap='8px'>
                     <Button
