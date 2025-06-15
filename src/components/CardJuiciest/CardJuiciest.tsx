@@ -35,10 +35,12 @@ export function CardJuiciest({
     data,
     index,
     type,
+    refetch,
 }: {
     data: recipeI;
     index: number;
     type?: string;
+    refetch?: () => void;
 }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -47,6 +49,9 @@ export function CardJuiciest({
     const handleBookmarks = (id: string) => {
         bookmarksRecipe(id)
             .unwrap()
+            .then(() => {
+                refetch?.();
+            })
             .catch(() => {
                 dispatch(
                     setNotification({

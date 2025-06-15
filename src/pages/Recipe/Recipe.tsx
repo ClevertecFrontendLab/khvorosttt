@@ -56,7 +56,7 @@ export function Recipe() {
                     <Calories {...data.nutritionValue} />
                     <Ingredients data={data.ingredients} portion={data.portions} />
                     <StepsCooking data={data.steps} />
-                    <AuthorRecipe name='Сергей Разумов' image='' email='@serge25' followers={554} />
+                    <AuthorRecipe authorId={data.authorId} />
                 </Flex>
                 <Box w='100%'>
                     <NewRecipes />
