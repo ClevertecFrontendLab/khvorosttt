@@ -14,9 +14,10 @@ import {
     Text,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { allergensRus } from '~/data/consts';
+import { cleanAllergen } from '~/services/features/filtersSlice';
 import { selectedFilters } from '~/services/features/selectors';
 
 import { AddNewAllergensBtnStyle, AddNewStyle, MenuButtonStyle } from './allergens.style';
@@ -33,6 +34,7 @@ export function Allergens({ type, isActive, setActive, selected, handleFunc }: A
     const filters = useSelector(selectedFilters);
     const [allergensList] = useState([...allergensRus]);
     const [newAllergen, setNewAllergen] = useState('');
+    const dispatch = useDispatch();
 
     const handleAddAllergen = () => {
         const newallergen = newAllergen.trim();
@@ -56,7 +58,10 @@ export function Allergens({ type, isActive, setActive, selected, handleFunc }: A
                 <Switch
                     size='sm'
                     fill='#b1ff2e'
-                    onChange={setActive}
+                    onChange={() => {
+                        dispatch(cleanAllergen());
+                        setActive();
+                    }}
                     data-test-id={
                         type === 'filter' ? `allergens-switcher-${type}` : 'allergens-switcher'
                     }

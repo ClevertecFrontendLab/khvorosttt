@@ -26,7 +26,7 @@ import { Allergens } from '../Allergens/Allergens';
 import { Filter } from '../Filter/Filter';
 import { FilterTagPanel } from '../FilterTagPanel/FilterTagPanel';
 import { SearchIcon2 } from '../Icons/SearchIcon';
-import { SearchLoader } from '../SearchLoader/SearchLoader';
+import { SmallLoader } from '../SmallLoader/SmallLoader';
 import { IconButtonStyle } from './Search.style';
 
 export function SearchDetails({
@@ -47,9 +47,8 @@ export function SearchDetails({
 
     const handleSearch = () => {
         const query = search.trim().toLowerCase();
-        if (query.length >= 3) {
-            dispatch(setSearchQuery(query));
-        }
+        dispatch(setSearchQuery(query));
+        dispatch(setFinding(true));
     };
 
     const changeAllergenSelector = (item: string) => {
@@ -61,7 +60,7 @@ export function SearchDetails({
     };
 
     if (isLoading) {
-        return <SearchLoader />;
+        return <SmallLoader testId='loader-search-block' />;
     }
 
     return (
@@ -85,7 +84,12 @@ export function SearchDetails({
                                 : 'none'
                         }
                         data-test-id='search-button'
-                        cursor={search.trim().length >= 3 && !isLoading ? 'pointer' : 'default'}
+                        cursor={
+                            (search.trim().length >= 3 || filters.selectedAllergens.length > 0) &&
+                            !isLoading
+                                ? 'pointer'
+                                : 'default'
+                        }
                         onClick={handleSearch}
                     >
                         <SearchIcon color='black' />

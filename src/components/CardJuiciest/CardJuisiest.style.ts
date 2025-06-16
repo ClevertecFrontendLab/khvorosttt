@@ -4,8 +4,8 @@ export const CardStyle: SystemStyleObject = {
     overflow: 'hidden',
     variant: 'outline',
     maxH: '244px',
-    h: '100%',
-    w: '100%',
+    h: { base: '128px', lg: '244px' },
+    w: { base: '328px', md: '356px', lg: '468px', '2xl': '880px', '3xl': '668px' },
     position: 'relative',
     transition: 'all 0.2s ease',
     _hover: {

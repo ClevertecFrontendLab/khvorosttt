@@ -2,7 +2,7 @@ import type { SystemStyleObject } from '@chakra-ui/styled-system';
 
 export const NavbarStyle: SystemStyleObject = {
     bg: 'white',
-    width: { base: '100%', lg: '256px' },
+    width: { base: '100%', xl: '256px' },
     overflowY: 'hidden',
     position: { base: 'none', xl: 'fixed' },
     left: { base: 'none', xl: '0px' },

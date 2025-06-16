@@ -3,18 +3,32 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router';
 
-import { useGetRecipeByIdQuery } from '~/api/authApi';
+import { useGetRecipeByIdQuery, useGetUserByIdQuery } from '~/api/authApi';
 import { selectedCategories } from '~/services/features/selectors';
+import { getUserIdFromToken } from '~/services/utils';
 
 import { BurgerMenuProps } from '../BurgerMenu/BurgerMenu';
 import { BreadCrumbStyle } from './BreadCrumb.style';
 
 export function BreadCrumb({ isOpen, toggleMenu }: BurgerMenuProps) {
     const location = useLocation();
-    const paths = location.pathname.split('/').filter((x) => x);
+    const paths = location.pathname
+        .replace(/^\/edit-recipe/, '')
+        .split('/')
+        .filter((x) => x);
     const { id } = useParams();
     const { data: recipe } = useGetRecipeByIdQuery(id, { skip: id === undefined });
     const categoriesSavedData = useSelector(selectedCategories);
+
+    const bloggerId = paths[1] === 'blogs' ? paths[2] : paths[0] === 'blogs' ? paths[1] : undefined;
+    const currentUserId = getUserIdFromToken();
+    const { data: blogger } = useGetUserByIdQuery(
+        {
+            userId: bloggerId ? bloggerId : '',
+            currentUserId: currentUserId ? currentUserId : '',
+        },
+        { skip: !bloggerId },
+    );
 
     if (location.pathname === '/not-found') {
         return null;
@@ -23,10 +37,16 @@ export function BreadCrumb({ isOpen, toggleMenu }: BurgerMenuProps) {
     const getBreadCrumbsTitle = (path: string, index: number) => {
         if (index === 0) {
             if (path === 'the-juiciest') return 'Самое сочное';
+            if (path === 'blogs') return 'Блоги';
             return categoriesSavedData.categories.find((item) => item.category === path)?.title;
-        } else if (id && index === paths.length - 1) {
+        }
+        if (index === 1 && paths[0] === 'blogs' && blogger) {
+            return `${blogger.bloggerInfo.firstName} ${blogger.bloggerInfo.lastName} (@${blogger.bloggerInfo.login})`;
+        }
+        if (id && index === paths.length - 1) {
             return recipe?.title;
-        } else if (index === 1) {
+        }
+        if (index === 1) {
             return categoriesSavedData.subcategories.find((item) => item.category === path)?.title;
         }
     };

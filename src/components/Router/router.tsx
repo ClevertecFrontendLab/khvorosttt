@@ -4,6 +4,8 @@ import App from '~/app/App';
 import { Auth } from '~/pages/Auth/Auth';
 import { Login } from '~/pages/Auth/Login/Login';
 import { SignUp } from '~/pages/Auth/SignUp/SignUp';
+import { Blogger } from '~/pages/Blogger/Blogger';
+import { Bloggers } from '~/pages/Bloggers/Bloggers';
 import { ErrorPage } from '~/pages/Error/Error';
 import { Home } from '~/pages/Home/Home';
 import { JuiciestPage } from '~/pages/Juiciest/Juiciest';
@@ -61,7 +63,18 @@ const router = createBrowserRouter([
                 path: 'new-recipe',
                 element: <NewRecipe />,
             },
-            { path: 'edit-recipe/*', element: <EditRecipe /> },
+            {
+                path: 'edit-recipe/*',
+                element: <EditRecipe />,
+            },
+            {
+                path: 'blogs',
+                element: <Bloggers />,
+            },
+            {
+                path: 'blogs/:bloggerId',
+                element: <Blogger />,
+            },
         ],
     },
     {

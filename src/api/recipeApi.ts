@@ -15,10 +15,6 @@ export const recipesApi = createApi({
             query: () => '?sortBy=createdAt&sortOrder=desc&limit=10',
             transformResponse: (response: recipeResponceI) => response.data,
         }),
-        // getRecipeById: builder.query<recipeI, string | undefined>({
-        //     query: (id) => `/${id}`,
-        //     providesTags: (result, error, id) => [{ type: 'Recipe', id }],
-        // }),
         getJuiciestRecipes: builder.query<
             { recipes: recipeI[]; totalPages: number },
             { limit: number; page: number }
@@ -75,7 +71,6 @@ export const recipesApi = createApi({
 export const {
     useGetRecipesQuery,
     useGetNewestRecipesQuery,
-    // useGetRecipeByIdQuery,
     useGetJuiciestRecipesQuery,
     useGetRecipeBySubcategoryQuery,
     useGetRelevantQuery,

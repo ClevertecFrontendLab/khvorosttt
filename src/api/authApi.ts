@@ -16,6 +16,7 @@ import {
     successI,
     verifyOtpI,
 } from '~/interfaces/authI';
+import { bloggerInfoI, bloggersResponce, RecipesUserI } from '~/interfaces/bloggerI';
 import { MeasureUnitsI, recipeI } from '~/interfaces/recipeI';
 import { RecipeInputs, RecipeInputsOptional } from '~/pages/NewRecipe/NewRecipe';
 
@@ -86,7 +87,7 @@ const baseQueryWithTokenHandler: BaseQueryFn<
 export const authApi = createApi({
     reducerPath: 'auth',
     baseQuery: baseQueryWithTokenHandler,
-    tagTypes: ['Recipe'],
+    tagTypes: ['Recipe', 'toggleSubscription'],
     endpoints: (builder) => ({
         check: builder.query<authI, void>({
             query: () => '/auth/check-auth',
@@ -155,18 +156,21 @@ export const authApi = createApi({
                 url: `/recipe/${id}`,
                 method: 'DELETE',
             }),
+            invalidatesTags: (_result, _error, id) => [{ type: 'Recipe', id }, { type: 'Recipe' }],
         }),
         likeRecipe: builder.mutation<void, string>({
             query: (id) => ({
                 url: `/recipe/${id}/like`,
                 method: 'POST',
             }),
+            invalidatesTags: (_result, _error, id) => [{ type: 'Recipe', id }],
         }),
         bookmarkRecipe: builder.mutation<void, string>({
             query: (id) => ({
                 url: `/recipe/${id}/bookmark`,
                 method: 'POST',
             }),
+            invalidatesTags: (_result, _error, id) => [{ type: 'Recipe', id }],
         }),
         updateRecipe: builder.mutation<void, { id: string; data: RecipeInputs }>({
             query: ({ id, data }) => ({
@@ -179,6 +183,38 @@ export const authApi = createApi({
         getRecipeById: builder.query<recipeI, string | undefined>({
             query: (id) => `/recipe/${id}`,
             providesTags: (_result, _error, id) => [{ type: 'Recipe', id }],
+        }),
+        getBloggers: builder.query<bloggersResponce, { currentUserId: string; limit?: string }>({
+            query: ({ currentUserId, limit }) =>
+                `/bloggers?currentUserId=${currentUserId}&limit=${limit !== undefined ? limit : ''}`,
+            providesTags: (result) =>
+                result?.others
+                    ? result.others.map((b) => ({ type: 'toggleSubscription', id: b._id }))
+                    : [{ type: 'toggleSubscription' }],
+        }),
+        toggleSubscription: builder.mutation<void, { fromUserId: string; toUserId: string }>({
+            query: ({ fromUserId, toUserId }) => ({
+                url: `/users/toggle-subscription`,
+                method: 'PATCH',
+                body: { fromUserId, toUserId },
+            }),
+            invalidatesTags: (_result, _error, { toUserId }) => [
+                { type: 'toggleSubscription', id: toUserId },
+            ],
+        }),
+        getUserById: builder.query<bloggerInfoI, { userId: string; currentUserId: string }>({
+            query: ({ userId, currentUserId }) =>
+                `/bloggers/${userId}?currentUserId=${currentUserId}`,
+            providesTags: (_result, _error, { userId }) => [
+                { type: 'toggleSubscription', id: userId },
+            ],
+        }),
+        getRecipeByUser: builder.query<RecipesUserI, string | undefined>({
+            query: (id) => `/recipe/user/${id}`,
+            providesTags: (result) =>
+                result?.recipes
+                    ? result.recipes.map((r) => ({ type: 'Recipe', id: r._id }))
+                    : [{ type: 'Recipe' }],
         }),
     }),
 });
@@ -200,4 +236,8 @@ export const {
     useLikeRecipeMutation,
     useUpdateRecipeMutation,
     useGetRecipeByIdQuery,
+    useGetBloggersQuery,
+    useToggleSubscriptionMutation,
+    useGetUserByIdQuery,
+    useGetRecipeByUserQuery,
 } = authApi;

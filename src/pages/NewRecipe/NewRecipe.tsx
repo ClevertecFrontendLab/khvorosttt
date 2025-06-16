@@ -51,8 +51,8 @@ export function NewRecipe() {
         defaultValues: {
             title: '',
             description: '',
-            time: 0,
-            portions: 1,
+            time: undefined,
+            portions: undefined,
             categoriesIds: [],
             image: '',
             ingredients: [{ title: '', count: 1, measureUnit: '' }],

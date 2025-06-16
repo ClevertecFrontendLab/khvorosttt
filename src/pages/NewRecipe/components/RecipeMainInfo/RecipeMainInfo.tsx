@@ -3,11 +3,11 @@ import {
     FormControl,
     FormLabel,
     Input,
-    // NumberDecrementStepper,
-    // NumberIncrementStepper,
-    // NumberInput,
-    // NumberInputField,
-    // NumberInputStepper,
+    NumberDecrementStepper,
+    NumberIncrementStepper,
+    NumberInput,
+    NumberInputField,
+    NumberInputStepper,
     Textarea,
 } from '@chakra-ui/react';
 import { useController } from 'react-hook-form';
@@ -83,33 +83,28 @@ export function RecipePortions() {
             alignItems='center'
         >
             <FormLabel>На сколько человек ваш рецепт?</FormLabel>
-            {/* <NumberInput
-                value={field.value}
-                onChange={(val) => {
-                    const numberVal = parseInt(val, 10);
-                    field.onChange(isNaN(numberVal) ? 1 : numberVal);
+            <NumberInput
+                value={field.value ?? ''}
+                onChange={(valStr, valNum) => {
+                    if (valStr === '' || valStr === '-') {
+                        field.onChange(valStr);
+                    } else {
+                        field.onChange(isNaN(valNum) ? '' : valNum);
+                    }
                 }}
+                onBlur={field.onBlur}
+                clampValueOnBlur={false}
+                step={1}
+                max={50}
                 size='md'
                 w='90px'
-                max={50}
-                step={1}
             >
                 <NumberInputField data-test-id='recipe-portions' />
                 <NumberInputStepper w='24px' h='40px'>
                     <NumberIncrementStepper />
                     <NumberDecrementStepper />
                 </NumberInputStepper>
-            </NumberInput> */}
-            <Input
-                type='number'
-                {...field}
-                placeholder='Введите время'
-                data-test-id='recipe-portions'
-                onChange={(e) => {
-                    const val = e.target.value;
-                    field.onChange(val === '' ? null : Number(val));
-                }}
-            />
+            </NumberInput>
         </FormControl>
     );
 }
@@ -128,22 +123,28 @@ export function RecipeTime() {
             alignItems='center'
         >
             <FormLabel>Сколько времени готовить в минутах?</FormLabel>
-            <Input
-                type='number'
-                {...field}
-                placeholder='Введите время'
-                data-test-id='recipe-time'
-                onChange={(e) => {
-                    const val = e.target.value;
-                    field.onChange(val === '' ? null : Number(val));
+            <NumberInput
+                value={field.value ?? ''}
+                onChange={(valStr, valNum) => {
+                    if (valStr === '' || valStr === '-') {
+                        field.onChange(valStr);
+                    } else {
+                        field.onChange(isNaN(valNum) ? '' : valNum);
+                    }
                 }}
-            />
-            {/* <NumberInputField data-test-id='recipe-time' />
+                onBlur={field.onBlur}
+                clampValueOnBlur={false}
+                step={1}
+                max={50}
+                size='md'
+                w='90px'
+            >
+                <NumberInputField data-test-id='recipe-time' />
                 <NumberInputStepper w='24px' h='40px'>
                     <NumberIncrementStepper />
                     <NumberDecrementStepper />
                 </NumberInputStepper>
-            </NumberInput> */}
+            </NumberInput>
         </FormControl>
     );
 }
