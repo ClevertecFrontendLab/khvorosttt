@@ -10,6 +10,7 @@ import { selectedFilters } from '~/services/features/selectors';
 
 export function Home() {
     const filters = useSelector(selectedFilters);
+
     return (
         <Box w='100%' p='90px 0px'>
             <Flex flexDirection='column' gap='40px' p='0px 20px'>

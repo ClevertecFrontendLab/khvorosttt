@@ -75,6 +75,10 @@ const router = createBrowserRouter([
                 path: 'blogs/:bloggerId',
                 element: <Blogger />,
             },
+            {
+                path: 'profile',
+                element: <></>,
+            },
         ],
     },
     {
