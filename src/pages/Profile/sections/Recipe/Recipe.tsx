@@ -1,27 +1,21 @@
 import { Button, Flex, Text } from '@chakra-ui/react';
 import { useEffect, useMemo, useState } from 'react';
 
-import { useGetUserRecipeBookmarksQuery } from '~/api/authApi';
-import { Loader } from '~/components/Loader/Loader';
 import { userI } from '~/interfaces/bloggerI';
+import { recipeI } from '~/interfaces/recipeI';
 
 import { DraftCard } from '../../components/DraftCard/DraftCard';
 import { RecipeCard } from '../../components/RecipeCard/RecipeCard';
-import { BoxStyle, LoadMoreStyle, RecipeBoxStyle } from './recipe.style';
+import { BoxStyle, LoadMoreStyle, RecipeBoxStyle } from '../section.style';
 
 export interface RecipeProps {
     user?: userI;
+    recipes: recipeI[];
 }
 
-export function Recipe({ user }: RecipeProps) {
-    const { data, isLoading, isSuccess } = useGetUserRecipeBookmarksQuery(user?._id || '', {
-        refetchOnMountOrArgChange: true,
-    });
-
-    const safeDrafts = useMemo(() => user?.drafts || [], [user?.drafts]);
-    const safeRecipes = useMemo(() => data?.recipes || [], [data?.recipes]);
-
-    const [isReady, setIsReady] = useState(false);
+export function Recipe({ user, recipes }: RecipeProps) {
+    const safeDrafts = useMemo(() => user?.drafts ?? [], [user?.drafts]);
+    const safeRecipes = useMemo(() => recipes ?? [], [recipes]);
     const [showLoadMore, setShowLoadMore] = useState(false);
     const [displayCount, setDisplayCount] = useState({
         drafts: 0,
@@ -29,19 +23,16 @@ export function Recipe({ user }: RecipeProps) {
     });
 
     useEffect(() => {
-        if (isSuccess && !isLoading) {
-            const totalItems = safeDrafts.length + safeRecipes.length;
-            const newDraftCount = Math.min(8, safeDrafts.length);
-            const newRecipeCount = Math.max(0, 8 - safeDrafts.length);
+        const totalItems = safeDrafts.length + safeRecipes.length;
+        const newDraftCount = Math.min(8, safeDrafts.length);
+        const newRecipeCount = Math.max(0, 8 - safeDrafts.length);
 
-            setDisplayCount({
-                drafts: newDraftCount,
-                recipes: newRecipeCount,
-            });
-            setShowLoadMore(totalItems > 8);
-            setIsReady(true);
-        }
-    }, [isLoading, isSuccess, safeDrafts, safeRecipes]);
+        setDisplayCount({
+            drafts: newDraftCount,
+            recipes: newRecipeCount,
+        });
+        setShowLoadMore(totalItems > 8);
+    }, [safeDrafts, safeRecipes]);
 
     const handleLoadMore = () => {
         setDisplayCount({
@@ -51,13 +42,9 @@ export function Recipe({ user }: RecipeProps) {
         setShowLoadMore(false);
     };
 
-    if (isLoading || !isReady) {
-        return <Loader />;
-    }
-
     return (
         <Flex data-test-id='user-profile-recipes' sx={BoxStyle}>
-            <Flex sx={RecipeBoxStyle}>
+            <Flex sx={RecipeBoxStyle} alignSelf='flex-start'>
                 <Text as='span'>Мои рецепты</Text>
                 <Text as='span' color='rgba(0, 0, 0, 0.48)' fontWeight={400}>
                     ({safeRecipes.length})
@@ -83,6 +70,7 @@ export function Recipe({ user }: RecipeProps) {
                         key={`recipe-${index}`}
                         recipe={recipe}
                         index={displayCount.drafts + index}
+                        type='recipe'
                     />
                 ))}
             </Flex>

@@ -85,6 +85,8 @@ export const RecipeCardButtonStyle: SystemStyleObject = {
     fontSize: { base: '12px', lg: '14px' },
     fontWeight: 600,
     variant: 'outline',
+    display: 'flex',
+    gap: '10px',
 };
 
 export const DraftTextStyle: SystemStyleObject = {

@@ -231,6 +231,10 @@ export const authApi = createApi({
         }),
         getUserRecipeBookmarks: builder.query<RecipeBookmarksI, string | undefined>({
             query: (id) => `/recipe/user/${id}`,
+            providesTags: (result) =>
+                result?.myBookmarks
+                    ? result.myBookmarks.map((r) => ({ type: 'Recipe', id: r._id }))
+                    : [{ type: 'Recipe' }],
         }),
     }),
 });
