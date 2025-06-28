@@ -19,6 +19,7 @@ import {
 import {
     bloggerInfoI,
     bloggersResponce,
+    RecipeBookmarksI,
     RecipesUserI,
     statisticI,
     userI,
@@ -228,6 +229,9 @@ export const authApi = createApi({
         getUserStatistic: builder.query<statisticI, void>({
             query: () => `/statistic`,
         }),
+        getUserRecipeBookmarks: builder.query<RecipeBookmarksI, string | undefined>({
+            query: (id) => `/recipe/user/${id}`,
+        }),
     }),
 });
 
@@ -254,4 +258,5 @@ export const {
     useGetRecipeByUserQuery,
     useGetCurrentUserInfoQuery,
     useGetUserStatisticQuery,
+    useGetUserRecipeBookmarksQuery,
 } = authApi;

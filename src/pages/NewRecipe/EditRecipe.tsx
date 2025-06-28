@@ -3,7 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useBlocker, useNavigate, useParams } from 'react-router';
+import { useBlocker, useLocation, useNavigate, useParams } from 'react-router';
 
 import { useAddDraftMutation, useUpdateRecipeMutation } from '~/api/authApi';
 import { useGetRecipeByIdQuery } from '~/api/authApi';
@@ -25,6 +25,8 @@ export function EditRecipe() {
     const id = pathTail?.split('/').pop() ?? '';
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
+    const draftData = location.state?.draftData;
 
     const methods = useForm<RecipeInputs>({
         mode: 'onSubmit',
@@ -159,7 +161,10 @@ export function EditRecipe() {
         if (data) {
             methods.reset(data);
         }
-    }, [data]);
+        if (draftData) {
+            methods.reset(draftData);
+        }
+    }, [data, draftData]);
 
     const handleUpdate = (formData: RecipeInputs) => {
         setIsSubmitting(true);
