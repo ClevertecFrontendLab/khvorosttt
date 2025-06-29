@@ -64,19 +64,14 @@ export interface allUserI {
     photo: string;
 }
 
-export interface likesI {
-    date: string;
-    count: number;
-}
-
-export interface bookmarksI {
+export interface LikesBookmarksI {
     date: string;
     count: number;
 }
 
 export interface statisticI {
-    likes: likesI[];
-    bookmarks: bookmarksI[];
+    likes: LikesBookmarksI[];
+    bookmarks: LikesBookmarksI[];
     recommendationsCount: number;
     recipesWithRecommendations: recipeI[];
 }
