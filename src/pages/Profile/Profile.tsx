@@ -1,22 +1,14 @@
 import { Flex, Text } from '@chakra-ui/react';
 
-import {
-    useGetCurrentUserInfoQuery,
-    useGetUserRecipeBookmarksQuery,
-    useGetUserStatisticQuery,
-} from '~/api/authApi';
+import { useGetCurrentUserInfoQuery, useGetUserStatisticQuery } from '~/api/authApi';
 
 import { UserInfo } from './components/UserInfo/UserInfo';
-import { Bookmarks } from './sections/Bookmarks/Bookmarks';
 import { Recipe } from './sections/Recipe/Recipe';
 
 export function Profile() {
     const { data: user } = useGetCurrentUserInfoQuery();
     const { data: statistic } = useGetUserStatisticQuery();
-    const { data } = useGetUserRecipeBookmarksQuery(user?._id || '', {
-        refetchOnMountOrArgChange: true,
-    });
-
+    console.log(user?.drafts.length);
     return (
         <Flex
             w='100%'
@@ -25,11 +17,13 @@ export function Profile() {
             flexDirection='column'
         >
             <UserInfo user={user} statistic={statistic} />
-            <Recipe user={user} recipes={data?.recipes || []} />
+            <Recipe user={user} />
             <Flex data-test-id='blog-notes-box'>
                 <Text>Заметки ()</Text>
             </Flex>
-            <Bookmarks recipes={data?.myBookmarks || []} />
+            <Flex data-test-id='user-profile-bookmarks'>
+                <Text>Мои закладки ({statistic?.bookmarks.length})</Text>
+            </Flex>
         </Flex>
     );
 }

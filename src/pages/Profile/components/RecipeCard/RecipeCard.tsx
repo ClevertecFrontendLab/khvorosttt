@@ -10,10 +10,8 @@ import {
     Stack,
     Text,
 } from '@chakra-ui/react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 
-import { useBookmarkRecipeMutation } from '~/api/authApi';
 import {
     CardBodyHeadingStyle,
     CardBodyStyle,
@@ -24,20 +22,17 @@ import {
     RecipeCardButtonStyle,
 } from '~/components/CardJuiciest/CardJuisiest.style';
 import { CategoryMarker } from '~/components/CategoryMarker/CategoryMarker';
-import { DeleteBookmarkIcon } from '~/components/Icons/DeleteBookmark';
 import { Interactions } from '~/components/Interactions/Interactions';
 import { IMAGE_BASED_PATH } from '~/data/consts';
 import { recipeI } from '~/interfaces/recipeI';
-import { setNotification } from '~/services/features/notificationSlice';
 
 export interface RecipeCardProps {
     index: number;
     recipe: recipeI;
-    type: 'recipe' | 'bookmark';
-    onRemoveBookmark?: (id: string) => void;
 }
 
-export function RecipeCard({ index, recipe, type, onRemoveBookmark }: RecipeCardProps) {
+export function RecipeCard({ index, recipe }: RecipeCardProps) {
+    const navigate = useNavigate();
     return (
         <Card sx={CardStyle} direction={{ sm: 'row' }} data-test-id={`food-card-${index}`}>
             <Image
@@ -65,72 +60,17 @@ export function RecipeCard({ index, recipe, type, onRemoveBookmark }: RecipeCard
                     </Hide>
                 </CardBody>
                 <CardFooter display='flex' gap='5px' p={0} justifyContent='flex-end'>
-                    {type === 'recipe' ? (
-                        <EditButton _id={recipe?._id || ''} recipe={recipe} />
-                    ) : (
-                        <DeleteBookmarkButton _id={recipe?._id || ''} onRemove={onRemoveBookmark} />
-                    )}
+                    <Button
+                        sx={RecipeCardButtonStyle}
+                        data-test-id='profile-edit-button'
+                        onClick={() => {
+                            navigate(`/edit-recipe/${recipe?._id}`);
+                        }}
+                    >
+                        <Text>Редактировать</Text>
+                    </Button>
                 </CardFooter>
             </Stack>
         </Card>
-    );
-}
-
-export interface ButtonProps {
-    _id: string;
-    recipe?: recipeI;
-    onRemove?: (id: string) => void;
-}
-
-export function EditButton({ _id, recipe }: ButtonProps) {
-    const navigate = useNavigate();
-    return (
-        <Button
-            sx={RecipeCardButtonStyle}
-            data-test-id='profile-edit-button'
-            onClick={() => {
-                navigate(`/edit-recipe/${_id}`, {
-                    state: {
-                        recipeData: recipe,
-                    },
-                });
-            }}
-        >
-            <Text>Редактировать</Text>
-        </Button>
-    );
-}
-
-export function DeleteBookmarkButton({ _id, onRemove }: ButtonProps) {
-    const dispatch = useDispatch();
-    const [bookmarksRecipe, { isLoading }] = useBookmarkRecipeMutation();
-
-    const handleBookmarks = () => {
-        bookmarksRecipe(_id)
-            .unwrap()
-            .then(() => onRemove?.(_id))
-            .catch(() => {
-                dispatch(
-                    setNotification({
-                        title: 'Ошибка сервера',
-                        description: 'Попробуйте немного позже',
-                        type: 'error',
-                    }),
-                );
-            });
-    };
-
-    return (
-        <Button
-            sx={RecipeCardButtonStyle}
-            onClick={handleBookmarks}
-            isLoading={isLoading}
-            data-test-id='profile-edit-button'
-        >
-            <Hide below='lg'>
-                <DeleteBookmarkIcon />
-            </Hide>
-            <Text>Убрать из сохранённых</Text>
-        </Button>
     );
 }
