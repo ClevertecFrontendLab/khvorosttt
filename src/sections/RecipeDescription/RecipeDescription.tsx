@@ -8,7 +8,6 @@ import {
     useDeleteRecipeMutation,
     useLikeRecipeMutation,
 } from '~/api/authApi';
-import { useGetRecipeByIdQuery } from '~/api/authApi';
 import { MarkerStyle } from '~/components/CardNew/CardNew.style';
 import { CategoryMarker } from '~/components/CategoryMarker/CategoryMarker';
 import { BookmarkIcon } from '~/components/Icons/Bookmark';
@@ -35,7 +34,6 @@ export function RecipeDescription(data: recipeI) {
     const [deleteRecipe] = useDeleteRecipeMutation();
     const [likeRecipe] = useLikeRecipeMutation();
     const [bookmarksRecipe] = useBookmarkRecipeMutation();
-    const { refetch } = useGetRecipeByIdQuery(data._id);
 
     const handleDelete = (id: string) => {
         deleteRecipe(id)
@@ -64,9 +62,6 @@ export function RecipeDescription(data: recipeI) {
     const handleLike = (id: string) => {
         likeRecipe(id)
             .unwrap()
-            .then(() => {
-                refetch();
-            })
             .catch(() => {
                 dispatch(
                     setNotification({
@@ -81,9 +76,6 @@ export function RecipeDescription(data: recipeI) {
     const handleBookmarks = (id: string) => {
         bookmarksRecipe(id)
             .unwrap()
-            .then(() => {
-                refetch();
-            })
             .catch(() => {
                 dispatch(
                     setNotification({

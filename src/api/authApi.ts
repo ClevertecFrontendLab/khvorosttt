@@ -175,14 +175,14 @@ export const authApi = createApi({
                 url: `/recipe/${id}/like`,
                 method: 'POST',
             }),
-            invalidatesTags: (_result, _error, id) => [{ type: 'Recipe', id }],
+            invalidatesTags: (_result, _error, id) => [{ type: 'Recipe', id }, { type: 'Recipe' }],
         }),
         bookmarkRecipe: builder.mutation<void, string>({
             query: (id) => ({
                 url: `/recipe/${id}/bookmark`,
                 method: 'POST',
             }),
-            invalidatesTags: (_result, _error, id) => [{ type: 'Recipe', id }],
+            invalidatesTags: (_result, _error, id) => [{ type: 'Recipe', id }, { type: 'Recipe' }],
         }),
         updateRecipe: builder.mutation<void, { id: string; data: RecipeInputs }>({
             query: ({ id, data }) => ({
