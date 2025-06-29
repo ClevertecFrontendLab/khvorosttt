@@ -234,13 +234,6 @@ export const authApi = createApi({
         }),
         getUserStatistic: builder.query<statisticI, void>({
             query: () => `/statistic`,
-            providesTags: (result) =>
-                result?.recipesWithRecommendations
-                    ? result.recipesWithRecommendations.map((b) => ({
-                          type: 'Recomendation',
-                          id: b._id,
-                      }))
-                    : [{ type: 'Recomendation' }],
         }),
         getUserRecipeBookmarks: builder.query<RecipeBookmarksI, string | undefined>({
             query: (id) => `/recipe/user/${id}`,
@@ -279,7 +272,7 @@ export const authApi = createApi({
             }),
             invalidatesTags: [{ type: 'Note' }],
         }),
-        setRecomendation: builder.mutation<void, string>({
+        setRecommendatiion: builder.mutation<void, string>({
             query: (id) => ({
                 url: `recipe/recommend/${id}`,
                 method: 'POST',
@@ -355,5 +348,4 @@ export const {
     useUpdatePasswordMutation,
     useGetAllUserQuery,
     useDeleteProfileMutation,
-    useSetRecomendationMutation,
 } = authApi;

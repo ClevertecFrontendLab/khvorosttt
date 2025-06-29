@@ -81,11 +81,3 @@ export function groupDataByWeek(data: LikesBookmarksI[]) {
         .map(([date, count]) => ({ date, count }))
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 }
-
-export function recomendedText(count: number) {
-    const countMod = count % 10;
-    if (count > 10 && count < 20) return `${count} рекомендованных рецептов`;
-    if (countMod == 1) return `${count} рекомендованный рецепт`;
-    if (countMod > 1 && countMod < 5) return `${count} рекомендованный рецепта`;
-    return `${count} рекомендованных рецептов`;
-}

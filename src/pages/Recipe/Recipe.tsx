@@ -7,7 +7,6 @@ import {
     useGetCurrentUserInfoQuery,
     useGetRecipeByIdQuery,
     useGetUserStatisticQuery,
-    useSetRecomendationMutation,
 } from '~/api/authApi';
 import { AuthorRecipe } from '~/components/AuthorRecipe/AuthorRecipe';
 import { bookmarksCount } from '~/components/Header/utils';
@@ -29,8 +28,9 @@ export function Recipe() {
     const navigate = useNavigate();
     const { data: statistic } = useGetUserStatisticQuery();
     const { data: user } = useGetCurrentUserInfoQuery();
-    const [setRecomend] = useSetRecomendationMutation();
-    const [isRecommended, setRecommented] = useState(-1);
+    const [isRecommended, setRecommented] = useState(
+        statistic?.recipesWithRecommendations.findIndex((r) => r._id === id),
+    );
 
     useEffect(() => {
         if (isError) {
@@ -44,28 +44,6 @@ export function Recipe() {
             navigate(-1);
         }
     }, [isError, dispatch, navigate]);
-
-    const handleRecomend = () => {
-        setRecomend(id || '')
-            .unwrap()
-            .then(() => setRecommented(1))
-            .catch(() => {
-                dispatch(
-                    setNotification({
-                        title: 'Ошибка сервера',
-                        description: 'Попробуйте поискать снова попозже',
-                        typeN: 'error',
-                    }),
-                );
-            });
-    };
-
-    useEffect(() => {
-        if (statistic?.recipesWithRecommendations) {
-            const index = statistic.recipesWithRecommendations.findIndex((r) => r._id === id);
-            setRecommented(index);
-        }
-    }, [statistic?.recipesWithRecommendations, id]);
 
     if (isLoading) {
         return <Loader />;
@@ -92,12 +70,17 @@ export function Recipe() {
                     <AuthorRecipe authorId={data.authorId} />
                     {bookmarksCount(statistic?.bookmarks) > 200 &&
                         (user ? user.subscribers.length : 0) > 100 && (
-                            <Button onClick={handleRecomend} w='100' bg='black' borderRadius='6px'>
+                            <Button
+                                onClick={() => {
+                                    setRecommented(-1);
+                                }}
+                                w='100'
+                                bg='black'
+                                borderRadius='6px'
+                            >
                                 <LikeIcon color='green' />
-                                <Text color='white'>
-                                    {isRecommended === -1
-                                        ? 'Рекомендовать рецепт'
-                                        : 'Вы порекомендовали'}
+                                <Text>
+                                    {!isRecommended ? 'Рекомендовать рецепт' : 'Вы порекомендовали'}
                                 </Text>
                             </Button>
                         )}
