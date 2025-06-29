@@ -17,6 +17,7 @@ import {
     verifyOtpI,
 } from '~/interfaces/authI';
 import {
+    allUserI,
     bloggerInfoI,
     bloggersResponce,
     noteI,
@@ -304,6 +305,9 @@ export const authApi = createApi({
                 body: credentials,
             }),
         }),
+        getAllUser: builder.query<allUserI[], void>({
+            query: () => `/users/all`,
+        }),
     }),
 });
 
@@ -336,4 +340,5 @@ export const {
     useUpdateUserInfoMutation,
     useUpdateUserPhotoMutation,
     useUpdatePasswordMutation,
+    useGetAllUserQuery,
 } = authApi;
