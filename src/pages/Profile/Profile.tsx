@@ -1,4 +1,4 @@
-import { Flex, Text } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 
 import {
     useGetCurrentUserInfoQuery,
@@ -8,6 +8,7 @@ import {
 
 import { UserInfo } from './components/UserInfo/UserInfo';
 import { Bookmarks } from './sections/Bookmarks/Bookmarks';
+import { Notes } from './sections/Notes/Notes';
 import { Recipe } from './sections/Recipe/Recipe';
 
 export function Profile() {
@@ -26,9 +27,7 @@ export function Profile() {
         >
             <UserInfo user={user} statistic={statistic} />
             <Recipe user={user} recipes={data?.recipes || []} />
-            <Flex data-test-id='blog-notes-box'>
-                <Text>Заметки ()</Text>
-            </Flex>
+            <Notes notes={data?.notes || []} />
             <Bookmarks recipes={data?.myBookmarks || []} />
         </Flex>
     );

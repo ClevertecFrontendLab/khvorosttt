@@ -19,6 +19,7 @@ import {
 import {
     bloggerInfoI,
     bloggersResponce,
+    noteI,
     RecipeBookmarksI,
     RecipesUserI,
     statisticI,
@@ -26,6 +27,7 @@ import {
 } from '~/interfaces/bloggerI';
 import { MeasureUnitsI, recipeI } from '~/interfaces/recipeI';
 import { RecipeInputs, RecipeInputsOptional } from '~/pages/NewRecipe/NewRecipe';
+import { NoteInputs } from '~/pages/Profile/sections/Notes/NotesDrawer/NotesDrawer';
 
 const rawBaseQuery = fetchBaseQuery({
     baseUrl: 'https://marathon-api.clevertec.ru',
@@ -94,7 +96,7 @@ const baseQueryWithTokenHandler: BaseQueryFn<
 export const authApi = createApi({
     reducerPath: 'auth',
     baseQuery: baseQueryWithTokenHandler,
-    tagTypes: ['Recipe', 'toggleSubscription'],
+    tagTypes: ['Recipe', 'toggleSubscription', 'Note'],
     endpoints: (builder) => ({
         check: builder.query<authI, void>({
             query: () => '/auth/check-auth',
@@ -231,10 +233,40 @@ export const authApi = createApi({
         }),
         getUserRecipeBookmarks: builder.query<RecipeBookmarksI, string | undefined>({
             query: (id) => `/recipe/user/${id}`,
-            providesTags: (result) =>
-                result?.myBookmarks
-                    ? result.myBookmarks.map((r) => ({ type: 'Recipe', id: r._id }))
-                    : [{ type: 'Recipe' }],
+            providesTags: (result) => {
+                const tags: { type: 'Recipe' | 'Note'; id?: string }[] = [];
+
+                if (result?.myBookmarks?.length) {
+                    tags.push(
+                        ...result.myBookmarks.map((r) => ({ type: 'Recipe' as const, id: r._id })),
+                    );
+                } else {
+                    tags.push({ type: 'Recipe' });
+                }
+
+                if (result?.notes?.length) {
+                    tags.push(...result.notes.map(() => ({ type: 'Note' as const })));
+                } else {
+                    tags.push({ type: 'Note' });
+                }
+
+                return tags;
+            },
+        }),
+        createNote: builder.mutation<noteI, NoteInputs>({
+            query: (body) => ({
+                url: `users/me/note`,
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: [{ type: 'Note' }],
+        }),
+        deleteNote: builder.mutation<void, string>({
+            query: (id) => ({
+                url: `users/me/note/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: [{ type: 'Note' }],
         }),
     }),
 });
@@ -263,4 +295,6 @@ export const {
     useGetCurrentUserInfoQuery,
     useGetUserStatisticQuery,
     useGetUserRecipeBookmarksQuery,
+    useCreateNoteMutation,
+    useDeleteNoteMutation,
 } = authApi;

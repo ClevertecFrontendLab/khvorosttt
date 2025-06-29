@@ -1,6 +1,12 @@
 import { recipeI } from './recipeI';
 
+export interface noteResponceI {
+    statusCode: number;
+    body: noteI;
+}
+
 export interface noteI {
+    _id: string;
     date: string;
     text: string;
 }

@@ -29,10 +29,23 @@ export function Notes({ notes }: NotesProps) {
                     ({notes.length})
                 </Text>
             </Flex>
-            <Flex gap='16px' data-test-id='blogger-user-notes-grid' justifyContent='center'>
+            <Flex
+                gap='16px'
+                data-test-id='blogger-user-notes-grid'
+                justifyContent='center'
+                wrap='wrap'
+            >
                 {notes.map((note, index) => (
-                    <Box display={!showAll && index >= visibleCount ? 'none' : 'block'}>
-                        <Note note={note} index={index} />
+                    <Box
+                        display={!showAll && index >= visibleCount ? 'none' : 'flex'}
+                        flex={{
+                            base: '1 1 296px',
+                            sm: '1 1 224px',
+                            xl: '1 1 267px',
+                            '3xl': '1 1 427px',
+                        }}
+                    >
+                        <Note note={note} index={index} type='blog' />
                     </Box>
                 ))}
             </Flex>
@@ -40,7 +53,7 @@ export function Notes({ notes }: NotesProps) {
                 <Button
                     variant='ghost'
                     data-test-id='blogger-user-notes-button'
-                    onClick={() => setShowAll(true)}
+                    onClick={() => setShowAll((prev) => !prev)}
                     sx={ButtonStyle}
                 >
                     {showAll ? 'Свернуть' : 'Показать больше'}
