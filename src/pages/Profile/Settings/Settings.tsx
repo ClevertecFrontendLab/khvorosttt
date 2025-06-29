@@ -4,6 +4,7 @@ import { useGetCurrentUserInfoQuery, useGetUserStatisticQuery } from '~/api/auth
 import { groupDataByWeek } from '~/pages/Bloggers/sections/utils';
 
 import { AboutProject } from './AboutProject/AboutProject';
+import { DeleteAccount } from './DeleteAccount/DeleteAccount';
 import { ReactionStatistic } from './ReactionStatistic/ReactionStatistic';
 import { Subscribers } from './Subscribers/Subscribers';
 import { UpdateUserInfo } from './UpdateUserInfo/UpdateUserInfo';
@@ -32,6 +33,7 @@ export function Settings() {
             <ReactionStatistic data={bookmarks} color='#2db100' type='bookmark' />
             <ReactionStatistic data={likes} color='#8c54ff' type='like' />
             <AboutProject />
+            <DeleteAccount />
         </Flex>
     );
 }
