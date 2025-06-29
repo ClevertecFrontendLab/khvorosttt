@@ -69,10 +69,6 @@ const router = createBrowserRouter([
                 element: <EditRecipe />,
             },
             {
-                path: 'edit-draft/*',
-                element: <EditRecipe />,
-            },
-            {
                 path: 'blogs',
                 element: <Bloggers />,
             },

@@ -12,9 +12,8 @@ import { BreadCrumbStyle } from './BreadCrumb.style';
 
 export function BreadCrumb({ isOpen, toggleMenu }: BurgerMenuProps) {
     const location = useLocation();
-    const draftData = location.state?.draftData;
     const paths = location.pathname
-        .replace(/^\/edit-(recipe|draft)/, '')
+        .replace(/^\/edit-recipe/, '')
         .split('/')
         .filter((x) => x);
     const { id } = useParams();
@@ -36,7 +35,6 @@ export function BreadCrumb({ isOpen, toggleMenu }: BurgerMenuProps) {
     }
 
     const getBreadCrumbsTitle = (path: string, index: number) => {
-        if (draftData) return draftData.title;
         if (index === 0) {
             if (path === 'the-juiciest') return 'Самое сочное';
             if (path === 'profile') return 'Мой профиль';
@@ -58,7 +56,6 @@ export function BreadCrumb({ isOpen, toggleMenu }: BurgerMenuProps) {
     };
 
     const getPath = (index: number) => {
-        if (draftData) return draftData._id;
         if (index === 0) {
             const category = categoriesSavedData.categories.find((c) => c.category === paths[0]);
             if (category?.subCategories?.[0]) {

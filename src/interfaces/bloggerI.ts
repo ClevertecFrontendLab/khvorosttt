@@ -49,7 +49,7 @@ export interface userI {
     firstName: string;
     lastName: string;
     recipesIds: string[];
-    drafts: recipeI[];
+    drafts: recipeI;
     subscriptions: string[];
     subscribers: string[];
     photoLink: string;
@@ -70,13 +70,4 @@ export interface statisticI {
     bookmarks: bookmarksI[];
     recommendationsCount: number;
     recipesWithRecommendations: recipeI[];
-}
-
-export interface RecipeBookmarksI {
-    recipes: recipeI[];
-    notes: noteI[];
-    userId: string;
-    myBookmarks: recipeI[];
-    totalBookmarks: number;
-    totalSubscribers: number;
 }
