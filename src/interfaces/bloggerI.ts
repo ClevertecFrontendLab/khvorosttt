@@ -52,7 +52,6 @@ export interface userI {
     drafts: recipeI;
     subscriptions: string[];
     subscribers: string[];
-    photoLink: string;
 }
 
 export interface likesI {

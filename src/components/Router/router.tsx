@@ -11,7 +11,6 @@ import { Home } from '~/pages/Home/Home';
 import { JuiciestPage } from '~/pages/Juiciest/Juiciest';
 import { EditRecipe } from '~/pages/NewRecipe/EditRecipe';
 import { NewRecipe } from '~/pages/NewRecipe/NewRecipe';
-import { Profile } from '~/pages/Profile/Profile';
 import { Recipe } from '~/pages/Recipe/Recipe';
 import { Vegan } from '~/pages/Vegan/Vegan';
 import { Verification } from '~/pages/Verification/Verification';
@@ -78,10 +77,6 @@ const router = createBrowserRouter([
             },
             {
                 path: 'profile',
-                element: <Profile />,
-            },
-            {
-                path: 'profile/settings',
                 element: <></>,
             },
         ],

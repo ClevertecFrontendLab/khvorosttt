@@ -44,9 +44,6 @@ export function BreadCrumb({ isOpen, toggleMenu }: BurgerMenuProps) {
         if (index === 1 && paths[0] === 'blogs' && blogger) {
             return `${blogger.bloggerInfo.firstName} ${blogger.bloggerInfo.lastName} (@${blogger.bloggerInfo.login})`;
         }
-        if (index === 1 && paths[0] === 'profile' && path === 'settings') {
-            return 'Настройки';
-        }
         if (id && index === paths.length - 1) {
             return recipe?.title;
         }

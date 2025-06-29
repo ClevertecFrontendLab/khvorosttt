@@ -3,7 +3,6 @@ import { Avatar, Box, Flex, Hide, IconButton, Show, Text } from '@chakra-ui/reac
 import { useNavigate } from 'react-router';
 
 import { useGetCurrentUserInfoQuery, useGetUserStatisticQuery } from '~/api/authApi.ts';
-import { IMAGE_BASED_PATH } from '~/data/consts.ts';
 
 import { BreadCrumb } from '../BreadCrumb/BreadCrumb';
 import { BurgerMenuProps } from '../BurgerMenu/BurgerMenu.tsx';
@@ -50,11 +49,7 @@ export function Header(props: BurgerMenuProps) {
                         data-test-id='header-profile-button'
                         onClick={() => navigate('/profile')}
                     >
-                        <Avatar
-                            name={`${user?.firstName} ${user?.lastName}`}
-                            sx={avatarStyle}
-                            src={user?.photoLink ? `${IMAGE_BASED_PATH}${user?.photoLink}` : ''}
-                        />
+                        <Avatar name={`${user?.firstName} ${user?.lastName}`} sx={avatarStyle} />
                         <Box textAlign='left'>
                             <Text color='black' fontSize='18px' fontWeight={500}>
                                 {user?.firstName} {user?.lastName}
