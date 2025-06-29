@@ -1,9 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 
-import { useGetCurrentUserInfoQuery, useGetUserStatisticQuery } from '~/api/authApi';
-import { groupDataByWeek } from '~/pages/Bloggers/sections/utils';
+import { useGetCurrentUserInfoQuery } from '~/api/authApi';
 
-import { ReactionStatistic } from './ReactionStatistic/ReactionStatistic';
 import { Subscribers } from './Subscribers/Subscribers';
 import { UpdateUserInfo } from './UpdateUserInfo/UpdateUserInfo';
 
@@ -14,10 +12,7 @@ export type UpdateInputs = {
 
 export function Settings() {
     const { data: user } = useGetCurrentUserInfoQuery();
-    const { data: statistic } = useGetUserStatisticQuery();
-    console.log(statistic);
-    const bookmarks = groupDataByWeek(statistic?.bookmarks || []);
-    const likes = groupDataByWeek(statistic?.likes || []);
+    // const { data: statistic } = useGetUserStatisticQuery();
 
     return (
         <Flex
@@ -28,8 +23,6 @@ export function Settings() {
         >
             <UpdateUserInfo user={user} />
             <Subscribers user={user} />
-            <ReactionStatistic data={bookmarks} color='#2db100' type='bookmark' />
-            <ReactionStatistic data={likes} color='#8c54ff' type='like' />
         </Flex>
     );
 }
