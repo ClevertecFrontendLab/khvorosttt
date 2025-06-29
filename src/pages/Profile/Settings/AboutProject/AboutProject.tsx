@@ -1,4 +1,3 @@
-import { ArrowForwardIcon } from '@chakra-ui/icons';
 import { Flex, Link, Text } from '@chakra-ui/react';
 
 export function AboutProject() {
@@ -10,7 +9,7 @@ export function AboutProject() {
             <Flex fontFamily='text' fontSize='16px' fontWeight={500}>
                 <Text>Связаться с &nbsp;</Text>{' '}
                 <Link href='https://clevertec.ru/' isExternal textDecoration='underline'>
-                    разработчиками <ArrowForwardIcon />
+                    разработчиками
                 </Link>
             </Flex>
         </Flex>

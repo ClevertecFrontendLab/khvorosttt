@@ -308,12 +308,6 @@ export const authApi = createApi({
         getAllUser: builder.query<allUserI[], void>({
             query: () => `/users/all`,
         }),
-        deleteProfile: builder.mutation<void, void>({
-            query: () => ({
-                url: `/profile`,
-                method: 'DELETE',
-            }),
-        }),
     }),
 });
 
@@ -347,5 +341,4 @@ export const {
     useUpdateUserPhotoMutation,
     useUpdatePasswordMutation,
     useGetAllUserQuery,
-    useDeleteProfileMutation,
 } = authApi;
