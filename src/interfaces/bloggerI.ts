@@ -56,14 +56,6 @@ export interface userI {
     photoLink: string;
 }
 
-export interface allUserI {
-    id: string;
-    login: string;
-    firstName: string;
-    lastName: string;
-    photo: string;
-}
-
 export interface likesI {
     date: string;
     count: number;

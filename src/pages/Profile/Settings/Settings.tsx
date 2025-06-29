@@ -2,7 +2,6 @@ import { Flex } from '@chakra-ui/react';
 
 import { useGetCurrentUserInfoQuery } from '~/api/authApi';
 
-import { Subscribers } from './Subscribers/Subscribers';
 import { UpdateUserInfo } from './UpdateUserInfo/UpdateUserInfo';
 
 export type UpdateInputs = {
@@ -13,7 +12,6 @@ export type UpdateInputs = {
 export function Settings() {
     const { data: user } = useGetCurrentUserInfoQuery();
     // const { data: statistic } = useGetUserStatisticQuery();
-
     return (
         <Flex
             w='100%'
@@ -22,7 +20,6 @@ export function Settings() {
             flexDirection='column'
         >
             <UpdateUserInfo user={user} />
-            <Subscribers user={user} />
         </Flex>
     );
 }
