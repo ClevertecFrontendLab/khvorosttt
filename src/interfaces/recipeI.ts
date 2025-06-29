@@ -45,6 +45,7 @@ export interface recipeI {
     steps: stepsI[];
     nutritionValue: nutritionValueI;
     ingredients: ingredientsI[];
+    recommendedByuserId: string[];
 }
 
 export interface metaI {
