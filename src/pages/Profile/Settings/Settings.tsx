@@ -3,7 +3,6 @@ import { Flex } from '@chakra-ui/react';
 import { useGetCurrentUserInfoQuery, useGetUserStatisticQuery } from '~/api/authApi';
 import { groupDataByWeek } from '~/pages/Bloggers/sections/utils';
 
-import { AboutProject } from './AboutProject/AboutProject';
 import { ReactionStatistic } from './ReactionStatistic/ReactionStatistic';
 import { Subscribers } from './Subscribers/Subscribers';
 import { UpdateUserInfo } from './UpdateUserInfo/UpdateUserInfo';
@@ -31,7 +30,6 @@ export function Settings() {
             <Subscribers user={user} />
             <ReactionStatistic data={bookmarks} color='#2db100' type='bookmark' />
             <ReactionStatistic data={likes} color='#8c54ff' type='like' />
-            <AboutProject />
         </Flex>
     );
 }
