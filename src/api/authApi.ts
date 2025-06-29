@@ -28,8 +28,6 @@ import {
 import { MeasureUnitsI, recipeI } from '~/interfaces/recipeI';
 import { RecipeInputs, RecipeInputsOptional } from '~/pages/NewRecipe/NewRecipe';
 import { NoteInputs } from '~/pages/Profile/sections/Notes/NotesDrawer/NotesDrawer';
-import { PasswordInputs } from '~/pages/Profile/Settings/NewPasswordModal/NewPasswordModal';
-import { UpdateInputs } from '~/pages/Profile/Settings/Settings';
 
 const rawBaseQuery = fetchBaseQuery({
     baseUrl: 'https://marathon-api.clevertec.ru',
@@ -98,7 +96,7 @@ const baseQueryWithTokenHandler: BaseQueryFn<
 export const authApi = createApi({
     reducerPath: 'auth',
     baseQuery: baseQueryWithTokenHandler,
-    tagTypes: ['Recipe', 'toggleSubscription', 'Note', 'Recomendation', 'User'],
+    tagTypes: ['Recipe', 'toggleSubscription', 'Note'],
     endpoints: (builder) => ({
         check: builder.query<authI, void>({
             query: () => '/auth/check-auth',
@@ -229,7 +227,6 @@ export const authApi = createApi({
         }),
         getCurrentUserInfo: builder.query<userI, void>({
             query: () => `/users/me`,
-            providesTags: [{ type: 'User', id: 'CURRENT' }],
         }),
         getUserStatistic: builder.query<statisticI, void>({
             query: () => `/statistic`,
@@ -271,39 +268,6 @@ export const authApi = createApi({
             }),
             invalidatesTags: [{ type: 'Note' }],
         }),
-        setRecommendatiion: builder.mutation<void, string>({
-            query: (id) => ({
-                url: `recipe/recommend/${id}`,
-                method: 'POST',
-            }),
-            invalidatesTags: (_result, _error, id) => [{ type: 'Recomendation', id }],
-        }),
-        updateUserInfo: builder.mutation<void, { data: UpdateInputs }>({
-            query: ({ data }) => ({
-                url: `/users/me/update-info`,
-                method: 'PATCH',
-                body: data,
-            }),
-            invalidatesTags: ['User'],
-        }),
-        updateUserPhoto: builder.mutation<void, FormData>({
-            query: (formData) => ({
-                url: `users/me/photo`,
-                method: 'POST',
-                body: formData,
-            }),
-            invalidatesTags: ['User'],
-        }),
-        updatePassword: builder.mutation<
-            successI | errorI,
-            Omit<PasswordInputs, 'confirmPassword'>
-        >({
-            query: (credentials) => ({
-                url: 'users/me/update-password',
-                method: 'PATCH',
-                body: credentials,
-            }),
-        }),
     }),
 });
 
@@ -333,7 +297,4 @@ export const {
     useGetUserRecipeBookmarksQuery,
     useCreateNoteMutation,
     useDeleteNoteMutation,
-    useUpdateUserInfoMutation,
-    useUpdateUserPhotoMutation,
-    useUpdatePasswordMutation,
 } = authApi;

@@ -15,7 +15,6 @@ export function NotificationAside() {
     return (
         <Flex flexDirection='column' as='aside' sx={NotificationAsideStyle}>
             <ProfileNotification
-                recomendation={statistic?.recommendationsCount}
                 bookmarks={bookmarksCount(statistic?.bookmarks)}
                 people={user ? user.subscribers.length : 0}
                 like={likesCount(statistic?.likes)}
