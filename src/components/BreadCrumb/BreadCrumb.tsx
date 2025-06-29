@@ -37,7 +37,6 @@ export function BreadCrumb({ isOpen, toggleMenu }: BurgerMenuProps) {
     const getBreadCrumbsTitle = (path: string, index: number) => {
         if (index === 0) {
             if (path === 'the-juiciest') return 'Самое сочное';
-            if (path === 'profile') return 'Мой профиль';
             if (path === 'blogs') return 'Блоги';
             return categoriesSavedData.categories.find((item) => item.category === path)?.title;
         }

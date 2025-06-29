@@ -41,32 +41,3 @@ export interface RecipesUserI {
     totalSubscribers: number;
     notes: noteI[];
 }
-
-export interface userI {
-    _id: string;
-    email: string;
-    login: string;
-    firstName: string;
-    lastName: string;
-    recipesIds: string[];
-    drafts: recipeI;
-    subscriptions: string[];
-    subscribers: string[];
-}
-
-export interface likesI {
-    date: string;
-    count: number;
-}
-
-export interface bookmarksI {
-    date: string;
-    count: number;
-}
-
-export interface statisticI {
-    likes: likesI[];
-    bookmarks: bookmarksI[];
-    recommendationsCount: number;
-    recipesWithRecommendations: recipeI[];
-}

@@ -16,13 +16,7 @@ import {
     successI,
     verifyOtpI,
 } from '~/interfaces/authI';
-import {
-    bloggerInfoI,
-    bloggersResponce,
-    RecipesUserI,
-    statisticI,
-    userI,
-} from '~/interfaces/bloggerI';
+import { bloggerInfoI, bloggersResponce, RecipesUserI } from '~/interfaces/bloggerI';
 import { MeasureUnitsI, recipeI } from '~/interfaces/recipeI';
 import { RecipeInputs, RecipeInputsOptional } from '~/pages/NewRecipe/NewRecipe';
 
@@ -222,12 +216,6 @@ export const authApi = createApi({
                     ? result.recipes.map((r) => ({ type: 'Recipe', id: r._id }))
                     : [{ type: 'Recipe' }],
         }),
-        getCurrentUserInfo: builder.query<userI, void>({
-            query: () => `/users/me`,
-        }),
-        getUserStatistic: builder.query<statisticI, void>({
-            query: () => `/statistic`,
-        }),
     }),
 });
 
@@ -252,6 +240,4 @@ export const {
     useToggleSubscriptionMutation,
     useGetUserByIdQuery,
     useGetRecipeByUserQuery,
-    useGetCurrentUserInfoQuery,
-    useGetUserStatisticQuery,
 } = authApi;

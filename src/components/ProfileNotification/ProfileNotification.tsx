@@ -13,7 +13,7 @@ export type notificationInfo = {
 
 export function ProfileNotification(props: notificationInfo) {
     return (
-        <Flex sx={ProfileNotificationStyle} data-test-id='user-stats-block'>
+        <Flex sx={ProfileNotificationStyle}>
             <Box display='flex' gap='10px' p='0px 8px' alignItems='center'>
                 <BookmarkIcon />
                 <Text color='#2db100' fontWeight='600'>
