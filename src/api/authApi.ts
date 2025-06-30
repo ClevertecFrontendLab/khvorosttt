@@ -99,7 +99,7 @@ const baseQueryWithTokenHandler: BaseQueryFn<
 export const authApi = createApi({
     reducerPath: 'auth',
     baseQuery: baseQueryWithTokenHandler,
-    tagTypes: ['Recipe', 'toggleSubscription', 'Note', 'Recomendation', 'User'],
+    tagTypes: ['Recipe', 'toggleSubscription', 'Note', 'Recomendation', 'User', 'Draft'],
     endpoints: (builder) => ({
         check: builder.query<authI, void>({
             query: () => '/auth/check-auth',
@@ -192,6 +192,14 @@ export const authApi = createApi({
             }),
             invalidatesTags: (_result, _error, { id }) => [{ type: 'Recipe', id }],
         }),
+        updateDraft: builder.mutation<void, { id: string; data: RecipeInputsOptional }>({
+            query: ({ id, data }) => ({
+                url: `/recipe/draft/${id}`,
+                method: 'PATCH',
+                body: data,
+            }),
+            invalidatesTags: (_result, _error, { id }) => [{ type: 'Draft', id }],
+        }),
         getRecipeById: builder.query<recipeI, string | undefined>({
             query: (id) => `/recipe/${id}`,
             providesTags: (_result, _error, id) => [{ type: 'Recipe', id }],
@@ -230,7 +238,16 @@ export const authApi = createApi({
         }),
         getCurrentUserInfo: builder.query<userI, void>({
             query: () => `/users/me`,
-            providesTags: [{ type: 'User', id: 'CURRENT' }],
+            providesTags: (result) =>
+                result
+                    ? [
+                          { type: 'User', id: 'CURRENT' },
+                          ...result.drafts.map((draftItem) => ({
+                              type: 'Draft' as const,
+                              id: draftItem._id,
+                          })),
+                      ]
+                    : [{ type: 'User', id: 'CURRENT' }],
         }),
         getUserStatistic: builder.query<statisticI, void>({
             query: () => `/statistic`,
@@ -356,4 +373,5 @@ export const {
     useGetAllUserQuery,
     useDeleteProfileMutation,
     useSetRecomendationMutation,
+    useUpdateDraftMutation,
 } = authApi;

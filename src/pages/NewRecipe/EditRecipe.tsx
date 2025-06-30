@@ -5,7 +5,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useBlocker, useLocation, useNavigate, useParams } from 'react-router';
 
-import { useAddDraftMutation, useUpdateRecipeMutation } from '~/api/authApi';
+import {
+    useAddDraftMutation,
+    useUpdateDraftMutation,
+    useUpdateRecipeMutation,
+} from '~/api/authApi';
 import { useGetRecipeByIdQuery } from '~/api/authApi';
 import { Loader } from '~/components/Loader/Loader';
 import { setNotification } from '~/services/features/notificationSlice';
@@ -43,6 +47,8 @@ export function EditRecipe() {
     const categoriesSavedData = useSelector(selectedCategories);
     const [addDraft] = useAddDraftMutation();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const isEditingDraft = !!draftData?._id;
+    const [updateDraft] = useUpdateDraftMutation();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -76,24 +82,31 @@ export function EditRecipe() {
         blocker?.reset?.();
     };
 
-    const handleSaveDraft = async () => {
-        const isValid = await methods.trigger('title');
-        if (isValid) {
+    const handleSaveDraft = () => {
+        methods.trigger('title').then((isValid) => {
+            if (!isValid) {
+                onClose();
+                return;
+            }
+
             const formData = methods.getValues();
             const normalizedData = normalizeRecipeDataOptianal(formData);
-            addDraft(normalizedData)
-                .unwrap()
+
+            const savePromise = isEditingDraft
+                ? updateDraft({ id: draftData._id, data: normalizedData }).unwrap()
+                : addDraft(normalizedData).unwrap();
+
+            savePromise
                 .then(() => {
                     dispatch(
                         setNotification({
-                            title: 'Черновик успешно сохранен',
+                            title: isEditingDraft ? 'Черновик обновлён' : 'Черновик сохранён',
                             description: '',
                             typeN: 'success',
                         }),
                     );
                     onClose();
-                })
-                .then(() => {
+
                     methods.reset(
                         {
                             title: '',
@@ -110,29 +123,24 @@ export function EditRecipe() {
 
                     handleConfirmNavigation();
                 })
-                .catch((error) => {
-                    if (error.status === 500) {
-                        dispatch(
-                            setNotification({
-                                title: 'Ошибка сервера',
-                                description: 'Не удалось сохранить черновик рецепта',
-                                typeN: 'error',
-                            }),
-                        );
-                    } else if (error.status === 409) {
-                        dispatch(
-                            setNotification({
-                                title: 'Ошибка',
-                                description: 'Рецепт с таким названием уже существует.',
-                                typeN: 'error',
-                            }),
-                        );
+                .catch((error: unknown) => {
+                    const defaultError = {
+                        title: 'Ошибка сервера',
+                        description: 'Не удалось сохранить черновик рецепта',
+                        typeN: 'error',
+                    };
+
+                    if (typeof error === 'object' && error !== null && 'status' in error) {
+                        if ((error as { status?: number }).status === 409) {
+                            defaultError.title = 'Ошибка';
+                            defaultError.description = 'Рецепт с таким названием уже существует.';
+                        }
                     }
+
+                    dispatch(setNotification(defaultError));
                     onClose();
                 });
-        } else {
-            onClose();
-        }
+        });
     };
 
     function normalizeRecipeDataOptianal(data: RecipeInputs): RecipeInputsOptional {
