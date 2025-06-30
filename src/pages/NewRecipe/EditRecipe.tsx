@@ -82,65 +82,65 @@ export function EditRecipe() {
         blocker?.reset?.();
     };
 
-    const handleSaveDraft = () => {
-        methods.trigger('title').then((isValid) => {
-            if (!isValid) {
-                onClose();
-                return;
+    const handleSaveDraft = async (data: RecipeInputs): Promise<void> => {
+        const isValid = await methods.trigger('title');
+
+        if (!isValid) {
+            onClose();
+            return;
+        }
+
+        const normalizedData = normalizeRecipeDataOptianal(data);
+
+        try {
+            if (isEditingDraft) {
+                await updateDraft({ id: draftData._id, data: normalizedData }).unwrap();
+            } else {
+                await addDraft(normalizedData).unwrap();
             }
 
-            const formData = methods.getValues();
-            const normalizedData = normalizeRecipeDataOptianal(formData);
+            dispatch(
+                setNotification({
+                    title: isEditingDraft ? 'Черновик обновлён' : 'Черновик сохранён',
+                    description: '',
+                    typeN: 'success',
+                }),
+            );
 
-            const savePromise = isEditingDraft
-                ? updateDraft({ id: draftData._id, data: normalizedData }).unwrap()
-                : addDraft(normalizedData).unwrap();
+            onClose();
 
-            savePromise
-                .then(() => {
-                    dispatch(
-                        setNotification({
-                            title: isEditingDraft ? 'Черновик обновлён' : 'Черновик сохранён',
-                            description: '',
-                            typeN: 'success',
-                        }),
-                    );
-                    onClose();
+            methods.reset(
+                {
+                    title: '',
+                    description: '',
+                    time: 0,
+                    portions: 1,
+                    categoriesIds: [],
+                    image: '',
+                    ingredients: [{ title: '', count: 1, measureUnit: '' }],
+                    steps: [{ stepNumber: 1, description: '', image: '' }],
+                },
+                { keepDirty: false },
+            );
 
-                    methods.reset(
-                        {
-                            title: '',
-                            description: '',
-                            time: 0,
-                            portions: 1,
-                            categoriesIds: [],
-                            image: '',
-                            ingredients: [{ title: '', count: 1, measureUnit: '' }],
-                            steps: [{ stepNumber: 1, description: '', image: '' }],
-                        },
-                        { keepDirty: false },
-                    );
+            handleConfirmNavigation();
+        } catch (error) {
+            const defaultError = {
+                title: 'Ошибка сервера',
+                description: 'Не удалось сохранить черновик рецепта',
+                typeN: 'error',
+            };
 
-                    handleConfirmNavigation();
-                })
-                .catch((error: unknown) => {
-                    const defaultError = {
-                        title: 'Ошибка сервера',
-                        description: 'Не удалось сохранить черновик рецепта',
-                        typeN: 'error',
-                    };
+            if (typeof error === 'object' && error !== null && 'status' in error) {
+                if ((error as { status?: number }).status === 409) {
+                    defaultError.title = 'Ошибка';
+                    defaultError.description = 'Рецепт с таким названием уже существует.';
+                }
+            }
 
-                    if (typeof error === 'object' && error !== null && 'status' in error) {
-                        if ((error as { status?: number }).status === 409) {
-                            defaultError.title = 'Ошибка';
-                            defaultError.description = 'Рецепт с таким названием уже существует.';
-                        }
-                    }
-
-                    dispatch(setNotification(defaultError));
-                    onClose();
-                });
-        });
+            dispatch(setNotification(defaultError));
+            onClose();
+        }
     };
 
     function normalizeRecipeDataOptianal(data: RecipeInputs): RecipeInputsOptional {
