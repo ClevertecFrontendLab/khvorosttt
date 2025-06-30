@@ -16,21 +16,9 @@ import {
     successI,
     verifyOtpI,
 } from '~/interfaces/authI';
-import {
-    allUserI,
-    bloggerInfoI,
-    bloggersResponce,
-    noteI,
-    RecipeBookmarksI,
-    RecipesUserI,
-    statisticI,
-    userI,
-} from '~/interfaces/bloggerI';
+import { bloggerInfoI, bloggersResponce, RecipesUserI } from '~/interfaces/bloggerI';
 import { MeasureUnitsI, recipeI } from '~/interfaces/recipeI';
 import { RecipeInputs, RecipeInputsOptional } from '~/pages/NewRecipe/NewRecipe';
-import { NoteInputs } from '~/pages/Profile/sections/Notes/NotesDrawer/NotesDrawer';
-import { PasswordInputs } from '~/pages/Profile/Settings/NewPasswordModal/NewPasswordModal';
-import { UpdateInputs } from '~/pages/Profile/Settings/Settings';
 
 const rawBaseQuery = fetchBaseQuery({
     baseUrl: 'https://marathon-api.clevertec.ru',

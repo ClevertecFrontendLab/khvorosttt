@@ -1,6 +1,5 @@
 import { Search2Icon } from '@chakra-ui/icons';
 import { Avatar, Box, Grid, GridItem, Text } from '@chakra-ui/react';
-import { useNavigate } from 'react-router';
 
 import avatar from '../../assets/images/kat_konst.jpg';
 import { HomeIcon } from '../Icons/Home';
@@ -8,7 +7,6 @@ import { NoteIcon } from '../Icons/Note';
 import { AvatarStyle, FooterStyle, HomeIconStyle } from './MTFooter.style';
 
 export function Footer() {
-    const navigate = useNavigate();
     return (
         <Box as='footer' data-test-id='footer' sx={FooterStyle}>
             <Grid templateColumns='repeat(4, 1fr)' p='10px 0px'>
@@ -33,14 +31,7 @@ export function Footer() {
                     </Box>
                 </GridItem>
                 <GridItem>
-                    <Box
-                        display='flex'
-                        flexDirection='column'
-                        alignItems='center'
-                        gap='8px'
-                        data-test-id='footer-profile-button'
-                        onClick={() => navigate('/profile')}
-                    >
+                    <Box display='flex' flexDirection='column' alignItems='center' gap='8px'>
                         <Avatar sx={AvatarStyle} src={avatar} />
                         <Text fontSize='12px'>Мой профиль</Text>
                     </Box>

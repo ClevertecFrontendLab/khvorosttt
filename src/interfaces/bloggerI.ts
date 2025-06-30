@@ -1,7 +1,6 @@
 import { recipeI } from './recipeI';
 
 export interface noteI {
-    _id: string;
     date: string;
     text: string;
 }
@@ -41,46 +40,4 @@ export interface RecipesUserI {
     totalBookmarks: number;
     totalSubscribers: number;
     notes: noteI[];
-}
-
-export interface userI {
-    _id: string;
-    email: string;
-    login: string;
-    firstName: string;
-    lastName: string;
-    recipesIds: string[];
-    drafts: recipeI[];
-    subscriptions: string[];
-    subscribers: string[];
-    photoLink: string;
-}
-
-export interface allUserI {
-    id: string;
-    login: string;
-    firstName: string;
-    lastName: string;
-    photo: string;
-}
-
-export interface LikesBookmarksI {
-    date: string;
-    count: number;
-}
-
-export interface statisticI {
-    likes: LikesBookmarksI[];
-    bookmarks: LikesBookmarksI[];
-    recommendationsCount: number;
-    recipesWithRecommendations: recipeI[];
-}
-
-export interface RecipeBookmarksI {
-    recipes: recipeI[];
-    notes: noteI[];
-    userId: string;
-    myBookmarks: recipeI[];
-    totalBookmarks: number;
-    totalSubscribers: number;
 }
