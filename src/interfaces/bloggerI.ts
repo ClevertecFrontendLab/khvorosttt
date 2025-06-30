@@ -16,6 +16,7 @@ export interface bloggerI {
     isFavorite: boolean;
     firstName: string;
     bookmarksCount: number;
+    photoLink: string;
 }
 
 export interface bloggersResponce {
