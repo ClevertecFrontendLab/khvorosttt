@@ -19,13 +19,6 @@ export const CardImageStyle: SystemStyleObject = {
     maxW: { base: '158px', '2xl': '346px' },
 };
 
-export const CardNoneImageStyle: SystemStyleObject = {
-    alignItems: 'center',
-    justifyContent: 'center',
-    minW: { base: '158px', '2xl': '346px' },
-    bg: 'rgba(0, 0, 0, 0.08)',
-};
-
 export const MarkerInteractionsStyle: SystemStyleObject = {
     justifyContent: { lg: 'space-between' },
     gap: { base: '30px' },
@@ -73,39 +66,4 @@ export const SaveButtonStyle: SystemStyleObject = {
     gap: '5px',
     w: { base: '24px', md: 'auto' },
     h: { base: '24px', md: '32px' },
-};
-
-export const RecipeCardButtonStyle: SystemStyleObject = {
-    color: 'black',
-    p: '0px 12px',
-    h: { base: '24px', md: '32px' },
-    border: '1px solid rgba(0, 0, 0, 0.48)',
-    borderRadius: '6px',
-    fontFamily: 'text',
-    fontSize: { base: '12px', lg: '14px' },
-    fontWeight: 600,
-    variant: 'outline',
-    display: 'flex',
-    gap: '10px',
-};
-
-export const DraftTextStyle: SystemStyleObject = {
-    borderRadius: '4px',
-    p: '2px 8px',
-    bg: 'rgba(0, 0, 0, 0.06)',
-    fontFamily: 'text',
-    fontSize: '14px',
-    fontWeight: 400,
-};
-
-export const DraftCardButtonStyle: SystemStyleObject = {
-    bg: 'black',
-    color: 'white',
-    p: '0px 12px',
-    h: { base: '24px', md: '32px' },
-    border: '1px solid rgba(0, 0, 0, 0.08)',
-    borderRadius: '6px',
-    fontFamily: 'text',
-    fontSize: { base: '12px', lg: '14px' },
-    fontWeight: 600,
 };

@@ -45,7 +45,7 @@ function App() {
                     </Hide>
                 </Grid>
             </Box>
-            <Box display={{ base: 'block', xl: 'none' }}>
+            <Box display={{ base: 'block', lg: 'none' }}>
                 <Footer />
             </Box>
         </Box>

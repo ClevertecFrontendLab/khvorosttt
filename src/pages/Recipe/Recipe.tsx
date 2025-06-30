@@ -1,17 +1,10 @@
-import { Box, Button, Flex, Text } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { Box, Flex } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 
-import {
-    useGetCurrentUserInfoQuery,
-    useGetRecipeByIdQuery,
-    useGetUserStatisticQuery,
-    useSetRecomendationMutation,
-} from '~/api/authApi';
+import { useGetRecipeByIdQuery } from '~/api/authApi';
 import { AuthorRecipe } from '~/components/AuthorRecipe/AuthorRecipe';
-import { bookmarksCount } from '~/components/Header/utils';
-import { LikeIcon } from '~/components/Icons/LikeIcon';
 import { Loader } from '~/components/Loader/Loader';
 import { Calories } from '~/sections/Calories/Calories';
 import { Ingredients } from '~/sections/Ingredients/Ingredients';
@@ -27,10 +20,6 @@ export function Recipe() {
     });
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { data: statistic } = useGetUserStatisticQuery();
-    const { data: user } = useGetCurrentUserInfoQuery();
-    const [setRecomend] = useSetRecomendationMutation();
-    const [isRecommended, setRecommented] = useState(-1);
 
     useEffect(() => {
         if (isError) {
@@ -44,28 +33,6 @@ export function Recipe() {
             navigate(-1);
         }
     }, [isError, dispatch, navigate]);
-
-    const handleRecomend = () => {
-        setRecomend(id || '')
-            .unwrap()
-            .then(() => setRecommented(1))
-            .catch(() => {
-                dispatch(
-                    setNotification({
-                        title: 'Ошибка сервера',
-                        description: 'Попробуйте поискать снова попозже',
-                        typeN: 'error',
-                    }),
-                );
-            });
-    };
-
-    useEffect(() => {
-        if (statistic?.recipesWithRecommendations) {
-            const index = statistic.recipesWithRecommendations.findIndex((r) => r._id === id);
-            setRecommented(index);
-        }
-    }, [statistic?.recipesWithRecommendations, id]);
 
     if (isLoading) {
         return <Loader />;
@@ -90,17 +57,6 @@ export function Recipe() {
                     <Ingredients data={data.ingredients} portion={data.portions} />
                     <StepsCooking data={data.steps} />
                     <AuthorRecipe authorId={data.authorId} />
-                    {bookmarksCount(statistic?.bookmarks) > 200 &&
-                        (user ? user.subscribers.length : 0) > 100 && (
-                            <Button onClick={handleRecomend} w='100' bg='black' borderRadius='6px'>
-                                <LikeIcon color='green' />
-                                <Text color='white'>
-                                    {isRecommended === -1
-                                        ? 'Рекомендовать рецепт'
-                                        : 'Вы порекомендовали'}
-                                </Text>
-                            </Button>
-                        )}
                 </Flex>
                 <Box w='100%'>
                     <NewRecipes />

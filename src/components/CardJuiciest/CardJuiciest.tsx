@@ -70,9 +70,7 @@ export function CardJuiciest({
                     <Flex wrap='wrap' gap='3px' direction={{ base: 'column', xl: 'row' }}>
                         <CategoryMarker style={MarkerStyle} data={data} />
                     </Flex>
-                    <Flex position={{ base: 'absolute', lg: 'initial' }} left='160px'>
-                        <Interactions {...data} />
-                    </Flex>
+                    <Interactions {...data} />
                 </Flex>
                 <CardBody sx={CardBodyStyle}>
                     <Heading size='md' isTruncated sx={CardBodyHeadingStyle}>
@@ -84,7 +82,7 @@ export function CardJuiciest({
                         </Text>
                     </Hide>
                 </CardBody>
-                <CardFooter display='flex' gap='5px' p={0} justifyContent='flex-end' mt='auto'>
+                <CardFooter display='flex' gap='5px' p={0} justifyContent='flex-end'>
                     <Button sx={SaveButtonStyle} onClick={() => handleBookmarks(data._id)}>
                         <BookmarkIcon />
                         <Hide below='lg'>
