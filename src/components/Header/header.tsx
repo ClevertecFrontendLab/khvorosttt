@@ -1,19 +1,21 @@
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
-import { Avatar, Box, Flex, Hide, IconButton, Text } from '@chakra-ui/react';
-import { useState } from 'react';
+import { Avatar, Box, Flex, Hide, IconButton, Show, Text } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 
-import avatar from '../../assets/images/kat_konst.jpg';
+import { useGetCurrentUserInfoQuery, useGetUserStatisticQuery } from '~/api/authApi.ts';
+import { IMAGE_BASED_PATH } from '~/data/consts.ts';
+
 import { BreadCrumb } from '../BreadCrumb/BreadCrumb';
 import { BurgerMenuProps } from '../BurgerMenu/BurgerMenu.tsx';
 import { NameIcon } from '../Icons/Name.tsx';
 import { PotIcon } from '../Icons/Pot.tsx';
 import { ProfileNotification } from '../ProfileNotification/ProfileNotification';
 import { avatarStyle, headerStyle } from './header.style.ts';
+import { bookmarksCount, likesCount } from './utils.tsx';
 
 export function Header(props: BurgerMenuProps) {
-    const [name] = useState('Екатерина Константинопольская');
-    const [email] = useState('@bake_and_pie');
+    const { data: user } = useGetCurrentUserInfoQuery();
+    const { data: statistic } = useGetUserStatisticQuery();
     const navigate = useNavigate();
     return (
         <Box
@@ -42,20 +44,35 @@ export function Header(props: BurgerMenuProps) {
                     </Box>
                 </Hide>
                 <Hide below='xl'>
-                    <Flex align='center' gap={3}>
-                        <Avatar sx={avatarStyle} name={name} src={avatar} />
+                    <Flex
+                        align='center'
+                        gap={3}
+                        data-test-id='header-profile-button'
+                        onClick={() => navigate('/profile')}
+                    >
+                        <Avatar
+                            name={`${user?.firstName} ${user?.lastName}`}
+                            sx={avatarStyle}
+                            src={user?.photoLink ? `${IMAGE_BASED_PATH}${user?.photoLink}` : ''}
+                        />
                         <Box textAlign='left'>
                             <Text color='black' fontSize='18px' fontWeight={500}>
-                                {name}
+                                {user?.firstName} {user?.lastName}
                             </Text>
                             <Text color='rgba(0, 0, 0, 0.64)' fontSize='14px' fontWeight={400}>
-                                {email}
+                                @{user?.login}
                             </Text>
                         </Box>
                     </Flex>
                 </Hide>
                 <Flex align='center' gap={3} display={{ base: 'flex', xl: 'none' }}>
-                    <ProfileNotification bookmarks={0} people={0} like={0} />
+                    <Show below='xl'>
+                        <ProfileNotification
+                            bookmarks={bookmarksCount(statistic?.bookmarks)}
+                            people={user ? user.subscribers.length : 0}
+                            like={likesCount(statistic?.likes)}
+                        />
+                    </Show>
                     <IconButton
                         bg='transparent'
                         icon={!props.isOpen ? <HamburgerIcon /> : <CloseIcon />}

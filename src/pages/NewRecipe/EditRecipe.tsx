@@ -3,9 +3,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useBlocker, useNavigate, useParams } from 'react-router';
+import { useBlocker, useLocation, useNavigate, useParams } from 'react-router';
 
-import { useAddDraftMutation, useUpdateRecipeMutation } from '~/api/authApi';
+import {
+    useAddDraftMutation,
+    useUpdateDraftMutation,
+    useUpdateRecipeMutation,
+} from '~/api/authApi';
 import { useGetRecipeByIdQuery } from '~/api/authApi';
 import { Loader } from '~/components/Loader/Loader';
 import { setNotification } from '~/services/features/notificationSlice';
@@ -25,6 +29,8 @@ export function EditRecipe() {
     const id = pathTail?.split('/').pop() ?? '';
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const location = useLocation();
+    const draftData = location.state?.draftData;
 
     const methods = useForm<RecipeInputs>({
         mode: 'onSubmit',
@@ -41,6 +47,8 @@ export function EditRecipe() {
     const categoriesSavedData = useSelector(selectedCategories);
     const [addDraft] = useAddDraftMutation();
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const isEditingDraft = !!draftData?._id;
+    const [updateDraft] = useUpdateDraftMutation();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -74,61 +82,63 @@ export function EditRecipe() {
         blocker?.reset?.();
     };
 
-    const handleSaveDraft = async () => {
+    const handleSaveDraft = async (data: RecipeInputs): Promise<void> => {
         const isValid = await methods.trigger('title');
-        if (isValid) {
-            const formData = methods.getValues();
-            const normalizedData = normalizeRecipeDataOptianal(formData);
-            addDraft(normalizedData)
-                .unwrap()
-                .then(() => {
-                    dispatch(
-                        setNotification({
-                            title: 'Черновик успешно сохранен',
-                            description: '',
-                            typeN: 'success',
-                        }),
-                    );
-                    onClose();
-                })
-                .then(() => {
-                    methods.reset(
-                        {
-                            title: '',
-                            description: '',
-                            time: 0,
-                            portions: 1,
-                            categoriesIds: [],
-                            image: '',
-                            ingredients: [{ title: '', count: 1, measureUnit: '' }],
-                            steps: [{ stepNumber: 1, description: '', image: '' }],
-                        },
-                        { keepDirty: false },
-                    );
 
-                    handleConfirmNavigation();
-                })
-                .catch((error) => {
-                    if (error.status === 500) {
-                        dispatch(
-                            setNotification({
-                                title: 'Ошибка сервера',
-                                description: 'Не удалось сохранить черновик рецепта',
-                                typeN: 'error',
-                            }),
-                        );
-                    } else if (error.status === 409) {
-                        dispatch(
-                            setNotification({
-                                title: 'Ошибка',
-                                description: 'Рецепт с таким названием уже существует.',
-                                typeN: 'error',
-                            }),
-                        );
-                    }
-                    onClose();
-                });
-        } else {
+        if (!isValid) {
+            onClose();
+            return;
+        }
+
+        const normalizedData = normalizeRecipeDataOptianal(data);
+
+        try {
+            if (isEditingDraft) {
+                await updateDraft({ id: draftData._id, data: normalizedData }).unwrap();
+            } else {
+                await addDraft(normalizedData).unwrap();
+            }
+
+            dispatch(
+                setNotification({
+                    title: isEditingDraft ? 'Черновик обновлён' : 'Черновик сохранён',
+                    description: '',
+                    typeN: 'success',
+                }),
+            );
+
+            onClose();
+
+            methods.reset(
+                {
+                    title: '',
+                    description: '',
+                    time: 0,
+                    portions: 1,
+                    categoriesIds: [],
+                    image: '',
+                    ingredients: [{ title: '', count: 1, measureUnit: '' }],
+                    steps: [{ stepNumber: 1, description: '', image: '' }],
+                },
+                { keepDirty: false },
+            );
+
+            handleConfirmNavigation();
+        } catch (error) {
+            const defaultError = {
+                title: 'Ошибка сервера',
+                description: 'Не удалось сохранить черновик рецепта',
+                typeN: 'error',
+            };
+
+            if (typeof error === 'object' && error !== null && 'status' in error) {
+                if ((error as { status?: number }).status === 409) {
+                    defaultError.title = 'Ошибка';
+                    defaultError.description = 'Рецепт с таким названием уже существует.';
+                }
+            }
+
+            dispatch(setNotification(defaultError));
             onClose();
         }
     };
@@ -159,7 +169,10 @@ export function EditRecipe() {
         if (data) {
             methods.reset(data);
         }
-    }, [data]);
+        if (draftData) {
+            methods.reset(draftData);
+        }
+    }, [data, draftData]);
 
     const handleUpdate = (formData: RecipeInputs) => {
         setIsSubmitting(true);

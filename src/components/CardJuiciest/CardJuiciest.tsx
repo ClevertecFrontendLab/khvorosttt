@@ -1,4 +1,5 @@
 import {
+    Avatar,
     Button,
     Card,
     CardBody,
@@ -13,10 +14,11 @@ import {
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 
-import { useBookmarkRecipeMutation } from '~/api/authApi';
+import { useBookmarkRecipeMutation, useGetUserByIdQuery } from '~/api/authApi';
 import { IMAGE_BASED_PATH } from '~/data/consts';
 import { recipeI } from '~/interfaces/recipeI';
 import { setNotification } from '~/services/features/notificationSlice';
+import { getUserIdFromToken } from '~/services/utils';
 
 import { CategoryMarker } from '../CategoryMarker/CategoryMarker';
 import { BookmarkIcon } from '../Icons/Bookmark';
@@ -45,6 +47,12 @@ export function CardJuiciest({
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [bookmarksRecipe] = useBookmarkRecipeMutation();
+    const recomId = data.recommendedByuserId ? data.recommendedByuserId[0] : '';
+    const currentUserId = getUserIdFromToken();
+    const { data: reUser } = useGetUserByIdQuery(
+        { userId: recomId, currentUserId: currentUserId || '' },
+        { skip: !recomId },
+    );
 
     const handleBookmarks = (id: string) => {
         bookmarksRecipe(id)
@@ -70,7 +78,9 @@ export function CardJuiciest({
                     <Flex wrap='wrap' gap='3px' direction={{ base: 'column', xl: 'row' }}>
                         <CategoryMarker style={MarkerStyle} data={data} />
                     </Flex>
-                    <Interactions {...data} />
+                    <Flex position={{ base: 'absolute', lg: 'initial' }} left='160px'>
+                        <Interactions {...data} />
+                    </Flex>
                 </Flex>
                 <CardBody sx={CardBodyStyle}>
                     <Heading size='md' isTruncated sx={CardBodyHeadingStyle}>
@@ -82,7 +92,7 @@ export function CardJuiciest({
                         </Text>
                     </Hide>
                 </CardBody>
-                <CardFooter display='flex' gap='5px' p={0} justifyContent='flex-end'>
+                <CardFooter display='flex' gap='5px' p={0} justifyContent='flex-end' mt='auto'>
                     <Button sx={SaveButtonStyle} onClick={() => handleBookmarks(data._id)}>
                         <BookmarkIcon />
                         <Hide below='lg'>
@@ -106,6 +116,27 @@ export function CardJuiciest({
                     </Button>
                 </CardFooter>
             </Stack>
+            {reUser && (
+                <Flex
+                    position='absolute'
+                    left='10px'
+                    bottom='20px'
+                    color='#d7ff94'
+                    p='4px 8px'
+                    borderRadius='4px'
+                    gap='3px'
+                >
+                    <Avatar
+                        w='16px'
+                        h='16px'
+                        src={`${IMAGE_BASED_PATH}/${reUser.bloggerInfo.photoLink}`}
+                    />
+                    <Text fontSize='14px'>
+                        {`${reUser.bloggerInfo.firstName} ${reUser.bloggerInfo.lastName}`}{' '}
+                        рекомендует
+                    </Text>
+                </Flex>
+            )}
         </Card>
     );
 }

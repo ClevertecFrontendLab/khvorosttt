@@ -16,9 +16,21 @@ import {
     successI,
     verifyOtpI,
 } from '~/interfaces/authI';
-import { bloggerInfoI, bloggersResponce, RecipesUserI } from '~/interfaces/bloggerI';
+import {
+    allUserI,
+    bloggerInfoI,
+    bloggersResponce,
+    noteI,
+    RecipeBookmarksI,
+    RecipesUserI,
+    statisticI,
+    userI,
+} from '~/interfaces/bloggerI';
 import { MeasureUnitsI, recipeI } from '~/interfaces/recipeI';
 import { RecipeInputs, RecipeInputsOptional } from '~/pages/NewRecipe/NewRecipe';
+import { NoteInputs } from '~/pages/Profile/sections/Notes/NotesDrawer/NotesDrawer';
+import { PasswordInputs } from '~/pages/Profile/Settings/NewPasswordModal/NewPasswordModal';
+import { UpdateInputs } from '~/pages/Profile/Settings/Settings';
 
 const rawBaseQuery = fetchBaseQuery({
     baseUrl: 'https://marathon-api.clevertec.ru',
@@ -87,7 +99,7 @@ const baseQueryWithTokenHandler: BaseQueryFn<
 export const authApi = createApi({
     reducerPath: 'auth',
     baseQuery: baseQueryWithTokenHandler,
-    tagTypes: ['Recipe', 'toggleSubscription'],
+    tagTypes: ['Recipe', 'toggleSubscription', 'Note', 'Recomendation', 'User', 'Draft'],
     endpoints: (builder) => ({
         check: builder.query<authI, void>({
             query: () => '/auth/check-auth',
@@ -163,14 +175,14 @@ export const authApi = createApi({
                 url: `/recipe/${id}/like`,
                 method: 'POST',
             }),
-            invalidatesTags: (_result, _error, id) => [{ type: 'Recipe', id }],
+            invalidatesTags: (_result, _error, id) => [{ type: 'Recipe', id }, { type: 'Recipe' }],
         }),
         bookmarkRecipe: builder.mutation<void, string>({
             query: (id) => ({
                 url: `/recipe/${id}/bookmark`,
                 method: 'POST',
             }),
-            invalidatesTags: (_result, _error, id) => [{ type: 'Recipe', id }],
+            invalidatesTags: (_result, _error, id) => [{ type: 'Recipe', id }, { type: 'Recipe' }],
         }),
         updateRecipe: builder.mutation<void, { id: string; data: RecipeInputs }>({
             query: ({ id, data }) => ({
@@ -179,6 +191,14 @@ export const authApi = createApi({
                 body: data,
             }),
             invalidatesTags: (_result, _error, { id }) => [{ type: 'Recipe', id }],
+        }),
+        updateDraft: builder.mutation<void, { id: string; data: RecipeInputsOptional }>({
+            query: ({ id, data }) => ({
+                url: `/recipe/draft/${id}`,
+                method: 'PATCH',
+                body: data,
+            }),
+            invalidatesTags: (_result, _error, { id }) => [{ type: 'Draft', id }],
         }),
         getRecipeById: builder.query<recipeI, string | undefined>({
             query: (id) => `/recipe/${id}`,
@@ -216,6 +236,108 @@ export const authApi = createApi({
                     ? result.recipes.map((r) => ({ type: 'Recipe', id: r._id }))
                     : [{ type: 'Recipe' }],
         }),
+        getCurrentUserInfo: builder.query<userI, void>({
+            query: () => `/users/me`,
+            providesTags: (result) =>
+                result
+                    ? [
+                          { type: 'User', id: 'CURRENT' },
+                          ...result.drafts.map((draftItem) => ({
+                              type: 'Draft' as const,
+                              id: draftItem._id,
+                          })),
+                      ]
+                    : [{ type: 'User', id: 'CURRENT' }],
+        }),
+        getUserStatistic: builder.query<statisticI, void>({
+            query: () => `/statistic`,
+            providesTags: (result) =>
+                result?.recipesWithRecommendations
+                    ? result.recipesWithRecommendations.map((b) => ({
+                          type: 'Recomendation',
+                          id: b._id,
+                      }))
+                    : [{ type: 'Recomendation' }],
+        }),
+        getUserRecipeBookmarks: builder.query<RecipeBookmarksI, string | undefined>({
+            query: (id) => `/recipe/user/${id}`,
+            providesTags: (result) => {
+                const tags: { type: 'Recipe' | 'Note'; id?: string }[] = [];
+
+                if (result?.myBookmarks?.length) {
+                    tags.push(
+                        ...result.myBookmarks.map((r) => ({ type: 'Recipe' as const, id: r._id })),
+                    );
+                } else {
+                    tags.push({ type: 'Recipe' });
+                }
+
+                if (result?.notes?.length) {
+                    tags.push(...result.notes.map(() => ({ type: 'Note' as const })));
+                } else {
+                    tags.push({ type: 'Note' });
+                }
+
+                return tags;
+            },
+        }),
+        createNote: builder.mutation<noteI, NoteInputs>({
+            query: (body) => ({
+                url: `users/me/note`,
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: [{ type: 'Note' }],
+        }),
+        deleteNote: builder.mutation<void, string>({
+            query: (id) => ({
+                url: `users/me/note/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: [{ type: 'Note' }],
+        }),
+        setRecomendation: builder.mutation<void, string>({
+            query: (id) => ({
+                url: `recipe/recommend/${id}`,
+                method: 'POST',
+            }),
+            invalidatesTags: (_result, _error, id) => [{ type: 'Recomendation', id }],
+        }),
+        updateUserInfo: builder.mutation<void, { data: UpdateInputs }>({
+            query: ({ data }) => ({
+                url: `/users/me/update-info`,
+                method: 'PATCH',
+                body: data,
+            }),
+            invalidatesTags: ['User'],
+        }),
+        updateUserPhoto: builder.mutation<void, FormData>({
+            query: (formData) => ({
+                url: `users/me/photo`,
+                method: 'POST',
+                body: formData,
+            }),
+            invalidatesTags: ['User'],
+        }),
+        updatePassword: builder.mutation<
+            successI | errorI,
+            Omit<PasswordInputs, 'confirmPassword'>
+        >({
+            query: (credentials) => ({
+                url: 'users/me/update-password',
+                method: 'PATCH',
+                body: credentials,
+            }),
+        }),
+        getAllUser: builder.query<allUserI[], void>({
+            query: () => `/users/all`,
+        }),
+        deleteProfile: builder.mutation<void, void>({
+            query: () => ({
+                url: `/profile`,
+                method: 'DELETE',
+            }),
+        }),
     }),
 });
 
@@ -240,4 +362,16 @@ export const {
     useToggleSubscriptionMutation,
     useGetUserByIdQuery,
     useGetRecipeByUserQuery,
+    useGetCurrentUserInfoQuery,
+    useGetUserStatisticQuery,
+    useGetUserRecipeBookmarksQuery,
+    useCreateNoteMutation,
+    useDeleteNoteMutation,
+    useUpdateUserInfoMutation,
+    useUpdateUserPhotoMutation,
+    useUpdatePasswordMutation,
+    useGetAllUserQuery,
+    useDeleteProfileMutation,
+    useSetRecomendationMutation,
+    useUpdateDraftMutation,
 } = authApi;

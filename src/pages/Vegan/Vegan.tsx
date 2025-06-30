@@ -1,10 +1,11 @@
 import { Box, Flex } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 
 import { Search } from '~/components/Search/Search';
 import { TabsFood } from '~/components/TabsFood/TabsFood';
+import { categoryI } from '~/interfaces/categoryI';
 import { CategoryInfo } from '~/sections/CategoryInfoSection/CategoryInfo';
 import { selectedCategories, selectedFilters } from '~/services/features/selectors';
 
@@ -13,6 +14,7 @@ export function Vegan() {
     const navigate = useNavigate();
     const categories = useSelector(selectedCategories);
     const filters = useSelector(selectedFilters);
+    const [cat, setCat] = useState<categoryI>();
 
     useEffect(() => {
         const category = categories.categories.find((cat) => cat.category === categoryId);
@@ -20,7 +22,7 @@ export function Vegan() {
             navigate('/not-found');
             return;
         }
-
+        setCat(category);
         if (subcategoryId) {
             const hasSubcategory = category.subCategories?.some(
                 (sub) => sub.category === subcategoryId,
@@ -38,10 +40,7 @@ export function Vegan() {
     return (
         <Box w='100%' p='90px 0px'>
             <Flex flexDirection='column' gap='40px'>
-                <Search
-                    name='Веганская кухня'
-                    description='Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.'
-                />
+                <Search name={cat?.title || ''} description={cat?.description || ''} />
                 {!filters.doFinding ? <TabsFood /> : null}
                 <CategoryInfo />
             </Flex>

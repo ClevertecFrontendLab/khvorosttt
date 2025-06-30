@@ -1,7 +1,7 @@
 import type { SystemStyleObject } from '@chakra-ui/styled-system';
 
 export const NoteCardStyle: SystemStyleObject = {
-    w: { base: '296px', sm: '224px', xl: '267px', '3xl': '427px' },
+    minW: { base: '296px', sm: '224px', xl: '267px', '3xl': '427px' },
     h: { base: '204px', sm: '216px', xl: '204px', '3xl': '164px' },
     p: '24px 24px 20px 24px',
     borderRadius: '8px',
@@ -10,6 +10,7 @@ export const NoteCardStyle: SystemStyleObject = {
     flexDirection: 'column',
     bg: 'white',
     overflow: 'hidden',
+    flex: { base: '1 1 296px', sm: '1 1 224px', xl: '1 1 267px', '3xl': '1 1 427px' },
 };
 
 export const DateStyle: SystemStyleObject = {
